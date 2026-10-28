@@ -1,0 +1,117 @@
+{
+  "project": "P07_Email_Order_Entry",
+  "structure": 1.0,
+  "missing_sections": [],
+  "coverage": 0.9107142857142857,
+  "coverage_all": 0.9130434782608695,
+  "guard_downgrades": 1,
+  "missed_facts": [
+    {
+      "id": "F001",
+      "category": "business_rule",
+      "fact": "Reduce order entry time by 60%"
+    },
+    {
+      "id": "F002",
+      "category": "business_rule",
+      "fact": "Reduce order entry errors by 50%"
+    },
+    {
+      "id": "F005",
+      "category": "data",
+      "fact": "Customer Service receives about 6,000 PO emails per week"
+    },
+    {
+      "id": "F006",
+      "category": "data",
+      "fact": "PO emails across 40 branches"
+    },
+    {
+      "id": "F054",
+      "category": "architecture",
+      "fact": "Order Creation Service writes drafts to Azure Cosmos DB"
+    }
+  ],
+  "coverage_by_category": {
+    "acceptance": 1.0,
+    "architecture": 0.92,
+    "assumption": 1.0,
+    "business_rule": 0.33,
+    "data": 0.4,
+    "dependency": 1.0,
+    "functional": 1.0,
+    "integration": 1.0,
+    "nfr_availability": 1.0,
+    "nfr_performance": 1.0,
+    "out_of_scope": 1.0,
+    "risk": 1.0,
+    "role": 1.0,
+    "scope_mvp1": 1.0,
+    "scope_mvp2": 1.0,
+    "security_access": 1.0,
+    "timeline": 1.0
+  },
+  "faithfulness": 0.9743589743589743,
+  "claims": 47,
+  "requirement_claims": 39,
+  "test_design_claims": 8,
+  "invented": 1,
+  "unverified_supported": 1,
+  "invented_claims": [
+    {
+      "claim": "Protect PO email content as Confidential and mask PII in logs",
+      "kind": "requirement",
+      "verdict": "supported"
+    }
+  ],
+  "similarity": 0.9523809523809523,
+  "embedding_sim": 0.7391425665960311,
+  "section_scores": {
+    "references": 1.0,
+    "objectives": 1.0,
+    "scope_in": 1.0,
+    "scope_out": 1.0,
+    "assumptions_dependencies": 1.0,
+    "test_strategy": 1.0,
+    "functional_coverage": 1.0,
+    "rbac_testing": 1.0,
+    "security_compliance": 0.8,
+    "ai_data_quality": 1.0,
+    "nfr_performance": 1.0,
+    "nfr_reliability": 0.8,
+    "nfr_accessibility_compat": 0.6,
+    "observability_audit": 0.8,
+    "test_data_environment": 1.0,
+    "entry_exit_criteria": 1.0,
+    "defect_management": 1.0,
+    "risks": 1.0,
+    "deliverables_reporting": 1.0,
+    "traceability_metrics": 1.0,
+    "e2e_scenario": 1.0
+  },
+  "missing_points": {
+    "security_compliance": [
+      "Explicit MFA verification and tests for MFA flows (documented requirement in reference).",
+      "CSRF and XSS-specific tests called out (UI/API protections).",
+      "Explicit spoofed sender-domain tests to ensure spoofing cannot auto-trust a customer.",
+      "Explicit prompt-injection tests for text in emails to ensure AI components cannot be manipulated.",
+      "Explicit JWT/session timeout values and token expiry tests (reference listed session timeout/token expiration specifics)."
+    ],
+    "nfr_reliability": [
+      "Explicit backup/restore testing and verification of restore behavior.",
+      "Data reconciliation tests and verification after recovery (reconcile Cosmos DB/SAP/Blob states).",
+      "Documented runbooks and exact retry/backoff policies tied to tests (reference expects runbooks & alerting)."
+    ],
+    "nfr_accessibility_compat": [
+      "Full accessibility/WCAG conformance tests (screen reader labels, focus order, ARIA attributes).",
+      "Zoom/reflow and high-contrast mode verification and detailed error identification guidance.",
+      "Explicit supported browser version matrix (enterprise-supported Edge/Chrome/Firefox versions)."
+    ],
+    "observability_audit": [
+      "Explicit capture of 'extraction/model/prompt version' in audit records/logs (extraction version).",
+      "Explicit audit trail entries for CSR corrections and release actions (who changed what and when).",
+      "Clear verification of access controls for audit/export and retention policy enforcement in tests."
+    ]
+  },
+  "overall": 0.9212912087912087
+}

@@ -1,0 +1,140 @@
+{
+  "project": "P07_Email_Order_Entry",
+  "structure": 0.65,
+  "missing_sections": [
+    "document_control",
+    "scope_out",
+    "functional_coverage",
+    "ai_data_quality",
+    "nfr_reliability",
+    "nfr_accessibility_compat",
+    "e2e_scenario"
+  ],
+  "coverage": 0.9017857142857143,
+  "coverage_all": 0.8623188405797102,
+  "guard_downgrades": 1,
+  "missed_facts": [
+    {
+      "id": "F001",
+      "category": "business_rule",
+      "fact": "Reduce order entry time by 60%"
+    },
+    {
+      "id": "F002",
+      "category": "business_rule",
+      "fact": "Reduce order entry errors by 50%"
+    },
+    {
+      "id": "F005",
+      "category": "data",
+      "fact": "Customer Service receives about 6,000 PO emails per week"
+    },
+    {
+      "id": "F033",
+      "category": "nfr_availability",
+      "fact": "Availability 99.5% 24x5"
+    }
+  ],
+  "coverage_by_category": {
+    "acceptance": 1.0,
+    "architecture": 0.96,
+    "assumption": 1.0,
+    "business_rule": 0.33,
+    "data": 0.5,
+    "dependency": 1.0,
+    "functional": 1.0,
+    "integration": 1.0,
+    "nfr_availability": 0.0,
+    "nfr_performance": 1.0,
+    "out_of_scope": 0.5,
+    "risk": 1.0,
+    "role": 0.67,
+    "scope_mvp1": 1.0,
+    "scope_mvp2": 0.83,
+    "security_access": 1.0,
+    "timeline": 1.0
+  },
+  "faithfulness": 0.9818181818181818,
+  "claims": 79,
+  "requirement_claims": 55,
+  "test_design_claims": 24,
+  "invented": 1,
+  "unverified_supported": 1,
+  "invented_claims": [
+    {
+      "claim": "System extracts header and line data from emails and attachments",
+      "kind": "requirement",
+      "verdict": "supported"
+    }
+  ],
+  "similarity": 0.8761904761904761,
+  "embedding_sim": 0.44252041587329444,
+  "section_scores": {
+    "references": 0.4,
+    "objectives": 1.0,
+    "scope_in": 1.0,
+    "scope_out": 1.0,
+    "assumptions_dependencies": 1.0,
+    "test_strategy": 1.0,
+    "functional_coverage": 1.0,
+    "rbac_testing": 0.8,
+    "security_compliance": 0.6,
+    "ai_data_quality": 0.8,
+    "nfr_performance": 1.0,
+    "nfr_reliability": 0.8,
+    "nfr_accessibility_compat": 0.6,
+    "observability_audit": 0.8,
+    "test_data_environment": 0.8,
+    "entry_exit_criteria": 1.0,
+    "defect_management": 1.0,
+    "risks": 1.0,
+    "deliverables_reporting": 0.8,
+    "traceability_metrics": 1.0,
+    "e2e_scenario": 1.0
+  },
+  "missing_points": {
+    "references": [
+      "Explicit list of source documents (Email Order Entry BRD, architecture diagram) as formal references",
+      "Versioned reference links/locations and owners"
+    ],
+    "rbac_testing": [
+      "Explicit test cases for CS Supervisor actions (monitoring and reassigning queues)",
+      "Explicit tests verifying CS Admin capabilities (mailbox routing, cross-reference upload, thresholds) and restrictions (cannot release orders)"
+    ],
+    "security_compliance": [
+      "MFA, session timeout and JWT/token expiry tests",
+      "CSRF and XSS specific test cases",
+      "Rate-limiting/throttling tests at API gateway level",
+      "Spoofed sender/domain tests to ensure not auto-trusted",
+      "Prompt-injection tests for email content",
+      "Explicit SAST/DAST pipeline steps and tooling/results"
+    ],
+    "ai_data_quality": [
+      "Explicit per-execution/model version tracking recorded with each email processing run",
+      "Detailed targets broken down by format (body, PDF, Excel) in test artifacts (though targets are stated, per-format validation traceability should be explicit)"
+    ],
+    "nfr_reliability": [
+      "Backup/restore procedures and tests",
+      "Data reconciliation tests after partial-failure recovery",
+      "Explicit runbooks and playbook validation steps for operational recovery"
+    ],
+    "nfr_accessibility_compat": [
+      "Specific accessibility checks: screen-reader labels, focus order, colour contrast thresholds, error identification and zoom/reflow tests",
+      "Explicit browser compatibility matrix (Edge/Chrome/Firefox versions) and test matrix"
+    ],
+    "observability_audit": [
+      "Explicit audit record fields list including extraction version and email identifier in audit events",
+      "Log retention/export policies and access control tests for audit data",
+      "Explicit test cases verifying audit capture of CSR corrections and release events with required fields"
+    ],
+    "test_data_environment": [
+      "Explicit boundary test values called out (5% vs 5.01% price variance, 29 vs 30\u2011minute ageing) in the dataset list",
+      "Formal requirement to record dataset and model versions per execution (traceability requirement)"
+    ],
+    "deliverables_reporting": [
+      "Explicit callout of separate performance, security, accessibility and reliability test reports",
+      "Formal Test Closure Report with residual risks and lessons-learned deliverable"
+    ]
+  },
+  "overall": 0.8160487012987012
+}

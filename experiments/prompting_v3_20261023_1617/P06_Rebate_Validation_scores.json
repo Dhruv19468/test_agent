@@ -1,0 +1,101 @@
+{
+  "project": "P06_Rebate_Validation",
+  "structure": 1.0,
+  "missing_sections": [],
+  "coverage": 0.93125,
+  "coverage_all": 0.8928571428571429,
+  "guard_downgrades": 0,
+  "missed_facts": [
+    {
+      "id": "F013",
+      "category": "nfr_performance",
+      "fact": "Cut claim preparation time from 3 days to 4 hours per supplier"
+    }
+  ],
+  "coverage_by_category": {
+    "acceptance": 1.0,
+    "ai_quality": 1.0,
+    "architecture": 0.88,
+    "assumption": 1.0,
+    "business_rule": 0.5,
+    "compliance": 0.75,
+    "data": 0.75,
+    "dependency": 1.0,
+    "functional": 0.96,
+    "integration": 0.96,
+    "nfr_availability": 1.0,
+    "nfr_performance": 0.67,
+    "out_of_scope": 1.0,
+    "risk": 1.0,
+    "role": 1.0,
+    "scope_mvp1": 1.0,
+    "scope_mvp2": 1.0,
+    "security_access": 1.0,
+    "timeline": 0.5
+  },
+  "faithfulness": 0.9482758620689655,
+  "claims": 70,
+  "requirement_claims": 58,
+  "test_design_claims": 12,
+  "invented": 3,
+  "unverified_supported": 2,
+  "invented_claims": [
+    {
+      "claim": "Audit trail must record who confirmed terms, who ran calculations, who approved claims and configuration changes",
+      "kind": "requirement",
+      "verdict": "supported"
+    },
+    {
+      "claim": "Entry criteria include BRD approved and requirements baselined",
+      "kind": "requirement",
+      "verdict": "supported"
+    },
+    {
+      "claim": "Accessibility requirements: Web UI should meet enterprise accessibility expectations",
+      "kind": "requirement",
+      "verdict": "not_found"
+    }
+  ],
+  "similarity": 0.9818181818181819,
+  "embedding_sim": 0.7123291991613244,
+  "section_scores": {
+    "references": 1.0,
+    "objectives": 1.0,
+    "scope_in": 1.0,
+    "scope_out": 1.0,
+    "assumptions_dependencies": 1.0,
+    "test_strategy": 1.0,
+    "functional_coverage": 0.8,
+    "rbac_testing": 1.0,
+    "security_compliance": 0.8,
+    "ai_data_quality": 1.0,
+    "nfr_performance": 1.0,
+    "nfr_reliability": 1.0,
+    "nfr_accessibility_compat": 1.0,
+    "observability_audit": 1.0,
+    "test_data_environment": 1.0,
+    "entry_exit_criteria": 1.0,
+    "defect_management": 1.0,
+    "risks": 1.0,
+    "deliverables_reporting": 1.0,
+    "traceability_metrics": 1.0,
+    "schedule": 1.0,
+    "e2e_scenario": 1.0
+  },
+  "missing_points": {
+    "functional_coverage": [
+      "Missing explicit worked numeric test vectors and expected results from the BRD (e.g. retroactive example: spend USD 2.1M \u2192 expected USD 63,000; incremental example \u2192 expected USD 23,000).",
+      "Retroactive semantics left as TBD / ambiguous \u2014 no definitive test expectation that 'retroactive' means highest-tier rate on full spend vs other interpretation.",
+      "Explicit retry/timeouts thresholds for Databricks SQL queries (numeric timeout and retry policy) are not specified in the test cases.",
+      "A concise list of critical boundary test combinations derived directly from the BRD examples (the generated plan discusses examples but defers exact vectors to TBD)."
+    ],
+    "security_compliance": [
+      "No explicit MFA/JWT expiration and token lifecycle tests called out (MFA and JWT validation present in BRD).",
+      "CSRF and XSS protection test cases not explicitly enumerated.",
+      "Rate limiting tests (throttling) are not explicitly listed.",
+      "Explicit verification that spend/confidential data are not written to logs (BRD requires spend not exposed in logs) is missing.",
+      "Explicit verification that Databricks access is via a least\u2011privilege service principal is not stated (OAuth mentioned but least\u2011privilege requirement not asserted)."
+    ]
+  },
+  "overall": 0.9137661637931035
+}

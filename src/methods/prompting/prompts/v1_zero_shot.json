@@ -1,0 +1,4 @@
+{
+  "system": "You are a senior QA lead. You write software test plans.",
+  "user": "Write a complete test plan for the project described below.\n\n<brd>\n{brd}\n</brd>\n\n<architecture>\n{arch}\n</architecture>\n\nOutput the test plan in Markdown with # headings."
+}

@@ -1,0 +1,192 @@
+{
+  "project": "P06_Rebate_Validation",
+  "split": "validation",
+  "title": null,
+  "sections": {
+    "document_control": {
+      "present": true,
+      "source_headings": [
+        "(front matter)"
+      ],
+      "text": "- MASTER TEST PLAN\n- Rebate Claim Validation\nVersion: 0.9\nApplication: Rebate Claim Validation\nPrepared by: QA Lead, Quality Engineering\nReviewed by: Test Manager\nTest phase: MVP1\nAudience: Business Stakeholders, Product Owners, Architects, Development Team and QA Team\nPurpose: This plan defines the quality approach for validating Rebate Claim Validation MVP1: agreement upload, term extraction, analyst confirmation, calculation from Delta Lake purchase data, claim worksheet and accrual variance. Portal submission, disputes, accrual posting and amendment comparison are MVP2."
+    },
+    "references": {
+      "present": true,
+      "source_headings": [
+        "References"
+      ],
+      "text": "### References\nRebate Claim Validation BRD. Rebate Claim Validation architecture diagram."
+    },
+    "objectives": {
+      "present": true,
+      "source_headings": [
+        "Test Objectives"
+      ],
+      "text": "Verify extraction of supplier, period, tiers, retroactive/incremental type, eligible product lines and exclusions. Validate that only analyst-confirmed terms are used. Verify calculation accuracy for retroactive and incremental tiers is 100% against verified examples. Validate Delta Lake data retrieval and reconciliation. Validate approval above USD 50,000, segregation of duties and reproducibility."
+    },
+    "scope_in": {
+      "present": true,
+      "source_headings": [
+        "In Scope / Out of Scope"
+      ],
+      "text": "In scope (functional): agreement upload; extraction; confirmation; Databricks SQL retrieval; calculation; worksheet export; accrual variance; month-end batch; Azure AD; RBAC.\nIn scope (non-functional): performance (supplier-year in 2 minutes, 400 agreements in 8 hours), auditability and reproducibility, security, accessibility, reliability."
+    },
+    "scope_out": {
+      "present": true,
+      "source_headings": [
+        "In Scope / Out of Scope",
+        "Out of scope"
+      ],
+      "text": "In scope (functional): agreement upload; extraction; confirmation; Databricks SQL retrieval; calculation; worksheet export; accrual variance; month-end batch; Azure AD; RBAC.\nIn scope (non-functional): performance (supplier-year in 2 minutes, 400 agreements in 8 hours), auditability and reproducibility, security, accessibility, reliability.\n\n### Out of scope\n- Customer rebates, price protection and payment collection.\n- Portal submission, disputes, accrual posting and amendment comparison (MVP2)."
+    },
+    "assumptions_dependencies": {
+      "present": true,
+      "source_headings": [
+        "Test Assumptions"
+      ],
+      "text": "- Agreements contain complex tier language and amendments.\n- Databricks SQL warehouse available with test data snapshot.\n- Analyst-verified calculation examples provided."
+    },
+    "test_strategy": {
+      "present": true,
+      "source_headings": [
+        "Testing Strategy",
+        "Test levels",
+        "Test techniques"
+      ],
+      "text": "### Test levels\n- Unit testing: developer-owned tests for tier calculator (retroactive and incremental), eligibility filter, reconciliation and APIs. Target minimum coverage: 85%.\n- Component testing: agreement service, extraction, calculation service and batch scheduler.\n- API and contract testing: positive and negative behaviour, schemas, authentication, error codes, idempotency and versioning.\n- Integration testing: UI–services, agreement service–APIM–Document Intelligence/Azure OpenAI, calculation service–Databricks SQL (Delta Lake), services–PostgreSQL/Blob and Azure AD.\n- System testing: end-to-end scenarios across upload, extraction, confirmation, calculation, worksheet and approval.\n- User acceptance testing: Rebate Analysts and Finance Managers validate terms, calculations and worksheets.\n\n### Test techniques\nUse requirements-based testing, equivalence partitioning, boundary-value analysis, pairwise coverage, negative testing, exploratory testing, risk-based prioritisation, regression testing and data-driven automation."
+    },
+    "functional_coverage": {
+      "present": true,
+      "source_headings": [
+        "Test Coverage – Functional",
+        "Agreement extraction",
+        "Confirmation",
+        "Calculation",
+        "Data retrieval and reconciliation",
+        "Worksheet and approval"
+      ],
+      "text": "### Agreement extraction\n- Tiers, rates, thresholds, periods, eligible lines and exclusions with page references; amendments override base terms.\n\n### Confirmation\n- Unconfirmed terms cannot be used; edits recorded with user and time.\n\n### Calculation\n- Retroactive: spend USD 2.1M with tiers 2% ≥USD 1M and 3% ≥USD 2M → USD 63,000.\n- Incremental: same spend → 2% of USD 1M + 3% of USD 0.1M = USD 23,000.\n- Spend exactly at threshold, below first tier (0), excluded product lines, returns and credit notes.\n\n### Data retrieval and reconciliation\n- Databricks query by supplier, period and product lines; timeout and retry; totals reconcile to GL control totals.\n\n### Worksheet and approval\n- Supporting lines, tier reached, earned amount, variance to accrual, Excel export; above USD 50,000 requires Finance Manager; analysts cannot approve own claims."
+    },
+    "rbac_testing": {
+      "present": true,
+      "source_headings": [
+        "Worksheet and approval",
+        "Roles & Permissions"
+      ],
+      "text": "### Worksheet and approval\n- Supporting lines, tier reached, earned amount, variance to accrual, Excel export; above USD 50,000 requires Finance Manager; analysts cannot approve own claims.\n\n| Role | Permitted actions | Restricted actions |\n|---|---|---|\n| Rebate Analyst | Upload, confirm terms, calculate, prepare worksheets | Approving own claims, settings |\n| Finance Manager | Approve above USD 50,000, review variances | Editing terms |\n| Program Admin | Mappings and settings | Approvals |\nVerify segregation of duties, approval thresholds, data access restrictions and audit of term edits."
+    },
+    "security_compliance": {
+      "present": true,
+      "source_headings": [
+        "Security, Privacy and Compliance"
+      ],
+      "text": "Azure AD login, MFA, session timeout, token expiration, logout and JWT validation. RBAC at UI and API layers; rate limiting; input validation; safe error messages; CSRF and XSS protection. Verify Databricks access via OAuth with least-privilege service principal. Verify spend data not exposed in logs. Dependency scanning, SAST/DAST and penetration testing before release."
+    },
+    "ai_data_quality": {
+      "present": true,
+      "source_headings": [
+        "AI and Data Quality Validation"
+      ],
+      "text": "Use golden agreements with SME-verified terms. Target ≥95% term extraction accuracy; calculations must be 100% correct.\n- Field-level accuracy for thresholds, rates and tier type.\n- Amendment precedence tests.\n- Version tracking for model, agreement and data snapshot."
+    },
+    "nfr_performance": {
+      "present": true,
+      "source_headings": [
+        "NFR Testing",
+        "Performance and scalability"
+      ],
+      "text": "### Performance and scalability\n- Supplier-year calculation within 2 minutes.\n- 400-agreement month-end batch within 8 hours."
+    },
+    "nfr_reliability": {
+      "present": true,
+      "source_headings": [
+        "NFR Testing",
+        "Reliability and recovery"
+      ],
+      "text": "### Reliability and recovery\n- Re-run of a calculation with the same snapshot produces identical results.\n- Service restart during processing, network interruption, dependency failure, retry/idempotency and recovery from partial failure.\n- Backup/restore, data reconciliation after recovery, alerting and runbooks."
+    },
+    "nfr_accessibility_compat": {
+      "present": true,
+      "source_headings": [
+        "Accessibility and compatibility"
+      ],
+      "text": "### Accessibility and compatibility\n- Screen reader labels, keyboard-only navigation, focus order, colour contrast, error identification and zoom/reflow.\n- Current enterprise-supported versions of Edge, Chrome and Firefox."
+    },
+    "observability_audit": {
+      "present": true,
+      "source_headings": [
+        "Logging, Monitoring & Audit"
+      ],
+      "text": "Verify structured logs, metrics, traces, correlation IDs, dashboards and alerts. Audit records must capture user, agreement version, confirmed terms, data snapshot date, calculation result, approval and export. Confirm timestamps, access controls, retention and exportability."
+    },
+    "test_data_environment": {
+      "present": true,
+      "source_headings": [
+        "Environments and Test Data"
+      ],
+      "text": "- Valid: Golden agreements with verified terms and calculations\n- Invalid: Unreadable agreements, missing tiers\n- Boundary: Spend at thresholds, USD 50,000.00/50,000.01 approvals\n- Security – Restricted accounts\n- Production-like – Masked 24-month purchase snapshot\nIsolated development, QA/integration, performance and UAT environments; versioned test data and expected results; record build, configuration, dataset and model version for every execution."
+    },
+    "entry_exit_criteria": {
+      "present": true,
+      "source_headings": [
+        "Suspension, Entry and Exit Criteria"
+      ],
+      "text": "| Entry criteria | Exit criteria |\n|---|---|\n| BRD approved and requirements baselined; acceptance criteria and thresholds agreed. | At least 95% of planned test cases passed, with all critical-path cases passed. |\n| Environment, integrations, monitoring and access provisioned; test data available. | No open Critical defects and no open High-severity security defects. |\n| Databricks test snapshot and verified calculation examples available. | 100% calculation accuracy on verified examples. |\n| Build deployed with unit-test evidence and known limitations documented. | ≥95% extraction accuracy. |\n|  | Batch performance met. |\n|  | All UAT scenarios approved and business sign-off completed. |"
+    },
+    "defect_management": {
+      "present": true,
+      "source_headings": [
+        "Defect Severity & Process"
+      ],
+      "text": "| Severity | Definition | Example |\n|---|---|---|\n| Critical | Wrong rebate amount | Retroactive calculated as incremental |\n| High | Calculation blocked | Databricks query fails |\n| Medium | Workaround | Manual term correction |\n| Low | Cosmetic | Export column width |\nEach defect includes steps, expected/actual results, evidence, severity, environment, build, owner and retest result."
+    },
+    "risks": {
+      "present": true,
+      "source_headings": [
+        "Risk Register"
+      ],
+      "text": "- Agreement complexity: Confirmation step and golden set\n- Data gaps – Reconciliation tests\n- Calculation logic errors – Worked examples and boundary tests\n- Access delays – Early Databricks provisioning"
+    },
+    "deliverables_reporting": {
+      "present": true,
+      "source_headings": [
+        "Deliverables and Reporting"
+      ],
+      "text": "Master Test Plan and Test Strategy. Requirements Traceability Matrix (RTM). Test scenarios, cases, scripts and automation report. Versioned test data and golden dataset. Defect report, daily status report and test execution report. Performance, security, accessibility and reliability test reports. UAT evidence and sign-off. Test closure report with residual risks and lessons learned."
+    },
+    "traceability_metrics": {
+      "present": true,
+      "source_headings": [
+        "Recommended MVP1 Traceability and Metrics"
+      ],
+      "text": "Map every BRD requirement to test cases and evidence. Report weekly planned/executed/passed/failed/blocked cases, coverage by requirement and risk, defect severity and ageing, extraction accuracy, calculation accuracy, batch SLA compliance, reconciliation variances, accessibility and security findings and UAT completion."
+    },
+    "schedule": {
+      "present": true,
+      "source_headings": [
+        "Timeline"
+      ],
+      "text": "- MVP1: Mar–Jun 2026\n- MVP2: Q4 2026\n- Test execution and UAT aligned to MVP1 milestones above."
+    },
+    "e2e_scenario": {
+      "present": true,
+      "source_headings": [
+        "Key End-to-End Scenario"
+      ],
+      "text": "- Sign in as Rebate Analyst.\n- Upload an agreement.\n- Confirm extracted terms.\n- Run a calculation from Delta Lake.\n- Review worksheet and variance.\n- Finance Manager approves.\n- Verify audit and reproducibility.\nRelease recommendation: MVP1 should not be released until the exit criteria are met or deviations are accepted by Supplier Programs Finance and Product."
+    },
+    "approvals": {
+      "present": false,
+      "source_headings": [],
+      "text": ""
+    }
+  },
+  "functional_features": [
+    "Agreement extraction",
+    "Confirmation",
+    "Calculation",
+    "Data retrieval and reconciliation",
+    "Worksheet and approval"
+  ],
+  "unmapped": []
+}

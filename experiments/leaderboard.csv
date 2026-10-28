@@ -1,0 +1,20 @@
+method,version,run,notes,overall,structure,coverage,coverage_all,faithfulness,invented,similarity,embedding_sim,words,gen_s
+prompting,v1,prompting_v1_20261023_1508,zero-shot baseline,54.0,35.0,85.6,79.3,88.9,5.5,46.4,20.0,3164.0,45.5
+prompting,v1,prompting_v1_20261023_1508,"zero-shot baseline (rescored, evaluator fix)",61.8,70.0,85.5,79.8,75.5,23.5,86.5,44.6,3164.0,
+prompting,v1,prompting_v1_20261023_1535,zero-shot baseline,70.4,70.0,89.1,86.4,84.2,9.5,87.8,44.4,3696.0,44.5
+prompting,v2,prompting_v2_20261023_1559,role + outline + grounding + coverage rules,89.2,100.0,90.6,88.9,95.2,5.5,92.9,68.4,4153.0,51.5
+prompting,v3,prompting_v3_20261023_1617,v2 + one-shot example (P01),79.6,100.0,90.6,89.4,99.2,0.5,48.1,72.6,4251.5,60.0
+prompting,v1,prompting_v1_20261023_1535,"zero-shot baseline (rescored, evaluator fix)",69.2,65.0,88.6,86.1,83.4,10.5,89.8,42.2,3696.0,
+prompting,v1,prompting_v1_20261023_1641,zero-shot baseline,68.8,80.0,85.9,82.4,79.8,19.5,90.6,51.9,3324.0,42.5
+prompting,v2,prompting_v2_20261023_1646,role + outline + grounding + coverage rules,92.7,100.0,94.0,91.9,97.6,1.5,92.0,67.6,4198.5,42.0
+prompting,v3,prompting_v3_20261023_1651,v2 + one-shot example (P01),89.4,100.0,92.1,90.3,93.6,8.0,96.8,71.8,3910.5,75.0
+prompting,v2,prompting_v2_20261023_1646,rescored (similarity key fix),77.2,100.0,93.8,92.2,81.6,17.0,91.6,67.6,4198.5,
+prompting,v3,prompting_v3_20261023_1651,rescored (similarity key fix),75.6,100.0,92.4,91.3,79.0,15.0,97.2,71.8,3910.5,
+prompting,v1,prompting_v1_20261023_1641,"zero-shot baseline (rescored, evaluator fix)",79.5,80.0,85.0,81.8,93.2,3.0,90.2,52.0,3324.0,
+prompting,v2,prompting_v2_20261023_1646,rescored (similarity key fix),92.0,100.0,94.3,92.2,97.8,1.0,88.8,67.6,4198.5,
+prompting,v1,prompting_v1_20261023_1641,"zero-shot baseline (rescored, evaluator fix)",76.7,80.0,86.6,82.9,89.5,6.5,87.8,51.6,3324.0,
+prompting,v1,prompting_v1_20261023_1901,zero-shot baseline,73.9,75.0,83.9,82.4,88.7,7.5,89.6,46.0,3333.5,39.0
+prompting,v2,prompting_v2_20261023_1929,role + outline + grounding + coverage rules,90.9,100.0,93.4,92.1,96.2,2.0,91.6,68.2,4529.0,47.5
+prompting,v3,prompting_v3_20261023_1942,v2 + one-shot example (P01),91.8,100.0,91.4,90.0,96.4,2.0,96.8,71.0,3852.0,47.0
+prompting,v2,prompting_v2_20261023_1929,rescored (similarity key fix),93.1,100.0,95.0,93.4,98.1,1.0,90.6,68.2,4529.0,
+prompting,v3,prompting_v3_20261023_1942,rescored (similarity key fix),93.1,100.0,90.6,89.6,98.6,1.0,95.4,71.0,3852.0,

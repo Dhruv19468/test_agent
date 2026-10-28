@@ -1,0 +1,211 @@
+{
+  "project": "P06_Rebate_Validation",
+  "structure": 0.9,
+  "missing_sections": [
+    "rbac_testing",
+    "nfr_accessibility_compat"
+  ],
+  "coverage": 0.8125,
+  "coverage_all": 0.7908163265306123,
+  "guard_downgrades": 4,
+  "missed_facts": [
+    {
+      "id": "F013",
+      "category": "nfr_performance",
+      "fact": "Cut claim preparation time from 3 days to 4 hours per supplier"
+    },
+    {
+      "id": "F024",
+      "category": "role",
+      "fact": "Rebate Analyst uploads agreements"
+    },
+    {
+      "id": "F046",
+      "category": "data",
+      "fact": "Rebate agreements data owner is Supplier Programs"
+    },
+    {
+      "id": "F047",
+      "category": "data",
+      "fact": "Rebate agreements security classification is Restricted"
+    },
+    {
+      "id": "F049",
+      "category": "data",
+      "fact": "Purchase data owner is Finance Data and security classification is Confidential"
+    },
+    {
+      "id": "F051",
+      "category": "data",
+      "fact": "Product line mapping owner is Program Admin and security classification is Internal"
+    },
+    {
+      "id": "F052",
+      "category": "data",
+      "fact": "Calculations data source is Tool output and frequency is Per run"
+    },
+    {
+      "id": "F053",
+      "category": "data",
+      "fact": "Calculations owner is Supplier Programs and security classification is Confidential"
+    },
+    {
+      "id": "F055",
+      "category": "functional",
+      "fact": "Quality checks include tier thresholds ascending"
+    },
+    {
+      "id": "F091",
+      "category": "integration",
+      "fact": "App Gateway is entry point for Rebate Analysts and Finance Managers over HTTPS/443 with AD/SSO"
+    }
+  ],
+  "coverage_by_category": {
+    "acceptance": 1.0,
+    "ai_quality": 1.0,
+    "architecture": 0.75,
+    "assumption": 1.0,
+    "business_rule": 0.57,
+    "compliance": 0.75,
+    "data": 0.25,
+    "dependency": 1.0,
+    "functional": 0.92,
+    "integration": 0.85,
+    "nfr_availability": 1.0,
+    "nfr_performance": 0.67,
+    "out_of_scope": 1.0,
+    "risk": 1.0,
+    "role": 0.67,
+    "scope_mvp1": 1.0,
+    "scope_mvp2": 1.0,
+    "security_access": 1.0,
+    "timeline": 0.5
+  },
+  "faithfulness": 0.8666666666666667,
+  "claims": 82,
+  "requirement_claims": 75,
+  "test_design_claims": 7,
+  "invented": 10,
+  "unverified_supported": 0,
+  "invented_claims": [
+    {
+      "claim": "Test management will use Azure DevOps Test Plans or Jira + Xray",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "UI automation will use Playwright or Selenium",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "API automation will use Postman/Newman or RestAssured",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Integration and unit automation will use PyTest or JUnit",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Load testing will use k6 or JMeter",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "AI extraction validation will use custom Python scripts to compute precision/recall",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Excel export validation will use openpyxl or Apache POI",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Test environments include Dev, Test/Integration, Performance, and UAT",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Test accounts and RBAC roles will be created in an Azure AD test tenant",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Secrets must not be written to logs",
+      "kind": "requirement",
+      "verdict": "not_found"
+    }
+  ],
+  "similarity": 0.9,
+  "embedding_sim": 0.5721386684335106,
+  "section_scores": {
+    "references": 0.6,
+    "objectives": 1.0,
+    "scope_in": 1.0,
+    "scope_out": 1.0,
+    "assumptions_dependencies": 1.0,
+    "test_strategy": 1.0,
+    "functional_coverage": 0.8,
+    "rbac_testing": 0.8,
+    "security_compliance": 0.8,
+    "ai_data_quality": 1.0,
+    "nfr_performance": 1.0,
+    "nfr_reliability": 0.8,
+    "nfr_accessibility_compat": 0.4,
+    "observability_audit": 1.0,
+    "test_data_environment": 1.0,
+    "entry_exit_criteria": 1.0,
+    "defect_management": 0.8,
+    "risks": 1.0,
+    "deliverables_reporting": 1.0,
+    "traceability_metrics": 0.8,
+    "schedule": 1.0,
+    "e2e_scenario": 1.0
+  },
+  "missing_points": {
+    "references": [
+      "Explicit list/links/versions for source documents (Rebate Claim Validation BRD, architecture diagram) and where to find them",
+      "Document versioning and owners for referenced artifacts"
+    ],
+    "functional_coverage": [
+      "Explicit worked numeric examples from the BRD (e.g. retroactive: $2.1M \u2192 $63,000; incremental: $23,000) as deterministic verification cases",
+      "Explicit tests for spend exactly at threshold, below-first-tier (zero), returns/credit notes handling",
+      "Amendment precedence test matrix called out as specific functional cases (though amendments are mentioned elsewhere)"
+    ],
+    "rbac_testing": [
+      "Explicit role-permission matrix table (Rebate Analyst / Finance Manager / Program Admin) reproduced as testable checks",
+      "Specific tests for Program Admin restricted actions and permission boundaries",
+      "Explicit test case(s) that verify audit entries capture user/time for every term edit (format and retention)"
+    ],
+    "security_compliance": [
+      "Explicit checks for session timeout, MFA, token/JWT expiration and validation",
+      "CSRF and XSS test cases and input validation test checklist",
+      "Rate-limiting/throttling tests and abuse scenarios",
+      "Explicit SAST/DAST and dependency-scanning gating and artifacts (the plan mentions pen tests but not full SAST/DAST pipeline)",
+      "Verify Databricks OAuth least-privilege setup and no-spend-data-in-logs checklist (explicit test steps)"
+    ],
+    "nfr_reliability": [
+      "Explicit backup & restore test cases and acceptance criteria",
+      "Runbooks / alerting verification steps and on-call responsibilities for failure scenarios",
+      "Explicit idempotency tests for re-run semantics during restart/partial failure beyond general retry tests"
+    ],
+    "nfr_accessibility_compat": [
+      "Detailed accessibility test cases: screen-reader (NVDA/JAWS) labels, keyboard-only navigation, focus order, ARIA attributes",
+      "Colour contrast, zoom/reflow and error identification verification",
+      "Compatibility matrix with supported browser versions (Edge/Chrome/Firefox) and mobile if applicable",
+      "Accessibility acceptance criteria and compliance standard (e.g. WCAG level)"
+    ],
+    "defect_management": [
+      "Explicit defect template fields and example entries (steps to reproduce, expected/actual, evidence artifacts, environment, build, owner, retest results) \u2014 the plan mentions process but does not provide the template",
+      "Mapping of example BRD issues to severity categories (some examples exist in reference)"
+    ],
+    "traceability_metrics": [
+      "Detailed KPI list & reporting cadence (weekly planned/executed/passed/failed/blocked, extraction accuracy, calculation accuracy, batch SLA compliance, reconciliation variances, accessibility/security findings, UAT completion)",
+      "Example report templates/dashboards and owners for each metric"
+    ]
+  },
+  "overall": 0.7458750000000001
+}

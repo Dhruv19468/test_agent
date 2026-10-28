@@ -1,0 +1,11 @@
+split,project,brd_sections,brd_empty,brd_words,brd_toc,testplan_sections,testplan_empty,testplan_words,testplan_toc,arch
+test,P08_Warranty_Returns,32,0,1032,True,23,0,1296,False,ok
+test,P09_Vendor_Compliance,29,0,1012,False,29,0,1227,False,ok
+train,P00_Pricing_Tool_UserSample,30,2,1477,True,24,0,1868,False,ok
+train,P01_Invoice_Matching,33,0,1480,True,30,0,1671,False,ok
+train,P02_Quote_Assistant,33,0,1401,True,24,0,1612,False,ok
+train,P03_Contract_Intelligence,32,0,1196,False,25,0,1478,False,ok
+train,P04_Product_Data_Enrichment,28,0,1102,True,32,0,1237,False,ok
+train,P05_Freight_Claims,34,0,1124,True,27,0,1353,True,ok
+validation,P06_Rebate_Validation,30,0,993,False,30,0,1248,False,ok
+validation,P07_Email_Order_Entry,38,0,1015,True,32,0,1202,True,ok

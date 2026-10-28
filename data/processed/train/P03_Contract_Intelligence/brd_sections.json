@@ -1,0 +1,162 @@
+[
+  {
+    "heading": "Business Requirement Specification – Contract Intelligence",
+    "level": 1,
+    "text": "| Field | Value |\n|---|---|\n| Version | 1.2 |\n| Date | 12 Mar 2025 |\n| Business Owner | Legal Operations |\n| Status | Draft |"
+  },
+  {
+    "heading": "Summary",
+    "level": 1,
+    "text": "Contract Intelligence (CI) will let the Legal team upload signed customer contracts, extract metadata, terms and clauses, and score seven commercial levers (P3 Levers) as Red, Amber or Green (RAG) against company standards.\nMVP1 covers contract upload, processing, extraction, RAG scoring and the Contract Overview page. MVP2 adds ad-hoc analysis of draft contracts, renewal alerts and integration with the CRM account hierarchy."
+  },
+  {
+    "heading": "Background",
+    "level": 1,
+    "text": "Customer contracts across the CSS, UBS and ESS SBUs are stored as PDF or Word files on shared drives and reviewed manually.\nReviews are slow and inconsistent, and commercial risk across a customer's contracts is not visible."
+  },
+  {
+    "heading": "Goals & Objectives",
+    "level": 1,
+    "text": "Extract contract metadata and clauses automatically. Score P3 Levers consistently against company standards. Give Legal and account teams one view of commercial risk per customer. Reduce contract review time by 60%.\nOpen question: confirm with business owner."
+  },
+  {
+    "heading": "Project Scope",
+    "level": 1,
+    "text": "- In scope (MVP1): Contract upload with mandatory attributes, blob storage, processing and OCR, metadata and clause extraction, RAG scoring of seven P3 Levers, Contract Overview page and contract details page\n- In scope (MVP2): Ad-hoc analysis of draft contracts, renewal and expiry alerts, CRM account hierarchy integration, bulk upload\n- Out of scope: Editing extracted clauses, manual override of RAG scores, e-signature, contract authoring"
+  },
+  {
+    "heading": "Appendix: MVP1 Overview",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Contract Intelligence MVP1 Scope Overview",
+    "level": 2,
+    "text": "- Contract Upload: Upload one signed contract with attributes.\n- Processing and Extraction: OCR, metadata and clause extraction.\n- RAG Scoring – Seven P3 Levers scored against standards.\n- Contract Overview: Search, filters, summary and lever status."
+  },
+  {
+    "heading": "How it works",
+    "level": 2,
+    "text": "- Legal uploads a contract with attributes.\n- The file is stored and processed.\n- Metadata and clauses are extracted.\n- Levers are scored.\n- Results appear on Contract Overview."
+  },
+  {
+    "heading": "Data sources for MVP",
+    "level": 3,
+    "text": "- Signed contracts\n- Standard Clause Library\n- SBU/customer mapping"
+  },
+  {
+    "heading": "Security",
+    "level": 3,
+    "text": "- Azure AD SSO\n- Persona-based access\n- Customer persona limited to assigned customers"
+  },
+  {
+    "heading": "Exclusions",
+    "level": 2,
+    "text": "- No draft contract analysis\n- No renewal alerts\n- No CRM integration\n- No bulk upload\nNote: to be validated with the backend architects."
+  },
+  {
+    "heading": "User Roles",
+    "level": 1,
+    "text": "| Persona | Responsibilities |\n|---|---|\n| Legal | Upload contracts, view all contracts and analysis |\n| Admin | All Legal access plus user management, SBU/customer mapping and the Standard Clause Library |\n| Customer (account manager) | Read-only access to Contract Overview and Contracts for assigned customers only; no Upload menu |"
+  },
+  {
+    "heading": "Sample Use Cases & User Stories",
+    "level": 1,
+    "text": "- As Legal, I can upload a signed contract with SBU, customer and contract type and see it processed within 15 minutes.\n- As an account manager, I can see Summary ('3 Critical, 2 Medium terms') and P3 Lever Status counts for my customers.\n- As Legal, I can open a contract and see each P3 Lever with clause text, page reference and RAG reason.\n- As Admin, I can change a lever threshold and existing contracts are re-scored with history retained."
+  },
+  {
+    "heading": "NFRs",
+    "level": 1,
+    "text": "| Area | Requirement |\n|---|---|\n| Availability | 99.5% during 06:00–22:00 local time. |\n| Security | Azure AD SSO; persona-based menus; direct-URL access to restricted pages denied. Encryption at rest and in transit. |\n| Performance | Processing of a 50-page contract within 15 minutes. Contract Overview loads within 3 seconds for 5,000 contracts. |\n| Observability | Processing logs in Datadog with contract reference; failure email to uploader. |\n| Compliance | Audit log of upload, view and archive actions. |"
+  },
+  {
+    "heading": "Functional Requirements",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "MVP1",
+    "level": 2,
+    "text": "- Upload of one PDF or DOCX contract (max 25 MB, not password protected) with SBU, customer, contract type, name, effective and expiration date.\n- Storage of the original in Azure Blob Storage and processing with OCR for scanned documents; statuses Uploaded, Processing, Completed, Failed.\n- Extraction of metadata (parties, dates, renewal type, governing law, notice period) and clauses with page references.\n- RAG scoring of seven P3 Levers: Payment Terms (Green ≤45 days, Amber 46–60, Red >60 or missing), Freight, Cost of Service MOQ/MOS, Restocking Fees, Customer Rebates, Cost Pass Through, Contract Price Obligations.\n- Contract Overview with search (customer, account number, contract name, min 3 characters), Active/Expired view, Expiring-in filter (30/60/90/180 days), Summary and P3 Lever Status, expand/collapse per customer."
+  },
+  {
+    "heading": "MVP2",
+    "level": 2,
+    "text": "- Ad-hoc analysis of unsigned drafts against the Standard Clause Library.\n- Renewal and expiry email alerts.\n- CRM account hierarchy integration.\n- Bulk upload."
+  },
+  {
+    "heading": "Admin",
+    "level": 2,
+    "text": "- Standard Clause Library and threshold maintenance; RAG recalculation on change with previous result kept in history.\nOpen question: confirm with business owner."
+  },
+  {
+    "heading": "Integrations",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Identity & Access",
+    "level": 2,
+    "text": "- Azure AD groups mapped to Legal, Admin and Customer personas."
+  },
+  {
+    "heading": "AI Services",
+    "level": 2,
+    "text": "- Azure Document Intelligence for OCR and layout; Azure OpenAI for clause extraction and scoring rationale."
+  },
+  {
+    "heading": "Data & Storage",
+    "level": 2,
+    "text": "- Azure Blob Storage for files; Azure PostgreSQL for metadata, clauses and scores."
+  },
+  {
+    "heading": "Orchestration",
+    "level": 2,
+    "text": "- Azure Service Bus between upload and processing; Azure Function for failure notifications via SendGrid.\nOpen question: confirm with business owner."
+  },
+  {
+    "heading": "Technical Overview",
+    "level": 1,
+    "text": "Refer to architecture diagram P03_Contract_Intelligence_Architecture.png."
+  },
+  {
+    "heading": "Data Sources",
+    "level": 1,
+    "text": "Data includes customer contracts, extracted metadata and clauses, RAG scores and the Standard Clause Library.\n| Data | Description | Source | Frequency | Owner | Security |\n|---|---|---|---|---|---|\n| Customer contracts | Signed PDF/DOCX | Legal upload | Ad-hoc | Legal | Restricted |\n| Extracted metadata and clauses | Parties, dates, clauses | Tool output | Per contract | Legal | Restricted |\n| RAG scores | Lever colour and reason | Tool output | Per contract | Legal | Restricted |\n| Standard Clause Library | Thresholds and standard clauses | Admin configuration | As needed | Admin | Internal |\n| SBU/customer mapping | Customer to SBU | Admin configuration | As needed | Admin | Internal |\n- Quality checks: Mandatory metadata present, clause-to-page references valid, all seven levers scored or marked 'Clause not found'\n- RBAC: Customer persona restricted to assigned customers; all access audited"
+  },
+  {
+    "heading": "Security, Privacy & Compliance",
+    "level": 1,
+    "text": "- AI Governance Council approval\n- Contracts are restricted data; masked contracts for testing"
+  },
+  {
+    "heading": "Constraints and Assumptions",
+    "level": 1,
+    "text": "- SBU and customer mappings exist before upload\n- Most contracts are text-based PDFs"
+  },
+  {
+    "heading": "Dependencies",
+    "level": 3,
+    "text": "- IT platform team for blob storage and processing\n- Legal SMEs for golden dataset\n- AI Governance Council approval"
+  },
+  {
+    "heading": "Timeline",
+    "level": 1,
+    "text": "- MVP1 build: Apr–Jun 2025\n- UAT: Jul 2025\n- MVP2: Q4 2025"
+  },
+  {
+    "heading": "Acceptance Criteria",
+    "level": 1,
+    "text": "- ≥90% accuracy of RAG colour per lever against the Legal golden dataset\n- ≥95% metadata extraction accuracy\n- Processing within 15 minutes for 50 pages\n- Customer persona cannot access unassigned customers"
+  },
+  {
+    "heading": "Risks",
+    "level": 1,
+    "text": "- Scanned or poor-quality contracts: OCR and failure handling with resubmission\n- Ambiguous clauses: Reason and page reference shown for Legal review\n- Threshold changes: Recalculation with history"
+  },
+  {
+    "heading": "Approvers",
+    "level": 1,
+    "text": "- AI Governance Council\n- Finance (BIR)\n- AI intake\n- Global Intake\n- C2P\n- WAB"
+  }
+]

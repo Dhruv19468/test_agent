@@ -1,0 +1,106 @@
+{
+  "project": "P07_Email_Order_Entry",
+  "structure": 1.0,
+  "missing_sections": [],
+  "coverage": 0.9375,
+  "coverage_all": 0.9347826086956522,
+  "guard_downgrades": 0,
+  "missed_facts": [
+    {
+      "id": "F001",
+      "category": "business_rule",
+      "fact": "Reduce order entry time by 60%"
+    },
+    {
+      "id": "F002",
+      "category": "business_rule",
+      "fact": "Reduce order entry errors by 50%"
+    },
+    {
+      "id": "F005",
+      "category": "data",
+      "fact": "Customer Service receives about 6,000 PO emails per week"
+    }
+  ],
+  "coverage_by_category": {
+    "acceptance": 1.0,
+    "architecture": 1.0,
+    "assumption": 1.0,
+    "business_rule": 0.33,
+    "data": 0.5,
+    "dependency": 1.0,
+    "functional": 1.0,
+    "integration": 1.0,
+    "nfr_availability": 1.0,
+    "nfr_performance": 1.0,
+    "out_of_scope": 1.0,
+    "risk": 1.0,
+    "role": 1.0,
+    "scope_mvp1": 1.0,
+    "scope_mvp2": 1.0,
+    "security_access": 1.0,
+    "timeline": 1.0
+  },
+  "faithfulness": 0.9871794871794872,
+  "claims": 84,
+  "requirement_claims": 78,
+  "test_design_claims": 6,
+  "invented": 1,
+  "unverified_supported": 1,
+  "invented_claims": [
+    {
+      "claim": "Logging must capture emails processed, draft accuracy and CSR correction rate",
+      "kind": "requirement",
+      "verdict": "supported"
+    }
+  ],
+  "similarity": 0.9523809523809523,
+  "embedding_sim": 0.7200984657739646,
+  "section_scores": {
+    "references": 1.0,
+    "objectives": 1.0,
+    "scope_in": 1.0,
+    "scope_out": 1.0,
+    "assumptions_dependencies": 1.0,
+    "test_strategy": 0.8,
+    "functional_coverage": 1.0,
+    "rbac_testing": 1.0,
+    "security_compliance": 0.8,
+    "ai_data_quality": 1.0,
+    "nfr_performance": 1.0,
+    "nfr_reliability": 0.8,
+    "nfr_accessibility_compat": 1.0,
+    "observability_audit": 1.0,
+    "test_data_environment": 1.0,
+    "entry_exit_criteria": 0.8,
+    "defect_management": 1.0,
+    "risks": 1.0,
+    "deliverables_reporting": 1.0,
+    "traceability_metrics": 1.0,
+    "e2e_scenario": 0.8
+  },
+  "missing_points": {
+    "test_strategy": [
+      "Explicit unit-test coverage target (85%) from reference is not carried through (marked TBD).",
+      "Some ownership/measurement targets (e.g., who enforces coverage targets) are left TBD."
+    ],
+    "security_compliance": [
+      "Explicit mention of MFA, token expiry/logout and JWT validation tests (login/session lifecycle) is not spelled out.",
+      "CSRF and XSS specific test cases are not explicitly listed.",
+      "Explicit prompt-injection mitigation test cases for Azure OpenAI (that prompt text in emails cannot change processing) are not clearly detailed."
+    ],
+    "nfr_reliability": [
+      "Explicit backup/restore tests and verification of backup integrity after failures are not called out.",
+      "Detailed data-reconciliation procedures and test cases after recovery (beyond generic reconciliation) could be more explicit."
+    ],
+    "entry_exit_criteria": [
+      "Explicit metric 'At least 95% of planned test cases passed' from reference is not stated verbatim (acceptance focuses on critical-path and specific accuracy thresholds).",
+      "Clear statement 'No open Critical defects' (non-security) as an exit gate is not explicitly mirrored."
+    ],
+    "e2e_scenario": [
+      "Explicit release gating: the reference requires MVP1 not be released until exit criteria are met or deviations accepted \u2014 the generated plan does not clearly state that releases are blocked until formal exit/sign-off.",
+      "One minor inconsistency: generated scenario includes CSR performing a release in the e2e flow without explicitly tying that to post-exit gating."
+    ]
+  },
+  "overall": 0.9453125
+}

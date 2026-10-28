@@ -1,0 +1,188 @@
+{
+  "project": "P01_Invoice_Matching",
+  "split": "train",
+  "title": null,
+  "sections": {
+    "document_control": {
+      "present": true,
+      "source_headings": [
+        "(front matter)"
+      ],
+      "text": "- QA Test Plan\n- Invoice Matching Automation\nVersion: 1.0\nApplication: Invoice Matching Automation\nPrepared by: QA Lead, Quality Engineering\nReviewed by: Test Manager\nTest phase: MVP1\nAudience: Business Stakeholders, Product Owners, Architects, Development Team and QA Team\nPurpose. This plan defines the quality approach for validating Invoice Matching Automation MVP1, from invoice intake through extraction, SAP PO/GR retrieval, three-way matching, exception listing and review. Items marked MVP2 (SAP posting, exception workflow, duplicate detection, supplier notifications) are forward-looking and are not release blockers for MVP1 unless approved by Product."
+    },
+    "references": {
+      "present": true,
+      "source_headings": [
+        "References"
+      ],
+      "text": "### References\n- Invoice Matching Automation BRD\n- Invoice Matching Automation architecture diagram"
+    },
+    "objectives": {
+      "present": true,
+      "source_headings": [
+        "Invoice Extraction and Three-Way Match Validation"
+      ],
+      "text": "- Verify accurate extraction of invoice number, supplier, dates, PO number, currency, tax, totals and line items from supplier PDFs.\n- Confirm correct retrieval of PO and GR data from SAP through APIM and accurate three-way matching.\n- Validate price (±2% default) and quantity (0 units default) tolerance rules and exception flagging.\n- Validate role-based access, approval limits (USD 25,000) and security controls.\n- Verify data integrity, traceability, logging, performance, availability and SOX-relevant controls."
+    },
+    "scope_in": {
+      "present": true,
+      "source_headings": [
+        "Scope"
+      ],
+      "text": "In scope (functional): mailbox ingestion via Graph API; manual upload; file validation; invoice extraction; PO/GR retrieval from SAP; three-way matching; tolerance rules; match result worksheet; exception list; Azure AD authentication; RBAC; error handling; operational logging.\nIn scope (non-functional): security, accessibility, performance (10-page invoice in 60 s, 500 invoices per hour), data quality, observability, browser compatibility, reliability and recovery."
+    },
+    "scope_out": {
+      "present": true,
+      "source_headings": [
+        "Out of scope"
+      ],
+      "text": "### Out of scope\n- Payment execution and SAP payment run changes.\n- Non-PO invoices and travel and expense claims.\n- SAP posting, exception workflow, duplicate detection and supplier notifications are MVP2 capabilities."
+    },
+    "assumptions_dependencies": {
+      "present": true,
+      "source_headings": [
+        "Assumptions, Constraints & Dependencies"
+      ],
+      "text": "- Invoices may be text-based, scanned, multi-page or contain multiple currencies.\n- Extraction accuracy depends on labelled sample invoices per pilot supplier.\n- SAP PO/GR APIs, Graph API mailbox, Azure AD and storage must be available or replaced with approved mocks.\n- AP Operations will provide tolerance values, approval limits and masked production-like invoices.\n- Test environments must not contain unmasked bank or tax identifiers."
+    },
+    "test_strategy": {
+      "present": true,
+      "source_headings": [
+        "Testing Strategy",
+        "Levels of testing",
+        "Test techniques"
+      ],
+      "text": "### Levels of testing\n- Unit testing: developer-owned tests for extraction mappers, tolerance calculator, matching engine and APIs. Target minimum coverage: 85%.\n- Component testing: mailbox ingestion function, extraction service (Document Intelligence), line normalisation (Azure OpenAI), matching service and notification service.\n- API and contract testing: positive and negative behaviour, schemas, authentication, error codes, idempotency and versioning.\n- Integration testing: UI–backend, Graph API mailbox–Azure Function, Function–Blob Storage, Service Bus–ingestion service, backend–APIM–Document Intelligence, backend–SAP S/4HANA, backend–PostgreSQL and backend–Azure AD.\n- System testing: end-to-end scenarios across intake, extraction, PO/GR retrieval, matching, exception listing, review and approval.\n- User acceptance testing: AP Analysts and AP Supervisors validate match results, exception handling, approval limits and usability.\n\n### Test techniques\nUse requirements-based testing, equivalence partitioning, boundary-value analysis, pairwise coverage, negative testing, exploratory testing, risk-based prioritisation, regression testing and data-driven automation."
+    },
+    "functional_coverage": {
+      "present": true,
+      "source_headings": [
+        "Features to be Tested",
+        "Invoice intake",
+        "Invoice extraction",
+        "PO and GR retrieval",
+        "Three-way matching and tolerances",
+        "Match worksheet and exception list"
+      ],
+      "text": "### Invoice intake\n- Mailbox polling: new invoice, multiple attachments, non-PDF attachment, oversized attachment, duplicate email, mailbox unavailable.\n- Manual upload: valid PDF, scanned PDF, corrupted file, empty file, password-protected file, unsupported format; clear errors and no partial records after failure.\n\n### Invoice extraction\n- Extract invoice number, supplier, invoice date, PO number, currency, tax, total and every line item.\n- Validate multi-page invoices, line tables spanning pages, credit notes with negative totals, multiple tax rates, special characters and decimal precision.\n- Verify source page reference for every field and reconciliation of line totals to invoice total.\n\n### PO and GR retrieval\n- Test PO found, PO not found, PO closed, partial GR, no GR yet, multiple GRs, SAP timeout and retry.\n- Verify supplier on invoice matches supplier on PO; mismatch raised as exception.\n\n### Three-way matching and tolerances\n- For PO unit price USD 100.00 and invoice USD 102.00, verify within ±2% tolerance (matched); USD 102.01 must be flagged.\n- Quantity invoiced greater than quantity received must be flagged with 0-unit default tolerance.\n- Cover zero, null and negative values, rounding boundaries, currency mismatch and admin-modified tolerances per supplier category.\n\n### Match worksheet and exception list\n- Validate matched, partially matched and unmatched statuses, variance amounts, exception reasons, filters and export to Excel.\n- Verify approval above USD 25,000 requires AP Supervisor and mandatory comment."
+    },
+    "rbac_testing": {
+      "present": true,
+      "source_headings": [
+        "Role-Based Access and Workflow"
+      ],
+      "text": "- AP Analyst: Permitted actions: Upload invoices, review match results, resolve exceptions, approve within limit; Restricted actions: Approve above USD 25,000, tolerance configuration, user management\n- AP Supervisor – Permitted actions: Approve above limit, override exceptions with comment, monitor SLAs; Restricted actions: Configuration of tolerance rules and mailbox\n- AP Admin: Permitted actions: Tolerance rules, approval limits, supplier mapping, mailbox and user roles; Restricted actions: Approving invoices (segregation of duties)\nVerify least privilege, segregation of duties (Admin cannot approve), privilege escalation, direct-URL/API access, inactive users, session expiry and override approvals with mandatory comments."
+    },
+    "security_compliance": {
+      "present": true,
+      "source_headings": [
+        "Security & Compliance Testing"
+      ],
+      "text": "- Azure AD login, MFA, session timeout, token expiration, logout and JWT validation.\n- RBAC at UI and API layers; rate limiting; input validation; safe error messages; CSRF and XSS protection.\n- Verify masking of bank and tax identifiers in UI, exports and logs.\n- Test malicious attachments in the mailbox, file-upload exploits, injection strings in invoice text and oversized payloads.\n- Verify encryption at rest and in transit, Key Vault secret handling and Managed Identity access between services.\n- Dependency scanning, SAST/DAST and penetration testing before release."
+    },
+    "ai_data_quality": {
+      "present": true,
+      "source_headings": [
+        "AI and Data Quality Validation"
+      ],
+      "text": "Use a labelled golden dataset of invoices from all pilot suppliers, including scanned and multi-page invoices. Target accuracy is ≥95% for header fields and ≥90% for line items, measured separately for numeric and text fields.\n- Analyse false positives and false negatives in line extraction and review-routing thresholds.\n- Validate Azure OpenAI line normalisation does not change quantities, prices or item codes.\n- Track model and prompt version per invoice; verify reprocessing after a model change."
+    },
+    "nfr_performance": {
+      "present": true,
+      "source_headings": [
+        "Performance and scalability"
+      ],
+      "text": "### Performance and scalability\n- Extraction and matching of a 10-page invoice within 60 seconds.\n- Batch of 500 invoices processed within 1 hour; queue depth and Service Bus throughput monitored.\n- Test 10, 50 and 100 concurrent users on the match worksheet."
+    },
+    "nfr_reliability": {
+      "present": true,
+      "source_headings": [
+        "Reliability and recovery"
+      ],
+      "text": "### Reliability and recovery\n- Service restart during processing, network interruption, dependency failure, retry/idempotency and recovery from partial failure.\n- Backup/restore, data reconciliation after recovery, alerting and runbooks."
+    },
+    "nfr_accessibility_compat": {
+      "present": true,
+      "source_headings": [
+        "Accessibility & Browser Compatibility"
+      ],
+      "text": "### Accessibility & Browser Compatibility\n- Screen reader labels, keyboard-only navigation, focus order, colour contrast, error identification and zoom/reflow.\n- Current enterprise-supported versions of Edge, Chrome and Firefox."
+    },
+    "observability_audit": {
+      "present": true,
+      "source_headings": [
+        "Audit and Observability"
+      ],
+      "text": "Verify structured logs, metrics, traces, correlation IDs, dashboards and alerts. Audit records must capture user, role, invoice identifier, supplier, PO number, extraction and model version, match outcome, tolerance applied, overrides, approvals and configuration changes. Confirm timestamps, access controls, retention and exportability."
+    },
+    "test_data_environment": {
+      "present": true,
+      "source_headings": [
+        "Test Data Management"
+      ],
+      "text": "- Valid: Pilot supplier invoices with expected golden outputs and matching SAP PO/GR records\n- Invalid – Corrupt, password-protected, empty and non-PDF attachments\n- Boundary: Price variance exactly at ±2%, quantity over receipt by 1 unit, approval exactly USD 25,000\n- Security: Malicious attachments, injection strings, expired tokens and restricted-role accounts\n- Production-like – Masked invoices and SAP data at representative monthly volume\nIsolated development, QA/integration, performance and UAT environments; versioned test data and expected results; record build, configuration, dataset and model version for every execution."
+    },
+    "entry_exit_criteria": {
+      "present": true,
+      "source_headings": [
+        "Entry / Exit Criteria",
+        "Entry criteria",
+        "Exit criteria"
+      ],
+      "text": "### Entry criteria\n- BRD approved and requirements baselined; acceptance criteria and thresholds agreed.\n- Environment, integrations, monitoring and access provisioned; test data available.\n- SAP non-production PO/GR data seeded for pilot suppliers; AP mailbox test account available.\n- Build deployed with unit-test evidence and known limitations documented.\n\n### Exit criteria\n- At least 95% of planned test cases passed, with all critical-path cases passed.\n- No open Critical defects and no open High-severity security defects.\n- Extraction targets met for the golden dataset (≥95% header, ≥90% lines).\n- 100% of variances above tolerance flagged as exceptions.\n- Performance results meet 60-second and 500-per-hour targets.\n- All UAT scenarios approved and business sign-off completed."
+    },
+    "defect_management": {
+      "present": true,
+      "source_headings": [
+        "Defect Tracking"
+      ],
+      "text": "| Severity | Definition | Example |\n|---|---|---|\n| Critical | Wrong match decision, data corruption or security breach | Invoice outside tolerance marked as matched |\n| High | Core workflow blocked or control failure | Approval above USD 25,000 possible without Supervisor |\n| Medium | Function works with workaround | One supplier layout needs manual field correction |\n| Low | Cosmetic issue | Variance column misaligned in export |\nEach defect includes steps, expected/actual results, evidence, severity, environment, build, owner and retest result."
+    },
+    "risks": {
+      "present": true,
+      "source_headings": [
+        "Risk Register"
+      ],
+      "text": "| Risk | Mitigation |\n|---|---|\n| Variable invoice layouts | Golden dataset per supplier, custom extraction models, human review |\n| SAP API unavailability | Mocks, contract tests, retries and timeouts |\n| Tolerance misconfiguration | Boundary tests and admin change audit |\n| Sensitive data exposure | Masking tests, least privilege and log scanning |\n| Scope creep into MVP2 | MVP release control and formal change approval |"
+    },
+    "deliverables_reporting": {
+      "present": false,
+      "source_headings": [],
+      "text": ""
+    },
+    "traceability_metrics": {
+      "present": true,
+      "source_headings": [
+        "Recommended MVP1 Traceability and Metrics"
+      ],
+      "text": "Map every BRD requirement to test cases and evidence. Report weekly planned/executed/passed/failed/blocked cases, coverage by requirement and risk, defect severity and ageing, extraction precision/recall, touchless match rate, exception rate, processing SLA compliance, API error rate, accessibility and security findings and UAT completion."
+    },
+    "schedule": {
+      "present": false,
+      "source_headings": [],
+      "text": ""
+    },
+    "e2e_scenario": {
+      "present": true,
+      "source_headings": [
+        "Representative End-to-End Scenario"
+      ],
+      "text": "- Authenticate through Azure AD and verify the AP Analyst role.\n- Receive an invoice in the AP mailbox and confirm ingestion into Blob Storage and the Service Bus queue.\n- Extract header and line data with source references.\n- Retrieve PO and GR data from SAP.\n- Run three-way matching with tolerance rules.\n- Review the match worksheet and exception list.\n- Approve within limit, or route above USD 25,000 to AP Supervisor.\n- Verify audit records, telemetry and reconciliation of totals.\nRelease decision: MVP1 should not be released until the exit criteria are met or each deviation has documented impact, mitigation, owner and formal AP Operations/Product acceptance."
+    },
+    "approvals": {
+      "present": false,
+      "source_headings": [],
+      "text": ""
+    }
+  },
+  "functional_features": [
+    "Invoice intake",
+    "Invoice extraction",
+    "PO and GR retrieval",
+    "Three-way matching and tolerances",
+    "Match worksheet and exception list"
+  ],
+  "unmapped": [
+    "Non-Functional Requirements Testing"
+  ]
+}

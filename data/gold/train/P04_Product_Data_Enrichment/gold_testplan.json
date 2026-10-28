@@ -1,0 +1,190 @@
+{
+  "project": "P04_Product_Data_Enrichment",
+  "split": "train",
+  "title": "Master Test Plan – Product Data Enrichment",
+  "sections": {
+    "document_control": {
+      "present": true,
+      "source_headings": [
+        "Master Test Plan – Product Data Enrichment"
+      ],
+      "text": "0.9 · Product Data Enrichment · QA Lead, Quality Engineering\nPurpose: This plan defines the quality approach for validating Product Data Enrichment MVP1 for three pilot categories: spec sheet upload, attribute extraction, normalisation, validation, review and CSV export for PIM import. PIM API publish, supplier portal retrieval, more categories and image extraction are MVP2."
+    },
+    "references": {
+      "present": true,
+      "source_headings": [
+        "References"
+      ],
+      "text": "### References\n- Product Data Enrichment BRD\n- Product Data Enrichment architecture diagram"
+    },
+    "objectives": {
+      "present": true,
+      "source_headings": [
+        "Attribute Extraction and Normalisation Validation"
+      ],
+      "text": "- Verify extraction of all required attributes per pilot category with value, unit, confidence and source page.\n- Validate unit normalisation and allowed-value/range validation.\n- Validate the 80% confidence threshold and mandatory review.\n- Verify export CSV matches the PIM import format and imports without errors.\n- Validate RBAC and export approval by Content Lead."
+    },
+    "scope_in": {
+      "present": true,
+      "source_headings": [
+        "Scope"
+      ],
+      "text": "In scope (functional): spec sheet upload; extraction; normalisation; validation; review accept/edit/reject; export approval; CSV generation and SFTP drop; schema administration; Azure AD; RBAC.\nIn scope (non-functional): performance (10 pages in 45 s, 1,000-item export in 2 minutes), security, accessibility, observability and reliability."
+    },
+    "scope_out": {
+      "present": true,
+      "source_headings": [
+        "Out of scope"
+      ],
+      "text": "### Out of scope\n- Pricing, marketing copy, translation and ERP item creation.\n- PIM API publish, supplier portal retrieval, additional categories and image extraction (MVP2)."
+    },
+    "assumptions_dependencies": {
+      "present": true,
+      "source_headings": [
+        "Assumptions and Dependencies"
+      ],
+      "text": "- Spec sheets differ widely by supplier, including tables, multi-column layouts and footnotes.\n- Golden dataset of items with correct attribute values per category is required.\n- PIM import format and test SFTP location provided by the PIM team."
+    },
+    "test_strategy": {
+      "present": true,
+      "source_headings": [
+        "Approach",
+        "Test levels",
+        "Test techniques"
+      ],
+      "text": "### Test levels\n- Unit testing: developer-owned tests for unit converters, validators, CSV builder and APIs. Target minimum coverage: 85%.\n- Component testing: extraction service, normalisation rules, export service and CSV function.\n- API and contract testing: positive and negative behaviour, schemas, authentication, error codes, idempotency and versioning.\n- Integration testing: UI–backend, backend–Blob Storage, backend–APIM–Document Intelligence/Azure OpenAI, backend–Azure SQL, export function–PIM SFTP and Azure AD.\n- System testing: end-to-end scenarios across upload, extraction, normalisation, review, approval and export.\n- User acceptance testing: Content Specialists and Content Leads validate attribute accuracy and the PIM import.\n\n### Test techniques\nUse requirements-based testing, equivalence partitioning, boundary-value analysis, pairwise coverage, negative testing, exploratory testing, risk-based prioritisation, regression testing and data-driven automation."
+    },
+    "functional_coverage": {
+      "present": true,
+      "source_headings": [
+        "Functional Test Coverage",
+        "Upload",
+        "Extraction and normalisation",
+        "Review",
+        "Export",
+        "Schema administration"
+      ],
+      "text": "### Upload\n- Single and multiple PDFs per item, 20 MB limit, invalid item number, scanned PDF, corrupted file.\n\n### Extraction and normalisation\n- Each required attribute per category extracted with source page; mm → in conversion and rounding; AWG, A and V formats; ranges such as '10–20 A'.\n- Values outside allowed lists or ranges flagged; missing mandatory attributes flagged.\n\n### Review\n- Accept, edit and reject per attribute; confidence below 80% must be reviewed before export; edit history retained.\n\n### Export\n- Only Content Lead approves batches up to 1,000 items; CSV columns, encoding and delimiters match PIM format; test import succeeds.\n- 1,001-item batch rejected with message.\n\n### Schema administration\n- Add allowed value and change range; verify effect on validation; schema version recorded per item."
+    },
+    "rbac_testing": {
+      "present": true,
+      "source_headings": [
+        "RBAC and Workflow Testing"
+      ],
+      "text": "| Role | Permitted actions | Restricted actions |\n|---|---|---|\n| Content Specialist | Upload, review, edit attributes | Approve exports, schema changes |\n| Content Lead | Approve and export batches, monitor quality | Schema changes |\n| Taxonomy Admin | Schemas, allowed values, unit rules, threshold | Approving exports |\nVerify export approval restricted to Content Lead, schema changes restricted to Taxonomy Admin, and direct API access controls."
+    },
+    "security_compliance": {
+      "present": true,
+      "source_headings": [
+        "Security"
+      ],
+      "text": "### Security\n- Azure AD login, MFA, session timeout, token expiration, logout and JWT validation.\n- RBAC at UI and API layers; rate limiting; input validation; safe error messages; CSRF and XSS protection.\n- Test malicious PDFs and injection in attribute values (CSV injection with leading '=' must be neutralised).\n- Verify SFTP credentials in Key Vault.\n- Dependency scanning, SAST/DAST and penetration testing before release."
+    },
+    "ai_data_quality": {
+      "present": true,
+      "source_headings": [
+        "AI and Data Quality Validation"
+      ],
+      "text": "Use a golden dataset of items per pilot category with expected attribute values. Target ≥92% correct attribute values; 100% of exported values valid.\n- Measure accuracy per attribute and per supplier.\n- Analyse wrong-unit errors separately.\n- Re-run after schema or model changes."
+    },
+    "nfr_performance": {
+      "present": true,
+      "source_headings": [
+        "Non-Functional Testing",
+        "Performance and scalability"
+      ],
+      "text": "### Performance and scalability\n- 10-page spec sheet extracted within 45 seconds.\n- Export of 1,000 items within 2 minutes.\n- and 25 concurrent specialists."
+    },
+    "nfr_reliability": {
+      "present": true,
+      "source_headings": [
+        "Non-Functional Testing",
+        "Resilience"
+      ],
+      "text": "### Resilience\n- Service restart during processing, network interruption, dependency failure, retry/idempotency and recovery from partial failure.\n- Backup/restore, data reconciliation after recovery, alerting and runbooks."
+    },
+    "nfr_accessibility_compat": {
+      "present": true,
+      "source_headings": [
+        "Accessibility and compatibility"
+      ],
+      "text": "### Accessibility and compatibility\n- Screen reader labels, keyboard-only navigation, focus order, colour contrast, error identification and zoom/reflow.\n- Current enterprise-supported versions of Edge, Chrome and Firefox."
+    },
+    "observability_audit": {
+      "present": true,
+      "source_headings": [
+        "Audit and Observability"
+      ],
+      "text": "Verify structured logs, metrics, traces, correlation IDs, dashboards and alerts. Audit records must capture user, role, item number, attribute, old and new value, confidence, model and schema version, approval and export batch. Confirm timestamps, access controls, retention and exportability."
+    },
+    "test_data_environment": {
+      "present": true,
+      "source_headings": [
+        "Test Data and Environment Strategy"
+      ],
+      "text": "- Valid: Golden items for wire and cable, lighting and circuit breakers\n- Invalid: Corrupt and oversized PDFs, wrong item numbers\n- Boundary – Confidence 79/80%, 1,000/1,001 items, range edges\n- Security: CSV-injection strings, restricted roles\n- Production-like: Masked spec sheets at pilot volume\nIsolated development, QA/integration, performance and UAT environments; versioned test data and expected results; record build, configuration, dataset and model version for every execution."
+    },
+    "entry_exit_criteria": {
+      "present": true,
+      "source_headings": [
+        "Suspension, Entry and Exit Criteria",
+        "Entry criteria",
+        "Exit criteria"
+      ],
+      "text": "### Entry criteria\n- BRD approved and requirements baselined; acceptance criteria and thresholds agreed.\n- Environment, integrations, monitoring and access provisioned; test data available.\n- Pilot category schemas finalised; PIM test import location available.\n- Build deployed with unit-test evidence and known limitations documented.\n\n### Exit criteria\n- At least 95% of planned test cases passed, with all critical-path cases passed.\n- No open Critical defects and no open High-severity security defects.\n- ≥92% attribute accuracy on golden set.\n- Export imports into PIM test without errors.\n- Performance targets met.\n- All UAT scenarios approved and business sign-off completed."
+    },
+    "defect_management": {
+      "present": true,
+      "source_headings": [
+        "Defect Severity & Process"
+      ],
+      "text": "| Severity | Definition | Example |\n|---|---|---|\n| Critical | Wrong value exported as valid | Amperage exported in wrong unit |\n| High | Export blocked | CSV rejected by PIM |\n| Medium | Workaround | One supplier layout needs manual entry |\n| Low | Cosmetic | Source page link misaligned |\nEach defect includes steps, expected/actual results, evidence, severity, environment, build, owner and retest result."
+    },
+    "risks": {
+      "present": true,
+      "source_headings": [
+        "Risk Register"
+      ],
+      "text": "| Risk | Mitigation |\n|---|---|\n| Supplier layout variety | Golden set across suppliers, review threshold |\n| Unit errors | Normalisation tests |\n| Schema change | Versioning and regression |\n| PIM format mismatch | Early import test |"
+    },
+    "deliverables_reporting": {
+      "present": false,
+      "source_headings": [],
+      "text": ""
+    },
+    "traceability_metrics": {
+      "present": true,
+      "source_headings": [
+        "Test Metrics"
+      ],
+      "text": "Map every BRD requirement to test cases and evidence. Report weekly planned/executed/passed/failed/blocked cases, coverage by requirement and risk, defect severity and ageing, attribute accuracy, acceptance rate, export success rate, accessibility and security findings and UAT completion."
+    },
+    "schedule": {
+      "present": true,
+      "source_headings": [
+        "Test Schedule"
+      ],
+      "text": "- MVP1: Mar–May 2026\n- MVP2: H2 2026\n- Test execution and UAT aligned to MVP1 milestones above."
+    },
+    "e2e_scenario": {
+      "present": true,
+      "source_headings": [
+        "End-to-End Scenario"
+      ],
+      "text": "- Sign in as Content Specialist.\n- Upload spec sheets for an item.\n- Verify extracted and normalised attributes.\n- Review low-confidence values.\n- Content Lead approves export.\n- Verify CSV and PIM test import.\n- Verify audit trail.\nGo/No-Go: MVP1 should not be released until the exit criteria are met or deviations are accepted by Digital Commerce and Product."
+    },
+    "approvals": {
+      "present": false,
+      "source_headings": [],
+      "text": ""
+    }
+  },
+  "functional_features": [
+    "Upload",
+    "Extraction and normalisation",
+    "Review",
+    "Export",
+    "Schema administration"
+  ],
+  "unmapped": []
+}

@@ -1,0 +1,180 @@
+{
+  "project": "P00_Pricing_Tool_UserSample",
+  "split": "train",
+  "title": null,
+  "sections": {
+    "document_control": {
+      "present": true,
+      "source_headings": [
+        "(front matter)"
+      ],
+      "text": "- Test Plan : Cost Sheet Automation\n- Version: 1.0\n- Application: Cost Sheet Automation\n- Prepared by: Sangram Mohanty\n- Reviewed By : Pradeep Baskaran\n- Test phase: MVP1\nAudience: Business Stakeholders, Product Owners, Architects, Development Team and QA Team\nPurpose. This plan defines the quality approach for validating the Cost Sheet Automation MVP1, from supplier PDF intake through extraction, validation, worksheet generation, pricing comparison, approval and audit logging. Items explicitly marked MVP2 are retained as forward-looking coverage and are not release blockers for MVP1 unless approved by Product."
+    },
+    "references": {
+      "present": true,
+      "source_headings": [
+        "References"
+      ],
+      "text": "- Cost Sheet Automation BRD\n- Cost Sheet Automation Figma designs"
+    },
+    "objectives": {
+      "present": false,
+      "source_headings": [],
+      "text": ""
+    },
+    "scope_in": {
+      "present": false,
+      "source_headings": [],
+      "text": ""
+    },
+    "scope_out": {
+      "present": true,
+      "source_headings": [
+        "Out of scope"
+      ],
+      "text": "- Mainframe pricing-logic changes.\n- CORE system changes.\n- Non-pricing processes; refer to the BRD.\n- Supplier discount-rule automation is a forward-looking MVP2 capability unless explicitly enabled for MVP1."
+    },
+    "assumptions_dependencies": {
+      "present": true,
+      "source_headings": [
+        "Quality Risks, Assumptions and Dependencies"
+      ],
+      "text": "- Supplier PDFs may be text-based, scanned, password-protected, multi-column or formatted differently between releases.\n- AI-assisted extraction accuracy depends on representative labelled samples and agreed ground truth.\n- Current pricing, storage, CMT(AI), Azure AD and downstream APIs must be available or replaced with approved mocks.\n- Business owners will provide threshold values, approval rules, supported file limits, SLAs, supplier templates and masked production-like data.\n- Test environments must isolate supplier-sensitive data, use least-privilege accounts and retain test evidence.\n- Current implementation and assumptions.\n- Supplier Name.\n- Testing Strategy\n- Test levels\n1.   Unit testing: developer-owned tests for PDF parsers, business rules, validation engine and APIs. Target minimum coverage: 85%, with critical calculation and security paths covered.\n2.   Component testing: PDF extraction service, worksheet generator, authentication module and audit-logging module.\n3.   API and contract testing: positive and negative API behaviour, request/response schemas, authentication, error codes, idempotency and version compatibility.\n4.   Integration testing: UI–backend, backend–database, backend–Azure AD, backend–CMT(AI), backend–storage and downstream pricing integrations.\n5.   System testing: end-to-end business scenarios across upload, extraction, validation, comparison, worksheet generation, approval and audit.\n6.   User acceptance testing: Pricing Analysts and Pricing Admins validate business workflow, pricing accuracy, usability and exception handling."
+    },
+    "test_strategy": {
+      "present": true,
+      "source_headings": [
+        "Test techniques"
+      ],
+      "text": "Use requirements-based testing, equivalence partitioning, boundary-value analysis, pairwise supplier/browser coverage, negative testing, exploratory testing, risk-based prioritisation, regression testing and data-driven automation."
+    },
+    "functional_coverage": {
+      "present": true,
+      "source_headings": [
+        "AI Driven Extraction and Historical Pricing Validation",
+        "Functional Test Coverage",
+        "Upload and file security",
+        "PDF extraction and mapping",
+        "Supplier formats",
+        "Worksheet generation and export",
+        "Pricing retrieval, comparison and validation"
+      ],
+      "text": "- Verify accurate extraction of Anixter parts, Trim, Functions, Finishes, Options, descriptions, categories, prices and metadata from supplier PDF price books.\n- Confirm correct pricing-data mapping, calculations and standardized pricing worksheet generation.\n- Validate retrieval of current pricing from enterprise data sources and accurate current-versus-updated comparisons.\n- Validate threshold rules, exception handling, approval workflow, role-based access and security controls.\n- Verify data integrity, audit trails, operational logging, accessibility, performance, availability and compliance expectations.\n- Demonstrate support for multiple supplier formats with minimal manual intervention and a controlled process for unknown formats.\n- Scope\n- In scope for MVP1\nFunctional: supplier PDF upload; file validation; PDF parsing and extraction; pricing-data mapping; validation rules; updated pricing worksheet generation; worksheet review and approval; Azure AD authentication; RBAC; error handling; current-price retrieval and comparison where enabled by the MVP1 design; audit and operational logging.\nNon-functional: security, accessibility, performance, data quality, logging/observability, browser compatibility, reliability and recovery validation.\n\n### Upload and file security\n- Valid PDF; large PDF; multi-page PDF; empty file; corrupted PDF; password-protected PDF(Need to check with business); duplicate upload; unsupported format; virus-infected or malicious file; concurrent uploads.\n- Validate file size/type limits, filename handling, checksum or duplicate(Need to Confirm from Business regarding the file structure) detection, upload progress, cancellation, retry, safe storage, clear user errors and no partial records after failure.\n\n### PDF extraction and mapping\n- Extract parts, prices, Trim, Functions, Finishes, Options, descriptions, categories, units, currencies, effective dates and supplier metadata.\n- Validate missing prices, invalid symbols, OCR quality, special characters, decimal precision, currency formats, multi-column layouts, repeated headers/footers, tables spanning pages and duplicate records.\n- Verify source-to-target field mapping, confidence scores or review flags where available, traceability to source page/row and preservation of leading zeroes and identifiers.\n\n### Supplier formats\nCover Supplier Type A, Supplier Type B, Supplier Type C, a new supplier template and an unknown format. Verify correct template selection, graceful rejection or manual-review routing for unknown layouts, and that a new template does not regress existing suppliers.\n\n### Worksheet generation and export\n- Validate required columns, column order, formatting, formulas, rounding, currency, effective dates, completeness, duplicate handling, special characters, row counts and source traceability.\n- Verify Excel export, file naming, download permissions, re-openability, formula/value consistency and protection against overwriting an approved worksheet.\n\n### Pricing retrieval, comparison and validation\n- Test existing part found, part not found, multiple matches, invalid mapping, timeout, database failure and retry behaviour.\n- For current price $100 and updated price $110, verify a 10% increase. For current price $100 and updated price $90, verify a 10% decrease.\n- Cover zero, null, negative, equal and duplicate prices; very large values; rounding boundaries; currency mismatch; and division-by-zero handling.\n- Validate increases/decreases beyond threshold, boundary values, exception overrides, admin-modified thresholds, versioning and approval of overridden exceptions."
+    },
+    "rbac_testing": {
+      "present": true,
+      "source_headings": [
+        "Role-Based Access and Workflow"
+      ],
+      "text": "Role   Permitted actions   Restricted actions\nPricing Analyst   Upload files, review extracted pricing, resolve exceptions, approve worksheets where authorised   Supplier configuration, validation-rule administration and user management\nPricing Admin   Supplier configuration, validation rules, user management and controlled overrides   Actions outside assigned environment or tenant\nVerify least privilege, privilege escalation, direct-URL/API access, role switching, inactive users, session expiry, separation of duties, approval transitions, rejected/reworked worksheets and concurrent edits."
+    },
+    "security_compliance": {
+      "present": true,
+      "source_headings": [
+        "Security, Privacy and Compliance"
+      ],
+      "text": "- Azure AD login, MFA, session timeout, token expiration, logout and JWT validation.\n- RBAC enforcement at UI and API layers; rate limiting; security headers; input validation; safe error messages; CSRF and XSS protection.\n- Test SQL injection, path traversal, file-upload exploits, malware handling, oversized payloads and archive/decompression risks.\n- Verify encryption at rest and in transit, secret handling, retention/deletion, access logging, masked test data and no sensitive pricing data in logs or exported error messages.\n- Perform dependency scanning, SAST/DAST and penetration testing before release; track remediation and approved exceptions."
+    },
+    "ai_data_quality": {
+      "present": true,
+      "source_headings": [
+        "AI and Data Quality Validation"
+      ],
+      "text": "Use a labelled golden dataset covering all supported suppliers, document types and difficult layouts. Target extraction accuracy is at least 90%, with separate measures for numeric fields, text fields, tables, multi-page documents, precision, recall and field-level completeness.\n- Analyse false positives and false negatives, confidence thresholds, human-review routing and reproducibility.\n- Run drift tests for supplier-format changes and new PDF layouts; define model/version traceability, rollback and reprocessing behaviour.\n- Validate completeness, accuracy, consistency, uniqueness, referential integrity, currency/unit consistency and reconciliation to source totals.\n- Non-Functional Testing\n- Performance and scalability\n- Test 1 MB, 10 MB and 50 MB PDFs, representative page counts and worksheet sizes.\n- Test 10, 50 and 100 concurrent users, queue behaviour, API latency, throughput, resource utilisation and rate limits.\n- Max file in Queue ?\n- Validate worksheet generation and end-to-end processing against a business-approved SLA error rates.\n- Test multiple suppliers, bulk upload, high transaction volume and large worksheet generation."
+    },
+    "nfr_performance": {
+      "present": false,
+      "source_headings": [],
+      "text": ""
+    },
+    "nfr_reliability": {
+      "present": true,
+      "source_headings": [
+        "Reliability and recovery"
+      ],
+      "text": "- 24-hour continuous processing, repeated uploads, service restart during processing, network interruption, dependency failure, retry/idempotency and recovery from partial failure.\n- Verify backup/restore, data reconciliation after recovery, alerting, runbooks and recovery objectives where defined."
+    },
+    "nfr_accessibility_compat": {
+      "present": true,
+      "source_headings": [
+        "Accessibility and compatibility"
+      ],
+      "text": "- Screen reader labels, keyboard-only navigation, focus order, visible focus, colour contrast, error identification, zoom/reflow and accessible downloads.\n- Validate current enterprise-supported versions of Edge, Chrome and Firefox at agreed desktop resolutions."
+    },
+    "observability_audit": {
+      "present": true,
+      "source_headings": [
+        "Observability and Audit Testing (Ask)"
+      ],
+      "text": "Verify structured logs, metrics, traces, correlation IDs, dashboards and actionable alerts. Audit records must capture user, role, supplier, uploaded file identifier, processing time, extraction/model version, validation errors, approval actions, overrides and configuration changes. Confirm timestamps, immutability/access controls, retention and exportability."
+    },
+    "test_data_environment": {
+      "present": true,
+      "source_headings": [
+        "Test Data and Environment Strategy"
+      ],
+      "text": "Data category   Examples\nValid   Known Supplier A/B/C PDFs and expected golden outputs\nInvalid   Corrupt, password-protected, unsupported, empty and incomplete files\nBoundary   Maximum file/page sizes, large prices, long descriptions, zero/null/negative values\nSecurity   Malicious uploads, injection strings, expired tokens and restricted-role accounts\nProduction-like   supplier pricing, representative volumes and realistic mappings\nMaintain isolated development, QA/integration, performance and UAT environments. Version test data and expected results; reset state between runs; record build, configuration, browser, dataset and model version for every execution.\n- Entry and Exit Criteria\n- Entry criteria\n- BRD approved and requirements baselined; acceptance criteria and thresholds agreed.\n- Environment, integrations, monitoring and access provisioned; test data and supplier templates available.\n- Build deployed with unit-test evidence, API documentation and known limitations documented."
+    },
+    "entry_exit_criteria": {
+      "present": true,
+      "source_headings": [
+        "Exit criteria"
+      ],
+      "text": "- At least 95% of planned test cases passed, with all critical-path cases passed.\n- No open Critical defects and no open High-severity security defects; residual risk formally accepted.\n- AI extraction target met for the approved golden dataset, or exception approved by Product and Business.\n- Performance, accessibility, audit and recovery results meet agreed thresholds.\n- All UAT scenarios approved and business sign-off completed."
+    },
+    "defect_management": {
+      "present": true,
+      "source_headings": [
+        "Defect Management"
+      ],
+      "text": "Severity   Definition   Typical example\nCritical   Pricing calculation wrong, data corruption, security breach or unrecoverable workflow failure   Approved worksheet contains materially incorrect prices\nHigh   Core workflow blocked or major security/control failure   Users cannot upload or approve any valid worksheet\nMedium   Function works with a reasonable workaround   One supplier format requires manual retry\nLow   Cosmetic or low-impact usability issue   Minor alignment or wording defect\nEach defect should include reproducible steps, expected/actual results, evidence, severity, environment, build, data identifiers, owner, root cause and retest result. Trend defect leakage, reopen rate, cycle time and escaped defects."
+    },
+    "risks": {
+      "present": true,
+      "source_headings": [
+        "Quality Risks, Assumptions and Dependencies",
+        "Risks and Mitigations"
+      ],
+      "text": "- Supplier PDFs may be text-based, scanned, password-protected, multi-column or formatted differently between releases.\n- AI-assisted extraction accuracy depends on representative labelled samples and agreed ground truth.\n- Current pricing, storage, CMT(AI), Azure AD and downstream APIs must be available or replaced with approved mocks.\n- Business owners will provide threshold values, approval rules, supported file limits, SLAs, supplier templates and masked production-like data.\n- Test environments must isolate supplier-sensitive data, use least-privilege accounts and retain test evidence.\n- Current implementation and assumptions.\n- Supplier Name.\n- Testing Strategy\n- Test levels\n1.   Unit testing: developer-owned tests for PDF parsers, business rules, validation engine and APIs. Target minimum coverage: 85%, with critical calculation and security paths covered.\n2.   Component testing: PDF extraction service, worksheet generator, authentication module and audit-logging module.\n3.   API and contract testing: positive and negative API behaviour, request/response schemas, authentication, error codes, idempotency and version compatibility.\n4.   Integration testing: UI–backend, backend–database, backend–Azure AD, backend–CMT(AI), backend–storage and downstream pricing integrations.\n5.   System testing: end-to-end business scenarios across upload, extraction, validation, comparison, worksheet generation, approval and audit.\n6.   User acceptance testing: Pricing Analysts and Pricing Admins validate business workflow, pricing accuracy, usability and exception handling.\n\nRisk   Mitigation\nSupplier PDF format changes   Template-based validation, contract tests, drift monitoring and rapid template rollback\nOCR or AI inaccuracies   Golden dataset, confidence thresholds, human review and reconciliation checks\nPoor source data quality   Validation, quarantine, exception workflow and source-owner feedback\nSecurity exposure   Secure upload, least privilege, scanning, SAST/DAST and penetration testing\nIntegration failures   Mocks, contract tests, retries, timeouts, monitoring and recovery tests\nScope creep   MVP release control, prioritised backlog and formal change approval"
+    },
+    "deliverables_reporting": {
+      "present": true,
+      "source_headings": [
+        "Deliverables and Reporting"
+      ],
+      "text": "- Master Test Plan and Test Strategy\n- Requirements Traceability Matrix (RTM)\n- Test scenarios, cases, scripts and automation report\n- Versioned test data and golden dataset\n- Defect report, daily status report and test execution report\n- Performance, security, accessibility and reliability test reports\n- UAT evidence and sign-off\n- Test closure report with residual risks and lessons learned"
+    },
+    "traceability_metrics": {
+      "present": true,
+      "source_headings": [
+        "Recommended MVP1 Traceability and Metrics"
+      ],
+      "text": "Map every BRD requirement to one or more test cases and evidence items. Report weekly planned/executed/passed/failed/blocked cases, coverage by requirement and risk, defect severity and ageing, extraction precision/recall, processing SLA compliance, API error rate, accessibility findings, security findings and UAT completion."
+    },
+    "schedule": {
+      "present": false,
+      "source_headings": [],
+      "text": ""
+    },
+    "e2e_scenario": {
+      "present": true,
+      "source_headings": [
+        "Representative End-to-End Scenario"
+      ],
+      "text": "1.   Authenticate through Azure AD and verify the user's role.\n2.   Upload a supported supplier PDF and validate file-security controls.\n3.   Extract and map pricing data, retaining confidence and source traceability.\n4.   Validate completeness, duplicates, thresholds and exceptions.\n5.   Retrieve current pricing, compare increases/decreases and handle unmatched parts.\n6.   Generate, review and export the updated pricing worksheet.\n7.   Approve or reject the worksheet according to role permissions.\n8.   Verify audit records, operational telemetry, notifications and final data reconciliation.\nRelease decision: MVP1 should not be released until the exit criteria are met or each deviation has documented impact, mitigation, owner and formal Business/Product acceptance."
+    },
+    "approvals": {
+      "present": false,
+      "source_headings": [],
+      "text": ""
+    }
+  },
+  "functional_features": [
+    "Upload and file security",
+    "PDF extraction and mapping",
+    "Supplier formats",
+    "Worksheet generation and export",
+    "Pricing retrieval, comparison and validation"
+  ],
+  "unmapped": []
+}

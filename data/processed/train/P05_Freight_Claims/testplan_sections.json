@@ -1,0 +1,137 @@
+[
+  {
+    "heading": "QA Test Plan – Freight Claims Automation",
+    "level": 1,
+    "text": "1.1 · Freight Claims Automation · QA Lead, Quality Engineering\nPurpose: This plan defines the quality approach for validating Freight Claims Automation MVP1: shipment lookup, evidence upload, AI damage description, claim value and deadline calculation, approval, packet generation and carrier email. Carrier APIs, status tracking, recovery reporting and finance posting are MVP2."
+  },
+  {
+    "heading": "References",
+    "level": 2,
+    "text": "- Freight Claims Automation BRD\n- Freight Claims Automation architecture diagram"
+  },
+  {
+    "heading": "Objectives",
+    "level": 1,
+    "text": "- Verify shipment lookup by PRO/BOL and pre-fill from TMS and ERP.\n- Validate evidence rules per claim type and upload limits.\n- Verify claim value calculation and deadline/late-claim warnings are 100% correct.\n- Validate AI damage description quality and editability.\n- Validate approval above USD 5,000, packet generation, carrier email and branch-scoped access."
+  },
+  {
+    "heading": "Scope",
+    "level": 1,
+    "text": "In scope (functional): shipment lookup; claim form; evidence upload; AI damage description; claim value calculation; deadline rules; approval; packet PDF; carrier email; claims register; carrier administration; Azure AD; RBAC.\nIn scope (non-functional): performance (lookup 3 s, description 20 s, packet 10 s), tablet usability, security, accessibility, observability and reliability."
+  },
+  {
+    "heading": "Out of scope",
+    "level": 3,
+    "text": "- Customer portal, litigation and insurance claims.\n- Carrier API submission, status tracking, recovery reporting and finance posting (MVP2)."
+  },
+  {
+    "heading": "Quality Risks, Assumptions and Dependencies",
+    "level": 1,
+    "text": "- Photos may be blurry, dark or unrelated.\n- TMS and ERP APIs available in non-production or mocked.\n- Carrier deadline rules provided by Transportation."
+  },
+  {
+    "heading": "Test Approach",
+    "level": 1,
+    "text": "| Test level | Description |\n|---|---|\n| Unit testing | developer-owned tests for claim value calculator, deadline rules, evidence validator and APIs. Target minimum coverage: 85%. |\n| Component testing | claims service, packet service, email function and AI description component. |\n| API and contract testing | positive and negative behaviour, schemas, authentication, error codes, idempotency and versioning. |\n| Integration testing | UI–claims service, claims service–APIM–TMS/ERP/Azure OpenAI, claims–Blob/PostgreSQL, Service Bus–packet service, Function–SendGrid and Azure AD. |\n| System testing | end-to-end scenarios across lookup, evidence, description, calculation, approval, packet and email. |\n| User acceptance testing | Branch Users and Claims Specialists validate the claim flow on tablets and desktops. |\nTechniques: Use requirements-based testing, equivalence partitioning, boundary-value analysis, pairwise coverage, negative testing, exploratory testing, risk-based prioritisation, regression testing and data-driven automation."
+  },
+  {
+    "heading": "Functional Testing",
+    "level": 1,
+    "text": "- Shipment lookup: Valid PRO, valid BOL, unknown number, multiple matches, TMS timeout with manual entry fallback.\n- Evidence upload: Up to 10 photos JPG/PNG ≤10 MB; 11th photo blocked; HEIC rejected; PDFs for documents; mandatory evidence per claim type.\n- AI damage description: Description reflects visible damage, is editable, and states 'unable to determine' for unclear photos rather than inventing damage.\n- Claim value and deadlines: 3 damaged units × USD 45.20 = USD 135.60 plus freight where applicable; rounding to 2 decimals. Concealed damage on day 5 → no warning; day 6 → warning; carrier 9-month deadline enforced.\n- Approval, packet and email: Claims above USD 5,000 require Claims Specialist approval; USD 5,000.00 exactly does not. Packet PDF contains form, photos and documents; email sent to correct carrier address; status updates in register."
+  },
+  {
+    "heading": "Access Control Testing",
+    "level": 1,
+    "text": "- Branch User – Permitted actions: Create and submit own branch claims; Restricted actions: Other branches, approvals, admin\n- Claims Specialist – Permitted actions: Approve above USD 5,000, follow up, close; Restricted actions: Carrier configuration\n- Logistics Admin: Permitted actions: Carriers, deadlines, templates; Restricted actions: Approving claims\nVerify branch isolation, approval enforcement, direct-URL access and session expiry on shared tablets."
+  },
+  {
+    "heading": "AI and Data Quality Validation",
+    "level": 1,
+    "text": "Use a labelled photo set with expected damage descriptions. Target: users rate ≥85% of descriptions acceptable; 0% invented damage on 'no damage' photos.\nHuman rating of description quality. Negative tests with unrelated photos. Model and prompt version tracked per claim."
+  },
+  {
+    "heading": "NFR Testing",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Performance and scalability",
+    "level": 2,
+    "text": "Lookup within 3 seconds; description within 20 seconds for 10 photos; packet within 10 seconds. 25 and 50 concurrent users."
+  },
+  {
+    "heading": "Reliability and recovery",
+    "level": 2,
+    "text": "- Service restart during processing, network interruption, dependency failure, retry/idempotency and recovery from partial failure.\n- Backup/restore, data reconciliation after recovery, alerting and runbooks."
+  },
+  {
+    "heading": "Accessibility & Browser Compatibility",
+    "level": 2,
+    "text": "- Screen reader labels, keyboard-only navigation, focus order, colour contrast, error identification and zoom/reflow.\n- Current enterprise-supported versions of Edge, Chrome and Firefox.\n- Validate responsive layout on supported tablets and touch interaction."
+  },
+  {
+    "heading": "Security",
+    "level": 2,
+    "text": "- Azure AD login, MFA, session timeout, token expiration, logout and JWT validation.\n- RBAC at UI and API layers; rate limiting; input validation; safe error messages; CSRF and XSS protection.\n- Test image files with embedded scripts and EXIF data stripping.\n- Verify unit cost is not exposed in carrier emails beyond the claim total.\n- Dependency scanning, SAST/DAST and penetration testing before release."
+  },
+  {
+    "heading": "Audit and Observability",
+    "level": 1,
+    "text": "Verify structured logs, metrics, traces, correlation IDs, dashboards and alerts. Audit records must capture user, branch, claim identifier, PRO/BOL, claim value, approval, packet and email events, model version. Confirm timestamps, access controls, retention and exportability."
+  },
+  {
+    "heading": "Test Data and Environment Strategy",
+    "level": 1,
+    "text": "- Valid: Shipments with damaged and short deliveries, labelled photos\n- Invalid: Unknown PRO, HEIC files, oversized photos\n- Boundary – Day 5/6 concealed damage, USD 5,000.00/5,000.01, 10/11 photos\n- Security: Malicious images, restricted roles\n- Production-like – Monthly claim volume with masked costs\nIsolated development, QA/integration, performance and UAT environments; versioned test data and expected results; record build, configuration, dataset and model version for every execution."
+  },
+  {
+    "heading": "Suspension, Entry and Exit Criteria",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Entry criteria",
+    "level": 2,
+    "text": "- BRD approved and requirements baselined; acceptance criteria and thresholds agreed.\n- Environment, integrations, monitoring and access provisioned; test data available.\n- TMS/ERP test data or mocks available; carrier rules configured.\n- Build deployed with unit-test evidence and known limitations documented."
+  },
+  {
+    "heading": "Exit criteria",
+    "level": 2,
+    "text": "- At least 95% of planned test cases passed, with all critical-path cases passed.\n- No open Critical defects and no open High-severity security defects.\n- Claim value and deadline rules 100% correct.\n- ≥85% description acceptance in UAT.\n- Performance targets met.\n- All UAT scenarios approved and business sign-off completed."
+  },
+  {
+    "heading": "Defect Tracking",
+    "level": 1,
+    "text": "| Severity | Definition | Example |\n|---|---|---|\n| Critical | Wrong claim value or wrong carrier | Packet sent to wrong carrier |\n| High | Claim cannot be submitted | Upload fails for all photos |\n| Medium | Workaround | Lookup needs manual entry for one carrier |\n| Low | Cosmetic | Tablet button spacing |\nEach defect includes steps, expected/actual results, evidence, severity, environment, build, owner and retest result."
+  },
+  {
+    "heading": "Risk Register",
+    "level": 1,
+    "text": "| Risk | Mitigation |\n|---|---|\n| Poor photos | Negative tests and editable description |\n| API gaps | Fallback tests |\n| Rule errors | Boundary tests |\n| Data exposure | Email content tests |"
+  },
+  {
+    "heading": "Deliverables and Reporting",
+    "level": 1,
+    "text": "- Master Test Plan and Test Strategy\n- Requirements Traceability Matrix (RTM)\n- Test scenarios, cases, scripts and automation report\n- Versioned test data and golden dataset\n- Defect report, daily status report and test execution report\n- Performance, security, accessibility and reliability test reports\n- UAT evidence and sign-off\n- Test closure report with residual risks and lessons learned"
+  },
+  {
+    "heading": "Recommended MVP1 Traceability and Metrics",
+    "level": 1,
+    "text": "Map every BRD requirement to test cases and evidence. Report weekly planned/executed/passed/failed/blocked cases, coverage by requirement and risk, defect severity and ageing, evidence completeness, calculation accuracy, description acceptance, packet success rate, accessibility and security findings and UAT completion."
+  },
+  {
+    "heading": "Schedule",
+    "level": 1,
+    "text": "- MVP1: Apr–Jun 2026\n- MVP2: Q4 2026\n- Test execution and UAT aligned to MVP1 milestones above."
+  },
+  {
+    "heading": "Representative End-to-End Scenario",
+    "level": 1,
+    "text": "- Sign in as Branch User on a tablet.\n- Look up a shipment by PRO.\n- Upload photos and documents.\n- Review the AI description.\n- Verify claim value and deadline.\n- Route to Claims Specialist for approval above USD 5,000.\n- Generate the packet and email the carrier.\n- Verify register and audit trail."
+  },
+  {
+    "heading": "Sign-off",
+    "level": 1,
+    "text": "| Role | Name | Signature / Date |\n|---|---|---|\n| QA Lead |  |  |\n| Product Owner |  |  |\n| Business Owner |  |  |\nGo/No-Go: MVP1 should not be released until the exit criteria are met or deviations are accepted by Logistics and Product."
+  }
+]

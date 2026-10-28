@@ -1,0 +1,136 @@
+{
+  "project": "P07_Email_Order_Entry",
+  "structure": 0.8,
+  "missing_sections": [
+    "scope_out",
+    "rbac_testing",
+    "nfr_accessibility_compat",
+    "e2e_scenario"
+  ],
+  "coverage": 0.8660714285714286,
+  "coverage_all": 0.8478260869565217,
+  "guard_downgrades": 1,
+  "missed_facts": [
+    {
+      "id": "F005",
+      "category": "data",
+      "fact": "Customer Service receives about 6,000 PO emails per week"
+    },
+    {
+      "id": "F006",
+      "category": "data",
+      "fact": "PO emails across 40 branches"
+    },
+    {
+      "id": "F033",
+      "category": "nfr_availability",
+      "fact": "Availability 99.5% 24x5"
+    }
+  ],
+  "coverage_by_category": {
+    "acceptance": 1.0,
+    "architecture": 0.92,
+    "assumption": 0.75,
+    "business_rule": 0.67,
+    "data": 0.4,
+    "dependency": 1.0,
+    "functional": 0.95,
+    "integration": 1.0,
+    "nfr_availability": 0.0,
+    "nfr_performance": 1.0,
+    "out_of_scope": 0.88,
+    "risk": 0.67,
+    "role": 0.5,
+    "scope_mvp1": 1.0,
+    "scope_mvp2": 1.0,
+    "security_access": 0.83,
+    "timeline": 1.0
+  },
+  "faithfulness": 0.8955223880597015,
+  "claims": 76,
+  "requirement_claims": 67,
+  "test_design_claims": 9,
+  "invented": 7,
+  "unverified_supported": 3,
+  "invented_claims": [
+    {
+      "claim": "API contract tests use pytest or Postman/Newman",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Web UI tests use Playwright or Selenium",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Load and throughput tests use Azure Load Testing or JMeter",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "AI evaluation uses Python scripts and stores results in Cosmos DB/dashboards",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "A correlation ID must be present in logs across all components for each processed email",
+      "kind": "requirement",
+      "verdict": "supported"
+    },
+    {
+      "claim": "Processing must support scanned PDFs using OCR",
+      "kind": "requirement",
+      "verdict": "supported"
+    },
+    {
+      "claim": "EDI ingestion is excluded from MVP1",
+      "kind": "requirement",
+      "verdict": "supported"
+    }
+  ],
+  "similarity": 0.9047619047619048,
+  "embedding_sim": 0.5073669854579501,
+  "section_scores": {
+    "references": 0.4,
+    "objectives": 1.0,
+    "scope_in": 1.0,
+    "scope_out": 1.0,
+    "assumptions_dependencies": 1.0,
+    "test_strategy": 1.0,
+    "functional_coverage": 1.0,
+    "rbac_testing": 1.0,
+    "security_compliance": 0.8,
+    "ai_data_quality": 1.0,
+    "nfr_performance": 1.0,
+    "nfr_reliability": 0.8,
+    "nfr_accessibility_compat": 0.0,
+    "observability_audit": 1.0,
+    "test_data_environment": 1.0,
+    "entry_exit_criteria": 1.0,
+    "defect_management": 1.0,
+    "risks": 1.0,
+    "deliverables_reporting": 1.0,
+    "traceability_metrics": 1.0,
+    "e2e_scenario": 1.0
+  },
+  "missing_points": {
+    "references": [
+      "Explicit list of reference documents (Email Order Entry BRD and architecture diagram) with versions/locations and any supplementary standards or policies"
+    ],
+    "security_compliance": [
+      "Explicit MFA/session timeout/JWT lifetime test cases and acceptance criteria (session timeout, token expiration)",
+      "CSRF and XSS specific test cases for UI",
+      "Explicit spoofed-sender detection tests and prompt\u2011injection resilience test cases called out under security"
+    ],
+    "nfr_reliability": [
+      "Backup & restore procedures and tests, data reconciliation after recovery and related verification",
+      "Runbook validation and alerting/playbook exercises (explicit recovery runbook test cases)"
+    ],
+    "nfr_accessibility_compat": [
+      "Accessibility test cases: screen reader labels, keyboard-only navigation, focus order, colour contrast, error identification and zoom/reflow",
+      "Browser compatibility matrix and tests for enterprise-supported Edge/Chrome/Firefox versions"
+    ]
+  },
+  "overall": 0.7711886993603412
+}

@@ -1,0 +1,150 @@
+{
+  "project": "P07_Email_Order_Entry",
+  "structure": 0.7,
+  "missing_sections": [
+    "document_control",
+    "scope_out",
+    "rbac_testing",
+    "ai_data_quality",
+    "nfr_accessibility_compat",
+    "e2e_scenario"
+  ],
+  "coverage": 0.8928571428571429,
+  "coverage_all": 0.8623188405797102,
+  "guard_downgrades": 1,
+  "missed_facts": [
+    {
+      "id": "F001",
+      "category": "business_rule",
+      "fact": "Reduce order entry time by 60%"
+    },
+    {
+      "id": "F005",
+      "category": "data",
+      "fact": "Customer Service receives about 6,000 PO emails per week"
+    },
+    {
+      "id": "F031",
+      "category": "functional",
+      "fact": "CS Supervisor sees orders older than 30 minutes in the queue flagged"
+    }
+  ],
+  "coverage_by_category": {
+    "acceptance": 1.0,
+    "architecture": 1.0,
+    "assumption": 0.75,
+    "business_rule": 0.5,
+    "data": 0.5,
+    "dependency": 1.0,
+    "functional": 0.85,
+    "integration": 1.0,
+    "nfr_availability": 1.0,
+    "nfr_performance": 1.0,
+    "out_of_scope": 0.75,
+    "risk": 0.67,
+    "role": 0.5,
+    "scope_mvp1": 1.0,
+    "scope_mvp2": 1.0,
+    "security_access": 1.0,
+    "timeline": 1.0
+  },
+  "faithfulness": 0.9402985074626866,
+  "claims": 81,
+  "requirement_claims": 67,
+  "test_design_claims": 14,
+  "invented": 4,
+  "unverified_supported": 0,
+  "invented_claims": [
+    {
+      "claim": "Use Azure DevOps Test Plans or Jira + Xray for test management",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Use Postman/Newman, RestAssured, or PyTest for API automation",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Use Playwright or Selenium WebDriver for UI automation",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Use k6, JMeter, or Gatling for performance testing",
+      "kind": "requirement",
+      "verdict": "not_found"
+    }
+  ],
+  "similarity": 0.8571428571428571,
+  "embedding_sim": 0.48067595645952227,
+  "section_scores": {
+    "references": 0.0,
+    "objectives": 1.0,
+    "scope_in": 1.0,
+    "scope_out": 1.0,
+    "assumptions_dependencies": 1.0,
+    "test_strategy": 0.8,
+    "functional_coverage": 0.8,
+    "rbac_testing": 1.0,
+    "security_compliance": 0.8,
+    "ai_data_quality": 0.8,
+    "nfr_performance": 1.0,
+    "nfr_reliability": 0.8,
+    "nfr_accessibility_compat": 0.6,
+    "observability_audit": 0.8,
+    "test_data_environment": 0.8,
+    "entry_exit_criteria": 0.8,
+    "defect_management": 1.0,
+    "risks": 1.0,
+    "deliverables_reporting": 1.0,
+    "traceability_metrics": 1.0,
+    "e2e_scenario": 1.0
+  },
+  "missing_points": {
+    "references": [
+      "Explicit list of reference documents (BRD, architecture diagram) and links/versions"
+    ],
+    "test_strategy": [
+      "Unit-test coverage target (85%) not called out",
+      "Detailed API/contract checks (idempotency/versioning/error codes) not explicitly enumerated",
+      "Explicit test ownership per level (e.g., developer vs QA responsibilities)"
+    ],
+    "functional_coverage": [
+      "Review-queue aging/flagging specifics (30-minute ageing flag)",
+      "Explicit multi-PO-per-email functional scenarios enumerated as core cases (only mentioned as edge)",
+      "Detailed behaviour for duplicate across branches vs within-branch clarified"
+    ],
+    "security_compliance": [
+      "Specific spoofed-sender tests to ensure spoofed domains are not auto-trusted",
+      "Prompt-injection (malicious email content) tests for AI components not explicitly listed",
+      "Explicit rate-limiting test cases for APIs"
+    ],
+    "ai_data_quality": [
+      "Explicit per-format field-level accuracy breakdown plan (body vs PDF vs Excel) with measurement method (though implied)",
+      "Version tracking per email/extraction model/version for every execution not explicitly required",
+      "Explicit matching-accuracy comparisons with and without cross-reference in test matrix"
+    ],
+    "nfr_reliability": [
+      "Explicit backup/restore and data reconciliation after partial failure test cases and runbook verification",
+      "Explicit idempotency test cases for retries (though retries/backoff are covered)"
+    ],
+    "nfr_accessibility_compat": [
+      "Detailed accessibility checklist: color contrast, focus order, error identification, zoom/reflow",
+      "Browser compatibility matrix (enterprise-supported Edge/Chrome/Firefox versions) and related test cases"
+    ],
+    "observability_audit": [
+      "Explicit audit record schema items to validate (email id, extraction version, CSR corrections, retention/exportability) called out as required artifacts",
+      "Retention/export and exportability test cases for audit logs"
+    ],
+    "test_data_environment": [
+      "Explicit requirement to record build/configuration/dataset/model version for every test execution",
+      "More detail on golden dataset size/labeling cadence (reference asked for versioned golden set)"
+    ],
+    "entry_exit_criteria": [
+      "Quantitative test-execution exit metric from reference (e.g., 'At least 95% of planned test cases passed') not explicitly present",
+      "Explicit exit requirement '100% duplicate detection' enforcement and how to demonstrate it in exit evidence"
+    ]
+  },
+  "overall": 0.7841417910447761
+}

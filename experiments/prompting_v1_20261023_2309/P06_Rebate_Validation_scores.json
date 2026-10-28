@@ -1,0 +1,169 @@
+{
+  "project": "P06_Rebate_Validation",
+  "structure": 0.85,
+  "missing_sections": [
+    "assumptions_dependencies",
+    "nfr_reliability",
+    "e2e_scenario"
+  ],
+  "coverage": 0.7875,
+  "coverage_all": 0.75,
+  "guard_downgrades": 4,
+  "missed_facts": [
+    {
+      "id": "F013",
+      "category": "nfr_performance",
+      "fact": "Cut claim preparation time from 3 days to 4 hours per supplier"
+    },
+    {
+      "id": "F025",
+      "category": "role",
+      "fact": "Rebate Analyst reviews extracted terms"
+    },
+    {
+      "id": "F028",
+      "category": "role",
+      "fact": "Finance Manager reviews accrual variances"
+    },
+    {
+      "id": "F046",
+      "category": "data",
+      "fact": "Rebate agreements data owner is Supplier Programs"
+    },
+    {
+      "id": "F047",
+      "category": "data",
+      "fact": "Rebate agreements security classification is Restricted"
+    },
+    {
+      "id": "F049",
+      "category": "data",
+      "fact": "Purchase data owner is Finance Data and security classification is Confidential"
+    },
+    {
+      "id": "F052",
+      "category": "data",
+      "fact": "Calculations data source is Tool output and frequency is Per run"
+    },
+    {
+      "id": "F091",
+      "category": "integration",
+      "fact": "App Gateway is entry point for Rebate Analysts and Finance Managers over HTTPS/443 with AD/SSO"
+    },
+    {
+      "id": "F094",
+      "category": "integration",
+      "fact": "Azure Function (Batch Scheduler) calls Agreement Service for month-end batch"
+    }
+  ],
+  "coverage_by_category": {
+    "acceptance": 1.0,
+    "ai_quality": 1.0,
+    "architecture": 0.5,
+    "assumption": 1.0,
+    "business_rule": 0.5,
+    "compliance": 1.0,
+    "data": 0.35,
+    "dependency": 1.0,
+    "functional": 0.92,
+    "integration": 0.78,
+    "nfr_availability": 1.0,
+    "nfr_performance": 0.67,
+    "out_of_scope": 0.33,
+    "risk": 1.0,
+    "role": 0.58,
+    "scope_mvp1": 1.0,
+    "scope_mvp2": 1.0,
+    "security_access": 1.0,
+    "timeline": 0.5
+  },
+  "faithfulness": 0.9090909090909091,
+  "claims": 47,
+  "requirement_claims": 44,
+  "test_design_claims": 3,
+  "invented": 4,
+  "unverified_supported": 1,
+  "invented_claims": [
+    {
+      "claim": "Variance-to-accrual reporting is provided",
+      "kind": "requirement",
+      "verdict": "supported"
+    },
+    {
+      "claim": "Use JMeter or k6 for API/service load testing",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Use Playwright (preferred) or Selenium for UI automation",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Test environments include Dev, Test, Staging/Pre-prod, and Production",
+      "kind": "requirement",
+      "verdict": "not_found"
+    }
+  ],
+  "similarity": 0.9272727272727272,
+  "embedding_sim": 0.5486431251808183,
+  "section_scores": {
+    "references": 0.8,
+    "objectives": 1.0,
+    "scope_in": 1.0,
+    "scope_out": 1.0,
+    "assumptions_dependencies": 0.8,
+    "test_strategy": 1.0,
+    "functional_coverage": 0.8,
+    "rbac_testing": 1.0,
+    "security_compliance": 0.8,
+    "ai_data_quality": 1.0,
+    "nfr_performance": 1.0,
+    "nfr_reliability": 0.8,
+    "nfr_accessibility_compat": 0.6,
+    "observability_audit": 0.8,
+    "test_data_environment": 1.0,
+    "entry_exit_criteria": 1.0,
+    "defect_management": 1.0,
+    "risks": 1.0,
+    "deliverables_reporting": 1.0,
+    "traceability_metrics": 1.0,
+    "schedule": 1.0,
+    "e2e_scenario": 1.0
+  },
+  "missing_points": {
+    "references": [
+      "Explicit citation of the BRD and the Rebate Claim Validation architecture diagram (document references list)",
+      "Links/locations for referenced artifacts (BRD/diagram)"
+    ],
+    "assumptions_dependencies": [
+      "Explicit single-line assumption that agreements contain complex tier language and amendments (implicit in generated risks but not stated as an assumption)",
+      "Explicit callout of dependency on analyst-verified worked examples availability (though golden dataset is described)"
+    ],
+    "functional_coverage": [
+      "Specific numeric worked examples used as canonical calculation test cases (e.g. spend=USD2.1M with tiers yielding USD63,000, and incremental example USD23,000)",
+      "Explicit tests for returns and credit notes handling called out in reference"
+    ],
+    "security_compliance": [
+      "Explicit MFA, session timeout and JWT validation tests",
+      "CSRF/XSS specific tests and rate-limiting verification called out in reference",
+      "Explicit verification of Databricks OAuth using least-privilege service principal and ensuring spend data is not logged"
+    ],
+    "nfr_reliability": [
+      "Explicit backup/restore tests and data reconciliation after recovery",
+      "Detailed tests for partial-failure recovery and runbook/alerting validation (some resilience items present but not fully detailed)"
+    ],
+    "nfr_accessibility_compat": [
+      "Detailed WCAG items: screen-reader labels, keyboard-only navigation, focus order, colour contrast, error identification and zoom/reflow",
+      "Browser compatibility matrix (enterprise-supported Edge/Chrome/Firefox)"
+    ],
+    "observability_audit": [
+      "Explicit verification of correlation IDs across logs/traces and end-to-end traceability",
+      "Tamper-evident audit trail verification and explicit retention/exportability tests (retention/exportability mentioned but not fully detailed)"
+    ],
+    "e2e_scenario": [
+      "Explicit release recommendation wording (reference says MVP1 should not release until exit criteria met) is implied but not called out verbatim"
+    ]
+  },
+  "overall": 0.7682334710743801
+}

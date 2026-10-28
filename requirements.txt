@@ -1,0 +1,9 @@
+openai>=1.40
+python-docx
+pandas
+python-dotenv
+pydantic>=2
+jsonschema
+tiktoken
+jupyter
+azure-search-documents>=11.6

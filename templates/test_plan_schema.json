@@ -1,0 +1,125 @@
+{
+  "version": "1.0",
+  "sections": [
+    {
+      "key": "document_control",
+      "description": "Title, version, application, prepared/reviewed by, audience, purpose statement",
+      "required": true
+    },
+    {
+      "key": "references",
+      "description": "Source documents the plan is based on (BRD, architecture diagram, etc.)",
+      "required": false
+    },
+    {
+      "key": "objectives",
+      "description": "What testing must prove; quality objectives and measurable targets",
+      "required": true
+    },
+    {
+      "key": "scope_in",
+      "description": "Features, modules and quality attributes in scope (by MVP)",
+      "required": true
+    },
+    {
+      "key": "scope_out",
+      "description": "Explicitly out of scope / deferred items (incl. later MVPs)",
+      "required": true
+    },
+    {
+      "key": "assumptions_dependencies",
+      "description": "Test assumptions, constraints, dependencies on systems, data or teams",
+      "required": true
+    },
+    {
+      "key": "test_strategy",
+      "description": "Approach, test levels, test types and techniques",
+      "required": true
+    },
+    {
+      "key": "functional_coverage",
+      "description": "Functional features / modules to be tested and what is verified for each",
+      "required": true
+    },
+    {
+      "key": "rbac_testing",
+      "description": "Roles, permissions, access control and approval workflow testing",
+      "required": true
+    },
+    {
+      "key": "security_compliance",
+      "description": "Security, privacy, compliance testing",
+      "required": true
+    },
+    {
+      "key": "ai_data_quality",
+      "description": "AI / extraction / retrieval accuracy, data quality and Responsible AI validation",
+      "required": true
+    },
+    {
+      "key": "nfr_performance",
+      "description": "Performance, load, scalability targets and tests",
+      "required": true
+    },
+    {
+      "key": "nfr_reliability",
+      "description": "Availability, resilience, recovery, retry and failure handling tests",
+      "required": true
+    },
+    {
+      "key": "nfr_accessibility_compat",
+      "description": "Accessibility and browser / device compatibility",
+      "required": true
+    },
+    {
+      "key": "observability_audit",
+      "description": "Logging, monitoring, alerting and audit-trail testing",
+      "required": true
+    },
+    {
+      "key": "test_data_environment",
+      "description": "Test environments and test data management",
+      "required": true
+    },
+    {
+      "key": "entry_exit_criteria",
+      "description": "Entry, exit, suspension and resumption criteria",
+      "required": true
+    },
+    {
+      "key": "defect_management",
+      "description": "Defect severity definitions, tracking tool and triage process",
+      "required": true
+    },
+    {
+      "key": "risks",
+      "description": "Test / quality risks and mitigations",
+      "required": true
+    },
+    {
+      "key": "deliverables_reporting",
+      "description": "Test deliverables and reporting",
+      "required": false
+    },
+    {
+      "key": "traceability_metrics",
+      "description": "Requirement-to-test traceability and test metrics / KPIs",
+      "required": true
+    },
+    {
+      "key": "schedule",
+      "description": "Test schedule, phases, milestones",
+      "required": false
+    },
+    {
+      "key": "e2e_scenario",
+      "description": "Representative end-to-end scenario(s)",
+      "required": true
+    },
+    {
+      "key": "approvals",
+      "description": "Sign-off / approvals",
+      "required": false
+    }
+  ]
+}

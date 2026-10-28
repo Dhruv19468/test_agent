@@ -1,0 +1,147 @@
+[
+  {
+    "heading": "(front matter)",
+    "level": 0,
+    "text": "- Business Requirements Document\n- Product Data Enrichment\nVersion: 0.9\nDate: 20 Feb 2026\nBusiness Owner: Digital Commerce – Product Content\nStatus: Approved"
+  },
+  {
+    "heading": "Overview",
+    "level": 1,
+    "text": "Product Data Enrichment will extract technical attributes from supplier specification sheets and catalog PDFs and propose them for new and existing items in the Product Information Management (PIM) system.\nMVP1 extracts attributes for three pilot categories (wire and cable, lighting, circuit breakers) and presents them for content specialist review. MVP2 publishes approved attributes to PIM and the e-commerce site and expands to more categories."
+  },
+  {
+    "heading": "Background",
+    "level": 1,
+    "text": "Around 35% of active items on the e-commerce site have incomplete attributes, which lowers search relevance and conversion.\nContent specialists copy attributes manually from supplier PDFs, which takes 10–15 minutes per item."
+  },
+  {
+    "heading": "Objectives",
+    "level": 1,
+    "text": "- Fill required attributes for pilot categories automatically\n- Reduce enrichment effort per item by 70%\n- Improve attribute completeness on the website from 65% to 90% for pilot categories\n- Keep specialists in control with review and approval"
+  },
+  {
+    "heading": "Project Scope",
+    "level": 1,
+    "text": "| Phase | Scope |\n|---|---|\n| In scope (MVP1) | Upload of supplier spec sheets (PDF) by item, attribute extraction against the category attribute schema, unit normalisation, confidence per attribute, review screen with accept/edit/reject, export of approved attributes as CSV in PIM import format |\n| In scope (MVP2) | Direct publish to PIM via API, automatic retrieval of spec sheets from supplier portals, expansion to 15 categories, image-based attribute extraction |\n| Out of scope | Product pricing, marketing descriptions, translation, item creation in ERP |"
+  },
+  {
+    "heading": "Personas & RBAC",
+    "level": 1,
+    "text": "| Persona | Responsibilities |\n|---|---|\n| Content Specialist | Upload spec sheets, review extracted attributes, accept, edit or reject values and export approved attributes |\n| Content Lead | Approve exports for PIM import and monitor quality |\n| Taxonomy Admin | Maintain category attribute schemas, allowed values and unit rules |"
+  },
+  {
+    "heading": "Use Cases & User Stories",
+    "level": 1,
+    "text": "- As a Content Specialist, I can upload a spec sheet for an item and see each required attribute with value, unit, confidence and source page.\n- As a Content Specialist, attributes with confidence below 80% are highlighted and must be reviewed before export.\n- As a Content Lead, I can approve an export batch of up to 1,000 items.\n- As a Taxonomy Admin, I can add an allowed value to a list attribute (e.g. jacket colour) without a code change."
+  },
+  {
+    "heading": "Solution Requirements",
+    "level": 1,
+    "text": "| Phase | Requirement |\n|---|---|\n| MVP1 | Upload of one or more spec sheet PDFs (max 20 MB each) linked to an item number. |\n| MVP1 | Extraction of attributes defined in the category schema using Azure Document Intelligence (layout) and Azure OpenAI (attribute mapping). |\n| MVP1 | Unit normalisation (e.g. mm → in, AWG, A, V) and validation against allowed values and ranges. |\n| MVP1 | Review screen with accept, edit, reject per attribute; export of approved attributes to CSV in PIM import format. |\n| MVP2 | Direct publish to PIM API. |\n| MVP2 | Spec sheet retrieval from supplier portals. |\n| MVP2 | Expansion to 15 categories. |\n| MVP2 | Image-based attribute extraction. |\n| Admin | Admin UI for category schemas, allowed values, ranges, unit conversion rules and confidence threshold (default 80%). |"
+  },
+  {
+    "heading": "Non-Functional Requirements (NFR)",
+    "level": 1,
+    "text": "- Availability: 99% during business hours.\n- Security: Azure AD SSO and role-based access.\n- Performance – Extraction for a 10-page spec sheet within 45 seconds. Export of 1,000 items within 2 minutes.\n- Observability: Trace per item including model version and schema version."
+  },
+  {
+    "heading": "System Integrations",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Identity & Access",
+    "level": 2,
+    "text": "- Azure AD."
+  },
+  {
+    "heading": "Enterprise Systems",
+    "level": 2,
+    "text": "- PIM import (CSV) in MVP1; PIM API in MVP2."
+  },
+  {
+    "heading": "AI Services",
+    "level": 2,
+    "text": "- Azure Document Intelligence, Azure OpenAI."
+  },
+  {
+    "heading": "Data & Storage",
+    "level": 2,
+    "text": "- Azure Blob Storage for PDFs, Azure SQL Database for attributes and review status.\n(TBD – pending SME review)"
+  },
+  {
+    "heading": "Technical Overview",
+    "level": 1,
+    "text": "NA – refer to the separate architecture diagram.\nOpen question: confirm with business owner."
+  },
+  {
+    "heading": "Data Management & Governance",
+    "level": 1,
+    "text": "Data includes supplier spec sheets, category attribute schemas, extracted attributes and review decisions.\n| Data | Description | Source | Frequency | Owner | Security |\n|---|---|---|---|---|---|\n| Spec sheets | Supplier technical PDFs | Upload | Ad-hoc | Content team | Internal |\n| Category schemas | Required attributes, allowed values | Taxonomy configuration | As needed | Taxonomy Admin | Internal |\n| Extracted attributes | Values, units, confidence | Tool output | Per item | Content team | Internal |\n| Approved export | CSV for PIM import | Tool output | Per batch | Content Lead | Internal |\n- Quality checks – Allowed-value and range validation, unit consistency, mandatory attribute completeness per category\n- RBAC – Only Content Leads can approve exports; Taxonomy Admin manages schemas"
+  },
+  {
+    "heading": "Reporting & Monitoring",
+    "level": 1,
+    "text": "- Attributes filled per category, acceptance rate per attribute, effort per item"
+  },
+  {
+    "heading": "Security, Privacy & Compliance",
+    "level": 1,
+    "text": "- AI Governance Council approval\n- Supplier documents used under supplier agreements; legal review pending"
+  },
+  {
+    "heading": "Constraints and Assumptions",
+    "level": 1,
+    "text": "- Spec sheets are text-based PDFs for at least 80% of items\n- Category schemas for the three pilot categories are finalised before build"
+  },
+  {
+    "heading": "Dependencies",
+    "level": 3,
+    "text": "- Taxonomy team for schemas\n- PIM team for import format\n- Legal review of supplier document usage"
+  },
+  {
+    "heading": "High-Level Plan",
+    "level": 1,
+    "text": "- MVP1: Mar–May 2026\n- MVP2: H2 2026"
+  },
+  {
+    "heading": "Acceptance Criteria",
+    "level": 1,
+    "text": "- ≥92% correct attribute values on the pilot golden set\n- 100% of exported values pass allowed-value and range validation\n- Export file imports into PIM without errors"
+  },
+  {
+    "heading": "Risks",
+    "level": 1,
+    "text": "| Risk | Mitigation |\n|---|---|\n| Inconsistent supplier units | Normalisation rules and validation |\n| Wrong attribute mapping | Confidence threshold and review |\n| Schema changes during build | Schema versioning |"
+  },
+  {
+    "heading": "Sign-off",
+    "level": 1,
+    "text": "- AI Governance Council\n- Finance (BIR)\n- AI intake\n- Global Intake\n- C2P\n- WAB"
+  },
+  {
+    "heading": "Annexure – MVP1 Scope",
+    "level": 1,
+    "text": "- Product Data Enrichment MVP1 Scope Overview\n- What's included\n- Spec Sheet Upload: Upload PDFs per item.\n- Attribute Extraction: Extract and normalise attributes.\n- Review and Export – Accept/edit/reject and export CSV."
+  },
+  {
+    "heading": "How it works",
+    "level": 2,
+    "text": "- Specialist uploads spec sheets for an item.\n- Attributes are extracted and normalised.\n- Values are validated against the schema.\n- Specialist reviews.\n- Content Lead approves the export."
+  },
+  {
+    "heading": "Data sources for MVP",
+    "level": 3,
+    "text": "- Supplier spec sheets\n- Category schemas"
+  },
+  {
+    "heading": "Security",
+    "level": 3,
+    "text": "- Azure AD\n- Role-based access"
+  },
+  {
+    "heading": "Not in MVP1",
+    "level": 3,
+    "text": "- No direct PIM publish\n- No supplier portal retrieval\n- Only three pilot categories\n- No image extraction"
+  }
+]

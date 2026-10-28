@@ -1,0 +1,97 @@
+{
+  "project": "P07_Email_Order_Entry",
+  "structure": 1.0,
+  "missing_sections": [],
+  "coverage": 0.9285714285714286,
+  "coverage_all": 0.927536231884058,
+  "guard_downgrades": 0,
+  "missed_facts": [
+    {
+      "id": "F001",
+      "category": "business_rule",
+      "fact": "Reduce order entry time by 60%"
+    },
+    {
+      "id": "F002",
+      "category": "business_rule",
+      "fact": "Reduce order entry errors by 50%"
+    },
+    {
+      "id": "F005",
+      "category": "data",
+      "fact": "Customer Service receives about 6,000 PO emails per week"
+    },
+    {
+      "id": "F006",
+      "category": "data",
+      "fact": "PO emails across 40 branches"
+    }
+  ],
+  "coverage_by_category": {
+    "acceptance": 1.0,
+    "architecture": 1.0,
+    "assumption": 1.0,
+    "business_rule": 0.33,
+    "data": 0.4,
+    "dependency": 1.0,
+    "functional": 1.0,
+    "integration": 1.0,
+    "nfr_availability": 1.0,
+    "nfr_performance": 1.0,
+    "out_of_scope": 1.0,
+    "risk": 1.0,
+    "role": 1.0,
+    "scope_mvp1": 1.0,
+    "scope_mvp2": 1.0,
+    "security_access": 1.0,
+    "timeline": 1.0
+  },
+  "faithfulness": 1.0,
+  "claims": 59,
+  "requirement_claims": 49,
+  "test_design_claims": 10,
+  "invented": 0,
+  "unverified_supported": 0,
+  "invented_claims": [],
+  "similarity": 0.9714285714285713,
+  "embedding_sim": 0.7136614795136399,
+  "section_scores": {
+    "references": 1.0,
+    "objectives": 1.0,
+    "scope_in": 1.0,
+    "scope_out": 1.0,
+    "assumptions_dependencies": 1.0,
+    "test_strategy": 0.8,
+    "functional_coverage": 1.0,
+    "rbac_testing": 1.0,
+    "security_compliance": 0.8,
+    "ai_data_quality": 1.0,
+    "nfr_performance": 1.0,
+    "nfr_reliability": 1.0,
+    "nfr_accessibility_compat": 1.0,
+    "observability_audit": 0.8,
+    "test_data_environment": 1.0,
+    "entry_exit_criteria": 1.0,
+    "defect_management": 1.0,
+    "risks": 1.0,
+    "deliverables_reporting": 1.0,
+    "traceability_metrics": 1.0,
+    "e2e_scenario": 1.0
+  },
+  "missing_points": {
+    "test_strategy": [
+      "Unit-test coverage target (reference specified 85%) not carried as a concrete target (generated marks coverage TBD).",
+      "Specific tooling/automation targets and coverage goals (e.g., automation scope/coverage %) are left TBD rather than defined."
+    ],
+    "security_compliance": [
+      "Explicit MFA requirement and tests for MFA flows are not called out (Azure AD auth / token tests present, but MFA is not explicit).",
+      "Frontend/web protections (CSRF and XSS test cases) are not spelled out explicitly.",
+      "Prompt-injection tests for AI in the security/compliance section are not explicitly listed (they appear in AI sections but not as security test cases)."
+    ],
+    "observability_audit": [
+      "Explicit capture of extraction/model/mapping version per email (extraction version) is not specified in audit/log requirements.",
+      "Retention/export requirements and exact retention periods / exportability tests are left TBD rather than specified."
+    ]
+  },
+  "overall": 0.9592857142857143
+}

@@ -1,0 +1,112 @@
+{
+  "project": "P07_Email_Order_Entry",
+  "structure": 1.0,
+  "missing_sections": [],
+  "coverage": 0.9107142857142857,
+  "coverage_all": 0.8768115942028986,
+  "guard_downgrades": 2,
+  "missed_facts": [
+    {
+      "id": "F001",
+      "category": "business_rule",
+      "fact": "Reduce order entry time by 60%"
+    },
+    {
+      "id": "F002",
+      "category": "business_rule",
+      "fact": "Reduce order entry errors by 50%"
+    },
+    {
+      "id": "F005",
+      "category": "data",
+      "fact": "Customer Service receives about 6,000 PO emails per week"
+    }
+  ],
+  "coverage_by_category": {
+    "acceptance": 1.0,
+    "architecture": 0.96,
+    "assumption": 1.0,
+    "business_rule": 0.33,
+    "data": 0.5,
+    "dependency": 1.0,
+    "functional": 1.0,
+    "integration": 1.0,
+    "nfr_availability": 1.0,
+    "nfr_performance": 1.0,
+    "out_of_scope": 0.5,
+    "risk": 1.0,
+    "role": 0.5,
+    "scope_mvp1": 1.0,
+    "scope_mvp2": 1.0,
+    "security_access": 1.0,
+    "timeline": 1.0
+  },
+  "faithfulness": 1.0,
+  "claims": 59,
+  "requirement_claims": 50,
+  "test_design_claims": 9,
+  "invented": 0,
+  "unverified_supported": 0,
+  "invented_claims": [],
+  "similarity": 0.9142857142857144,
+  "embedding_sim": 0.6748932625535751,
+  "section_scores": {
+    "references": 1.0,
+    "objectives": 1.0,
+    "scope_in": 1.0,
+    "scope_out": 1.0,
+    "assumptions_dependencies": 1.0,
+    "test_strategy": 1.0,
+    "functional_coverage": 1.0,
+    "rbac_testing": 1.0,
+    "security_compliance": 0.6,
+    "ai_data_quality": 0.8,
+    "nfr_performance": 1.0,
+    "nfr_reliability": 0.8,
+    "nfr_accessibility_compat": 0.6,
+    "observability_audit": 0.8,
+    "test_data_environment": 0.8,
+    "entry_exit_criteria": 1.0,
+    "defect_management": 0.8,
+    "risks": 1.0,
+    "deliverables_reporting": 1.0,
+    "traceability_metrics": 1.0,
+    "e2e_scenario": 1.0
+  },
+  "missing_points": {
+    "security_compliance": [
+      "Explicit MFA, session timeout and token expiration / JWT validation test cases",
+      "CSRF and XSS test cases and input validation specifics",
+      "Rate limiting and throttling tests for APIs (explicit test cases)",
+      "Prompt\u2011injection tests for Azure OpenAI inputs and handling",
+      "Explicit SAST/DAST/dependency scanning process and tool specifics"
+    ],
+    "ai_data_quality": [
+      "Explicit field\u2011level accuracy broken down by format (body, PDF, Excel) as separate targets",
+      "Matching accuracy metrics explicitly reported with and without cross\u2011reference",
+      "Version tracking per email / model/version recorded for every execution"
+    ],
+    "nfr_reliability": [
+      "Explicit backup/restore and data reconciliation test cases and acceptance",
+      "Runbooks and runbook\u2011driven recovery verification steps (explicit tests)"
+    ],
+    "nfr_accessibility_compat": [
+      "Concrete WCAG requirements and test cases (screen reader labels, keyboard navigation, focus order, color contrast, zoom/reflow)",
+      "Explicit browser/version compatibility matrix and per\u2011browser test cases"
+    ],
+    "observability_audit": [
+      "Explicit capture of extraction/model version per processed email",
+      "Retention, exportability and access control specifics for audit records",
+      "Explicit correlation ID format and required timestamp precision in audit entries"
+    ],
+    "test_data_environment": [
+      "Requirement to version and record build/configuration/dataset/model version for every test execution",
+      "Explicit examples of boundary test data cases (listed as concrete files/cases)"
+    ],
+    "defect_management": [
+      "Mandatory defect fields spelled out for each defect entry (steps, expected/actual results, evidence, environment, build, owner, retest result) as in reference table",
+      "Specific defect tracking tool and workflow details"
+    ]
+  },
+  "overall": 0.9341071428571428
+}

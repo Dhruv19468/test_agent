@@ -1,0 +1,183 @@
+{
+  "project": "P06_Rebate_Validation",
+  "structure": 0.65,
+  "missing_sections": [
+    "scope_out",
+    "rbac_testing",
+    "security_compliance",
+    "nfr_reliability",
+    "nfr_accessibility_compat",
+    "observability_audit",
+    "e2e_scenario"
+  ],
+  "coverage": 0.83125,
+  "coverage_all": 0.7959183673469388,
+  "guard_downgrades": 1,
+  "missed_facts": [
+    {
+      "id": "F013",
+      "category": "nfr_performance",
+      "fact": "Cut claim preparation time from 3 days to 4 hours per supplier"
+    },
+    {
+      "id": "F024",
+      "category": "role",
+      "fact": "Rebate Analyst uploads agreements"
+    },
+    {
+      "id": "F047",
+      "category": "data",
+      "fact": "Rebate agreements security classification is Restricted"
+    },
+    {
+      "id": "F049",
+      "category": "data",
+      "fact": "Purchase data owner is Finance Data and security classification is Confidential"
+    },
+    {
+      "id": "F052",
+      "category": "data",
+      "fact": "Calculations data source is Tool output and frequency is Per run"
+    },
+    {
+      "id": "F055",
+      "category": "functional",
+      "fact": "Quality checks include tier thresholds ascending"
+    },
+    {
+      "id": "F091",
+      "category": "integration",
+      "fact": "App Gateway is entry point for Rebate Analysts and Finance Managers over HTTPS/443 with AD/SSO"
+    }
+  ],
+  "coverage_by_category": {
+    "acceptance": 1.0,
+    "ai_quality": 1.0,
+    "architecture": 1.0,
+    "assumption": 1.0,
+    "business_rule": 0.64,
+    "compliance": 0.75,
+    "data": 0.45,
+    "dependency": 0.75,
+    "functional": 0.92,
+    "integration": 0.85,
+    "nfr_availability": 1.0,
+    "nfr_performance": 0.67,
+    "out_of_scope": 0.0,
+    "risk": 1.0,
+    "role": 0.75,
+    "scope_mvp1": 1.0,
+    "scope_mvp2": 1.0,
+    "security_access": 1.0,
+    "timeline": 0.5
+  },
+  "faithfulness": 0.9310344827586207,
+  "claims": 66,
+  "requirement_claims": 58,
+  "test_design_claims": 8,
+  "invented": 4,
+  "unverified_supported": 0,
+  "invented_claims": [
+    {
+      "claim": "Use Playwright or Selenium for UI automation",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Use Postman, REST-assured, or PyTest for API automation",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Use k6 or JMeter for load testing",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Use OWASP ZAP for UI security scanning",
+      "kind": "requirement",
+      "verdict": "not_found"
+    }
+  ],
+  "similarity": 0.8636363636363636,
+  "embedding_sim": 0.4359211799271394,
+  "section_scores": {
+    "references": 0.4,
+    "objectives": 1.0,
+    "scope_in": 1.0,
+    "scope_out": 1.0,
+    "assumptions_dependencies": 1.0,
+    "test_strategy": 0.8,
+    "functional_coverage": 0.8,
+    "rbac_testing": 0.8,
+    "security_compliance": 0.8,
+    "ai_data_quality": 1.0,
+    "nfr_performance": 1.0,
+    "nfr_reliability": 0.8,
+    "nfr_accessibility_compat": 0.2,
+    "observability_audit": 1.0,
+    "test_data_environment": 1.0,
+    "entry_exit_criteria": 0.8,
+    "defect_management": 1.0,
+    "risks": 1.0,
+    "deliverables_reporting": 0.8,
+    "traceability_metrics": 0.8,
+    "schedule": 1.0,
+    "e2e_scenario": 1.0
+  },
+  "missing_points": {
+    "references": [
+      "Explicit references list (Rebate Claim Validation BRD) and architecture diagram not included",
+      "Citation/version pointers to BRD/architecture for traceability"
+    ],
+    "test_strategy": [
+      "Explicit unit-test coverage target (85%) not stated",
+      "API/contract testing checklist (schemas, idempotency, error codes) not enumerated in detail",
+      "Named test techniques from reference (equivalence partitioning, boundary-value analysis, pairwise) not listed"
+    ],
+    "functional_coverage": [
+      "Worked numerical calculation examples (retroactive 63,000; incremental 23,000) not included as acceptance tests",
+      "Explicit boundary cases called out in reference (spend exactly at threshold, below first tier, returns/credit notes) not enumerated",
+      "Amendment precedence tests could be more explicit (though amendments are mentioned)"
+    ],
+    "rbac_testing": [
+      "Full role matrix table with permitted/restricted actions (Rebate Analyst / Finance Manager / Program Admin) not provided verbatim",
+      "Explicit tests for data access restrictions per role and mapping restrictions (Program Admin mappings)"
+    ],
+    "security_compliance": [
+      "Explicit MFA, session timeout and token expiration checks and JWT validation not listed",
+      "CSRF/XSS specific test items and safe error message checks not called out",
+      "Explicit check that spend data is not written to logs or exposed in telemetry"
+    ],
+    "nfr_reliability": [
+      "Explicit backup/restore and data reconciliation after recovery procedures and tests not detailed",
+      "Runbook-driven recovery steps and verification for partial-failure recovery could be more explicit"
+    ],
+    "nfr_accessibility_compat": [
+      "Screen reader / ARIA label tests",
+      "Keyboard-only navigation and focus order tests",
+      "Colour contrast, zoom/reflow and error identification tests",
+      "Browser compatibility matrix (Edge/Chrome/Firefox) and supported versions"
+    ],
+    "observability_audit": [
+      "Explicit audit retention/exportability policy and tests for audit exports not detailed"
+    ],
+    "entry_exit_criteria": [
+      "Explicit numeric exit criteria from reference (e.g., \u226595% of planned test cases passed) not restated exactly",
+      "100% calculation-accuracy on verified examples is present in checklist but not called out in the main exit-criteria block explicitly",
+      "Explicit 'no open High-severity security defects' wording from reference"
+    ],
+    "deliverables_reporting": [
+      "Accessibility test report and accessibility findings deliverable not listed",
+      "Daily status report and test execution report cadence (daily) not explicitly listed",
+      "Test closure report with residual risks and lessons learned not explicitly listed",
+      "Automation report wording from reference not explicit"
+    ],
+    "traceability_metrics": [
+      "Operational weekly metrics (planned/executed/passed/failed/blocked) not explicitly called out",
+      "Reconciliation variances (to GL) and batch SLA compliance metrics not enumerated",
+      "Accessibility and security findings coverage metrics not listed"
+    ]
+  },
+  "overall": 0.7407807601880878
+}

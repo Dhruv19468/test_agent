@@ -1,0 +1,95 @@
+{
+  "project": "P06_Rebate_Validation",
+  "structure": 1.0,
+  "missing_sections": [],
+  "coverage": 0.98125,
+  "coverage_all": 0.9489795918367347,
+  "guard_downgrades": 0,
+  "missed_facts": [
+    {
+      "id": "F013",
+      "category": "nfr_performance",
+      "fact": "Cut claim preparation time from 3 days to 4 hours per supplier"
+    }
+  ],
+  "coverage_by_category": {
+    "acceptance": 1.0,
+    "ai_quality": 1.0,
+    "architecture": 1.0,
+    "assumption": 1.0,
+    "business_rule": 0.57,
+    "compliance": 1.0,
+    "data": 1.0,
+    "dependency": 1.0,
+    "functional": 1.0,
+    "integration": 1.0,
+    "nfr_availability": 1.0,
+    "nfr_performance": 0.67,
+    "out_of_scope": 1.0,
+    "risk": 1.0,
+    "role": 1.0,
+    "scope_mvp1": 1.0,
+    "scope_mvp2": 1.0,
+    "security_access": 1.0,
+    "timeline": 0.5
+  },
+  "faithfulness": 0.9772727272727273,
+  "claims": 50,
+  "requirement_claims": 44,
+  "test_design_claims": 6,
+  "invented": 1,
+  "unverified_supported": 0,
+  "invented_claims": [
+    {
+      "claim": "Claims \u2264 USD 50,000 can be approved by Program-defined approvers",
+      "kind": "requirement",
+      "verdict": "not_found"
+    }
+  ],
+  "similarity": 0.9636363636363636,
+  "embedding_sim": 0.6883914618002588,
+  "section_scores": {
+    "references": 1.0,
+    "objectives": 1.0,
+    "scope_in": 1.0,
+    "scope_out": 1.0,
+    "assumptions_dependencies": 1.0,
+    "test_strategy": 1.0,
+    "functional_coverage": 0.8,
+    "rbac_testing": 1.0,
+    "security_compliance": 0.8,
+    "ai_data_quality": 1.0,
+    "nfr_performance": 1.0,
+    "nfr_reliability": 1.0,
+    "nfr_accessibility_compat": 0.6,
+    "observability_audit": 1.0,
+    "test_data_environment": 1.0,
+    "entry_exit_criteria": 1.0,
+    "defect_management": 1.0,
+    "risks": 1.0,
+    "deliverables_reporting": 1.0,
+    "traceability_metrics": 1.0,
+    "schedule": 1.0,
+    "e2e_scenario": 1.0
+  },
+  "missing_points": {
+    "functional_coverage": [
+      "Explicit numeric worked examples for retroactive/incremental (e.g. USD 2.1M \u2192 USD 63,000 / USD 23,000) not enumerated as concrete test cases",
+      "Explicit handling/tests for returns and credit notes (impact on eligible spend) is not called out",
+      "No explicit mention of testing amendments overriding base terms as separate negative/precedence test case (though amendments are present)"
+    ],
+    "security_compliance": [
+      "Multi-factor authentication, session timeout and explicit JWT/session expiry tests not listed",
+      "CSRF and XSS protection tests not specified",
+      "Rate limiting / throttling test cases not described",
+      "SAST/DAST and dependency-scanning workflows (explicitly listed) are not detailed (pen test scheduling is TBD but SAST/DAST missing)",
+      "Explicit check that spend data is not leaked in logs or telemetry not clearly called out"
+    ],
+    "nfr_accessibility_compat": [
+      "Detailed WCAG-level test cases (screen reader labels, focus order, colour contrast, error identification) not specified \u2014 only basic checks noted",
+      "Supported browser versions and exact compatibility matrix are TBD rather than listed",
+      "Zoom/reflow and full keyboard-only navigation test scripts are not provided"
+    ]
+  },
+  "overall": 0.9583658316115702
+}

@@ -1,0 +1,152 @@
+[
+  {
+    "heading": "Business Requirement Specification – Supplier Rebate Claim Validation",
+    "level": 1,
+    "text": "Version: 1.0\nDate: 17 Feb 2026\nBusiness Owner: Supplier Programs Finance\nStatus: Approved"
+  },
+  {
+    "heading": "Purpose",
+    "level": 1,
+    "text": "Rebate Claim Validation will automate the calculation and validation of rebates Wesco claims from suppliers under volume and growth rebate agreements.\nMVP1 reads rebate agreements, extracts tier rules, calculates earned rebates from sales and purchase data in the enterprise data lake, and produces a claim worksheet for review. MVP2 adds claim submission to supplier portals, dispute tracking and accrual integration with finance."
+  },
+  {
+    "heading": "Current State",
+    "level": 1,
+    "text": "Wesco manages over 400 supplier rebate agreements with different tiers, product eligibility and periods. Analysts calculate claims in spreadsheets, and an estimated 2–3% of earned rebates are never claimed.\nAgreement terms are in PDF contracts and amendments, and eligible products are defined by supplier product lines."
+  },
+  {
+    "heading": "Objectives",
+    "level": 1,
+    "text": "- Calculate earned rebates automatically for all active agreements\n- Recover unclaimed rebates (target +1.5% of rebate income)\n- Cut claim preparation time from 3 days to 4 hours per supplier\n- Provide auditable calculations"
+  },
+  {
+    "heading": "Scope of Work",
+    "level": 1,
+    "text": "| Phase | Scope |\n|---|---|\n| In scope (MVP1) | Upload of rebate agreements (PDF), AI extraction of tiers, rates, eligible product lines and periods, analyst review of extracted terms, calculation from Delta Lake purchase data, claim worksheet with tier reached and earned amount, variance to accrual |\n| In scope (MVP2) | Supplier portal submission, dispute tracking, accrual posting to finance, amendment comparison |\n| Out of scope | Customer rebates (sell-side), price protection claims, supplier payment collection |"
+  },
+  {
+    "heading": "User Roles",
+    "level": 1,
+    "text": "| Persona | Responsibilities |\n|---|---|\n| Rebate Analyst | Upload agreements, review extracted terms, run calculations and prepare claim worksheets |\n| Finance Manager | Approve claim worksheets above USD 50,000 and review accrual variances |\n| Program Admin | Maintain supplier mappings, product line mappings and calculation settings |"
+  },
+  {
+    "heading": "User Stories",
+    "level": 1,
+    "text": "- As a Rebate Analyst, I can upload an agreement and see extracted tiers (e.g. 2% from USD 1M, 3% from USD 2M) with page references.\n- As a Rebate Analyst, I must confirm extracted terms before they are used in calculations.\n- As a Rebate Analyst, I can run a calculation for a period and see purchases, tier reached and earned rebate.\n- As a Finance Manager, I approve claims above USD 50,000.\nNote: to be validated with the backend architects."
+  },
+  {
+    "heading": "Functional Requirements (by MVP)",
+    "level": 1,
+    "text": "- MVP1: Upload of agreement PDFs and amendments; extraction of supplier, period, tiers (threshold, rate), retroactive vs incremental, eligible product lines and exclusions using Azure Document Intelligence and Azure OpenAI.\n- MVP1: Analyst confirmation step; only confirmed terms are used.\n- MVP1: Calculation using purchase data from Delta Lake (EUDM) via Databricks SQL: eligible spend, tier reached, earned rebate (retroactive applies rate to full spend; incremental applies rate per tier band).\n- MVP1: Claim worksheet with supporting purchase lines, export to Excel, and variance to accrual.\n- MVP2 – Supplier portal submission.\n- MVP2 – Dispute tracking.\n- MVP2: Accrual posting.\n- MVP2: Amendment comparison."
+  },
+  {
+    "heading": "Quality Attributes",
+    "level": 1,
+    "text": "- Availability: 99% business hours.\n- Security – Azure AD; agreements and spend data restricted.\n- Performance: Calculation for one supplier-year within 2 minutes. Month-end batch of 400 agreements within 8 hours.\n- Auditability: Every calculation reproducible with agreement version and data snapshot date."
+  },
+  {
+    "heading": "Solution Architecture",
+    "level": 1,
+    "text": "See P06_Rebate_Validation_Architecture.png."
+  },
+  {
+    "heading": "Data Requirements",
+    "level": 1,
+    "text": "Data includes rebate agreements, purchase data, product line mappings and calculation results.\n| Data | Description | Source | Frequency | Owner | Security |\n|---|---|---|---|---|---|\n| Rebate agreements | Terms, tiers, eligibility | Upload | Ad-hoc | Supplier Programs | Restricted |\n| Purchase data | PO lines, spend by product line | Delta Lake (EUDM) | Daily | Finance Data | Confidential |\n| Product line mapping | Supplier lines to items | Configuration | Monthly | Program Admin | Internal |\n| Calculations | Spend, tier, rebate | Tool output | Per run | Supplier Programs | Confidential |\n- Quality checks: Agreement term completeness, tier thresholds ascending, purchase data reconciliation to GL totals\n- RBAC – Approval above USD 50,000 by Finance Manager; analysts cannot approve own claims"
+  },
+  {
+    "heading": "Interfaces and Dependencies on Systems",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Identity & Access",
+    "level": 2,
+    "text": "- Azure AD."
+  },
+  {
+    "heading": "Enterprise Data",
+    "level": 2,
+    "text": "- Delta Lake (EUDM/IAP) purchase data through Databricks SQL warehouse."
+  },
+  {
+    "heading": "AI Services",
+    "level": 2,
+    "text": "- Azure Document Intelligence, Azure OpenAI."
+  },
+  {
+    "heading": "Data & Storage",
+    "level": 2,
+    "text": "- Azure PostgreSQL for terms and calculations; Blob Storage for agreements."
+  },
+  {
+    "heading": "Compliance",
+    "level": 1,
+    "text": "- AI Governance Council approval; SOX relevance assessed via C2P"
+  },
+  {
+    "heading": "Assumptions & Constraints",
+    "level": 1,
+    "text": "- Delta Lake purchase data is complete for the last 24 months\n- Agreements are mostly digital PDFs"
+  },
+  {
+    "heading": "External Dependencies",
+    "level": 1,
+    "text": "- Data platform team for Databricks access\n- Supplier Programs SMEs for golden dataset"
+  },
+  {
+    "heading": "Timeline & Milestones",
+    "level": 1,
+    "text": "- MVP1: Mar–Jun 2026\n- MVP2: Q4 2026"
+  },
+  {
+    "heading": "Acceptance Criteria",
+    "level": 1,
+    "text": "- ≥95% accuracy of extracted tier terms on golden agreements\n- 100% calculation accuracy against analyst-verified examples\n- Reproducible calculations with snapshot date"
+  },
+  {
+    "heading": "Risk Register",
+    "level": 1,
+    "text": "| Risk | Mitigation |\n|---|---|\n| Complex agreement language | Mandatory analyst confirmation |\n| Data lake gaps | Reconciliation checks |\n| Retroactive vs incremental misread | Explicit field and tests |"
+  },
+  {
+    "heading": "ROI",
+    "level": 1,
+    "text": "Recovered rebate income. Analyst hours saved."
+  },
+  {
+    "heading": "Approvals",
+    "level": 1,
+    "text": "- AI Governance Council\n- Finance (BIR)\n- AI intake\n- Global Intake\n- C2P\n- WAB"
+  },
+  {
+    "heading": "Appendix",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Rebate Claim Validation MVP1 Scope Overview",
+    "level": 2,
+    "text": "Agreement Extraction: Extract tier terms with page references. Term Confirmation: Analyst confirms terms. Calculation and Worksheet: Calculate earned rebate and export."
+  },
+  {
+    "heading": "How it works",
+    "level": 3,
+    "text": "- Analyst uploads agreement.\n- Terms extracted.\n- Analyst confirms.\n- Purchases retrieved from Delta Lake.\n- Rebate calculated and worksheet produced."
+  },
+  {
+    "heading": "Data sources",
+    "level": 3,
+    "text": "- Agreements\n- Delta Lake purchase data\n- Product line mapping"
+  },
+  {
+    "heading": "Access and Security",
+    "level": 3,
+    "text": "- Azure AD\n- Restricted data"
+  },
+  {
+    "heading": "Exclusions",
+    "level": 2,
+    "text": "- No portal submission\n- No disputes\n- No accrual posting\n- No amendment comparison"
+  }
+]

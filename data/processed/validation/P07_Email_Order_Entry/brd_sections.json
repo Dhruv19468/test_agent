@@ -1,0 +1,192 @@
+[
+  {
+    "heading": "Business Requirements Document (BRD) – Email Purchase Order Entry Automation",
+    "level": 1,
+    "text": "Version: 1.0\nDate: 02 Mar 2026\nBusiness Owner: Customer Service Operations\nStatus: Approved"
+  },
+  {
+    "heading": "Purpose",
+    "level": 1,
+    "text": "Email Order Entry will convert customer purchase orders received by email into draft sales orders in SAP, reducing manual keying for Customer Service Representatives (CSRs).\nMVP1 reads PO emails and attachments, extracts customer, ship-to, lines and requested dates, matches items using customer cross-references, validates against SAP and creates a draft order for CSR review. MVP2 adds automatic order release for trusted customers and order acknowledgement emails."
+  },
+  {
+    "heading": "Current State",
+    "level": 1,
+    "text": "Customer Service receives about 6,000 PO emails per week across 40 branches; average manual entry takes 12 minutes.\nKeying errors cause wrong shipments, returns and credit notes.\nOpen question: confirm with business owner."
+  },
+  {
+    "heading": "Objectives",
+    "level": 1,
+    "text": "- Reduce order entry time by 60%\n- Reduce order entry errors by 50%\n- Create SAP draft orders within 5 minutes of email receipt\n- Keep CSR review for every order in MVP1"
+  },
+  {
+    "heading": "Scope of Work",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "(MVP1)",
+    "level": 2,
+    "text": "PO intake from branch order mailboxes, extraction from email body and PDF/Excel attachments, customer and ship-to identification, item matching via customer cross-reference and catalog, SAP validation (customer, material, pricing check), draft sales order creation, CSR review queue"
+  },
+  {
+    "heading": "(MVP2)",
+    "level": 2,
+    "text": "Straight-through release for trusted customers, order acknowledgement emails, EDI fallback detection, analytics"
+  },
+  {
+    "heading": "Out of scope",
+    "level": 2,
+    "text": "EDI orders, credit checks changes, quotations, returns"
+  },
+  {
+    "heading": "User Roles",
+    "level": 1,
+    "text": "| Persona | Responsibilities |\n|---|---|\n| CSR | Review draft orders, correct lines, release orders in SAP |\n| CS Supervisor | Monitor queue and SLAs, reassign orders |\n| CS Admin | Maintain mailbox routing, customer cross-reference uploads and confidence thresholds |"
+  },
+  {
+    "heading": "Sample Use Cases & User Stories",
+    "level": 1,
+    "text": "- As a CSR, I see each PO email converted to a draft order with header and lines and a confidence per field.\n- As a CSR, I see lines where the customer part number has no cross-reference highlighted.\n- As a CS Supervisor, I see orders older than 30 minutes in the queue flagged.\n- As a CS Admin, I can upload a customer cross-reference file."
+  },
+  {
+    "heading": "Requirements",
+    "level": 1,
+    "text": "- MVP1: Intake from branch order mailboxes via Microsoft Graph; duplicate PO detection by customer PO number.\n- MVP1: Extraction of customer PO number, sold-to, ship-to, requested delivery date and lines (customer part, description, quantity, UoM, price) using Azure Document Intelligence and Azure OpenAI.\n- MVP1: Customer identification by sender domain and PO content; item matching via customer cross-reference table, then catalog search.\n- MVP1: SAP validation via APIM (customer active, material valid, price variance >5% flagged) and creation of a draft sales order (not released).\n- MVP1 – CSR review queue with corrections and release action.\n- MVP2: Straight-through release for trusted customers.\n- MVP2: Acknowledgement emails.\n- MVP2 – EDI detection.\n- MVP2: Analytics."
+  },
+  {
+    "heading": "Non-Functional Requirements (NFR)",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Availability",
+    "level": 2,
+    "text": "- 99.5% 24x5."
+  },
+  {
+    "heading": "Security",
+    "level": 2,
+    "text": "- Azure AD; branch-based queue access."
+  },
+  {
+    "heading": "Performance",
+    "level": 2,
+    "text": "- Draft order created within 5 minutes of email receipt for 95% of POs.\n- Peak 300 emails per hour."
+  },
+  {
+    "heading": "Observability",
+    "level": 2,
+    "text": "- End-to-end trace per email to SAP draft order number."
+  },
+  {
+    "heading": "System Integrations",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Identity & Access",
+    "level": 2,
+    "text": "- Azure AD."
+  },
+  {
+    "heading": "Enterprise Systems",
+    "level": 2,
+    "text": "- Branch mailboxes (Graph API); SAP S/4HANA sales order and pricing APIs via APIM."
+  },
+  {
+    "heading": "AI Services",
+    "level": 2,
+    "text": "- Azure Document Intelligence, Azure OpenAI, Azure AI Search (catalog)."
+  },
+  {
+    "heading": "Data & Storage",
+    "level": 2,
+    "text": "- Cosmos DB for order drafts; Blob Storage for emails."
+  },
+  {
+    "heading": "Orchestration",
+    "level": 2,
+    "text": "- Event Grid on new mail, Service Bus for processing steps."
+  },
+  {
+    "heading": "Technical Overview",
+    "level": 1,
+    "text": "See P07_Email_Order_Entry_Architecture.png."
+  },
+  {
+    "heading": "Data Sources",
+    "level": 1,
+    "text": "Data includes PO emails, customer cross-references, catalog index, SAP master data and draft orders.\n| Data | Description | Source | Frequency | Owner | Security |\n|---|---|---|---|---|---|\n| PO emails | Body and attachments | Branch mailboxes | Continuous | Customer Service | Confidential |\n| Customer cross-reference | Customer part to material | CS Admin upload | Monthly | Customer Service | Internal |\n| SAP master data | Customers, materials, prices | SAP | On demand | Master Data | Confidential |\n| Draft orders | Header, lines, confidence | Tool output | Per email | Customer Service | Confidential |\n- Quality checks: Mandatory header fields, line quantity > 0, UoM valid in SAP\n- RBAC: CSRs see queues for their branches only"
+  },
+  {
+    "heading": "Logging and Monitoring",
+    "level": 1,
+    "text": "- Emails processed, draft accuracy, CSR correction rate, time to draft\n(TBD – pending SME review)"
+  },
+  {
+    "heading": "Security & Compliance",
+    "level": 1,
+    "text": "- AI Governance Council approval; customer data confidential"
+  },
+  {
+    "heading": "Constraints and Assumptions",
+    "level": 1,
+    "text": "- Customers send one PO per email in most cases\n- Cross-reference files exist for top 200 customers"
+  },
+  {
+    "heading": "Dependencies",
+    "level": 1,
+    "text": "- SAP integration team\n- Mailbox access approval\n- CS branches for UAT\nNote: to be validated with the backend architects."
+  },
+  {
+    "heading": "High-Level Plan",
+    "level": 1,
+    "text": "- MVP1: Apr–Jul 2026\n- MVP2: Q4 2026"
+  },
+  {
+    "heading": "Acceptance Criteria",
+    "level": 1,
+    "text": "- ≥95% header field accuracy and ≥90% line accuracy on pilot customers\n- Draft within 5 minutes for 95% of POs\n- No orders released without CSR action in MVP1\n- Duplicate POs detected 100% in test set"
+  },
+  {
+    "heading": "Key Risks",
+    "level": 1,
+    "text": "| Risk | Mitigation |\n|---|---|\n| Unusual PO layouts | CSR review and confidence flags |\n| Missing cross-references | Catalog search fallback |\n| SAP API limits | Queueing and retry |"
+  },
+  {
+    "heading": "ROI",
+    "level": 1,
+    "text": "- CSR hours saved\n- Error-related returns avoided"
+  },
+  {
+    "heading": "Approvals",
+    "level": 1,
+    "text": "AI Governance Council. Finance (BIR). AI intake. Global Intake. C2P. WAB."
+  },
+  {
+    "heading": "Appendix",
+    "level": 1,
+    "text": "- Email Order Entry MVP1 Scope Overview\n- What's included\n- PO Intake – Mailbox monitoring and duplicate check.\n- Extraction and Matching – Header, lines and item matching.\n- SAP Draft Order: Validation and draft creation for review."
+  },
+  {
+    "heading": "Process flow",
+    "level": 3,
+    "text": "- PO email arrives.\n- Data extracted.\n- Customer and items matched.\n- SAP validation.\n- Draft order in CSR queue."
+  },
+  {
+    "heading": "Data sources for MVP",
+    "level": 3,
+    "text": "- PO emails\n- Cross-reference files\n- SAP master data"
+  },
+  {
+    "heading": "Access and Security",
+    "level": 3,
+    "text": "- Azure AD\n- Branch-based access"
+  },
+  {
+    "heading": "Exclusions",
+    "level": 2,
+    "text": "No straight-through release. No acknowledgements. No EDI handling. No analytics."
+  }
+]

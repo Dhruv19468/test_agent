@@ -1,0 +1,157 @@
+[
+  {
+    "heading": "(front matter)",
+    "level": 0,
+    "text": "- Business Requirements Document (BRD)\n- Pricing Tool\n- Executive Summary\nThe Pricing Update Tool will automate supplier price book processing for lock and exit devices, reducing manual effort, cycle time, and pricing errors.\nThe solution extracts updated prices from supplier PDFs, applies discounts, and compares them with current prices to generate validated final pricing worksheets.\nMVP focuses on automated price extraction, current price retrieval from database and price comparison; future phases extend workflow automation and scalability across suppliers."
+  },
+  {
+    "heading": "Business Context",
+    "level": 1,
+    "text": "The pricing team currently relies on manual review of supplier PDF price books and spreadsheets, resulting in long turnaround times and error risk.\nPricing updates are repeated multiple times a year and delays can lead to inconsistent pricing and revenue/margin impact.\nAn automated, standardized pricing tool provides a reliable front door for price updates with validation, auditability, and human-in-the-loop controls."
+  },
+  {
+    "heading": "Goals & Objectives",
+    "level": 1,
+    "text": "Automate repetitive pricing update tasks by extracting and standardizing data from supplier price books\nGenerate accurate updated, current, and final pricing worksheets with built‑in validation\nReduce pricing cycle time and manual effort by standardizing comparisons and checks\nEnable measurable, auditable productivity and cost savings aligned to BIR and intake documents"
+  },
+  {
+    "heading": "In-Scope / Out-of-Scope",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Initial scope aligns to phased MVPs",
+    "level": 3,
+    "text": "In scope (MVP1): Supplier PDF price book ingestion, updated price extraction, discount application, generation of updated pricing worksheet\nIn scope (MVP2): Current pricing retrieval, Integration with CMT (for comparison, and validation of worksheets), Workflow automation, audit logging, and scale‑out across suppliers\nOut of scope (initial): Changes to mainframe pricing logic, CORE integrations, non‑pricing operational processes"
+  },
+  {
+    "heading": "Personas & RBAC",
+    "level": 1,
+    "text": "Pricing Analyst: Upload supplier price books, review extracted pricing, validate final worksheets, and approve outputs\nPricing Admin: Configure supplier templates, manage discount rules, maintain reference data, and control refresh cadence"
+  },
+  {
+    "heading": "Sample Use Cases & User Stories",
+    "level": 1,
+    "text": "As a Pricing Analyst, I can upload a supplier price book (PDF) and generate an updated pricing worksheet with discounts applied, along with source reference and processing timestamp.\nAs a Pricing Analyst, I can identify whether a part exists in current pricing, and see price differences between current and updated prices across systems.\nAs Support / Pricing Ops, I can view which supplier price books, discount files, and systems were referenced to generate the final pricing output, and log processing outcomes automatically.\nAs an Admin, I can configure supplier data sources (price book PDFs, buy‑in discount files, IAP tables), define refresh cadence, and control validation thresholds.\n- Functional Requirements (by MVP)\n- MVP1\nAutomated ingestion and parsing of supplier price book PDFs.\nGeneration of standardized Updated Pricing worksheet with discount application.\nSupport for multiple supplier formats with human‑in‑the‑loop review.\n- model details"
+  },
+  {
+    "heading": "MVP2",
+    "level": 1,
+    "text": "Retrieval of Current Pricing from database (or DDP‑aligned data source).\nIntegration with the CMT for automated comparison between updated and current prices.\nWorkflow automation for pricing worksheet finalization and downstream handoffs.\nAudit logging of pricing updates, sources used, and approvals.\nScalability across suppliers, brands, and product categories."
+  },
+  {
+    "heading": "Administration",
+    "level": 1,
+    "text": "Admin UI for supplier configuration, discount rules, RBAC, and refresh cadence.\n- Non-Functional Requirements (NFR)\n- Availability\n99.5% uptime for MVP1 production usage."
+  },
+  {
+    "heading": "Security (data,AI)?",
+    "level": 1,
+    "text": "Enterprise authentication via Azure AD.\nRole‑based access for Pricing Analyst and Admin roles.\nProtection of sensitive supplier pricing data."
+  },
+  {
+    "heading": "Performance",
+    "level": 1,
+    "text": "Pricing worksheet generation within minutes for large supplier files.\nPrice comparison and validation completed within acceptable SLA thresholds."
+  },
+  {
+    "heading": "Observability",
+    "level": 1,
+    "text": "End‑to‑end processing traceability for each pricing run.\nAudit logs capturing inputs, transformations, and outputs (from MVP2)."
+  },
+  {
+    "heading": "Compliance",
+    "level": 1,
+    "text": "Adherence to AI Governance Council guidance.\n- Integration & Interfaces\n- Identity & Access\nAzure AD for authentication and role assignment (to be validated with backend architects)"
+  },
+  {
+    "heading": "Enterprise Systems",
+    "level": 1,
+    "text": "DDP‑aligned data sources for current pricing.\nSupplier price book PDFs and buy‑in discount files (SharePoint or equivalent)."
+  },
+  {
+    "heading": "Data & Storage",
+    "level": 1,
+    "text": "Structured storage for pricing worksheets and processing metadata."
+  },
+  {
+    "heading": "Orchestration",
+    "level": 1,
+    "text": "Microservices or workflow orchestration for multi‑step pricing pipelines (to be validated with backend architects)\n- Architecture Overview\n- NA\n- Data Management & Governance\nThe source data managed by the Pricing Admin includes supplier price books (PDF), buy‑in discount files, current pricing data from database, reference templates, and validation rules required to generate pricing worksheets.\n#\n- Data\n- Description\n- Source\n- Frequency\n- Owner\n- Security\n1\n- Supplier price books\n- Base prices parts finishes options\n- Supplier PDFs SharePoint\n- Ad‑hoc 2–3x per year\n- Pricing Team\n- Restricted\n2\n- Buy‑in discount files\n- Discount rules and percentages\n- Supplier files emails, Teams\n- Annual Ad‑hoc\n- Pricing Team\n- Restricted\n3\n- Current pricing\n- Existing prices for comparison\n- IAP/DDP‑aligned tables\n- On demand\n- Pricing Team\n- Restricted\n4\n- Updated pricing worksheet\n- Extracted prices with discounts applied\n- Pricing Tool output\n- Per run\n- Pricing Team\n- Restricted\n5\n- Final pricing worksheet\n- Compared and validated prices\n- Pricing Tool output\n- Per run\n- Pricing Team\n- Restricted\n6\n- Validation rules\n- Thresholds for percentage price change\n- Tool configuration\n- As needed\n- Pricing Admin\n- Restricted\n7\n- Supplier metadata\n- Supplier brand category mappings\n- Reference files\n- Periodic\n- Pricing Admin\n- Restricted\nQuality checks: Schema validation and data quality checks for both structured and unstructured (PDF) sources\nRBAC: Role‑based access for Pricing Analyst and Pricing Admin, with audit trails for configuration and pricing changes"
+  },
+  {
+    "heading": "Analytics, Logging & Observability",
+    "level": 1,
+    "text": "Capture pricing run metadata: supplier, number of price books, processing time, validation flags\nMonthly reporting: price books processed, hours saved, cycle time reduction, analyst effort saved\nPublish dashboards as data matures to track adoption and realized benefits\n- Security, Privacy & Compliance\n- Follow AI Governance Council approvals and guardrails\n- VRA, IPA, and SOX applicability assessed via C2P\nSupplier pricing and confidential data protected; synthetic or masked data used for development and testing"
+  },
+  {
+    "heading": "Assumptions & Constraints",
+    "level": 1,
+    "text": "Supplier price books and discount files are available and accessible during MVP execution\nIAP / DDP data sources provide reliable current pricing for comparison\nSupplier PDF formats will continue to vary and require human‑in‑the‑loop validation\n- Dependencies\n- AI Governance Council approval\n- C2P routing and intake governance participation\n- Pricing team availability for validation and UAT\n- Legal review for supplier document usage, if required\n- Timeline & Milestones\nValue estimated by the business, Estimated effort calculation in progress\nTo be presented in the AI council in Apr-26\nMVP1: Supplier PDF parsing and updated pricing worksheet generation\nMVP2: Current pricing retrieval, Integration with CMT (for comparison, and validation of worksheets), Workflow automation, audit logging, and scale‑out across suppliers"
+  },
+  {
+    "heading": "Acceptance Criteria",
+    "level": 1,
+    "text": "≥90% accuracy for extracted pricing fields on pilot suppliers\n≥95% successful pricing runs without manual rework\nValidation flags correctly identify out‑of‑range price changes"
+  },
+  {
+    "heading": "Risks & Mitigations",
+    "level": 1,
+    "text": "Supplier format variability → Maintain human‑in‑the‑loop and configurable templates\nData quality gaps in source PDFs → Schema validation and exception handling\nScope creep → Phase‑gated MVP delivery with intake controls"
+  },
+  {
+    "heading": "Cost & ROI Summary",
+    "level": 1,
+    "text": "Annualized savings calculated based on time saved per price book update and update frequency\nHours saved converted to FTE‑equivalent using standard productivity baselines\n- Development and run costs captured via intake/BIR\n- Workflow (End-to-End)\n- A diagram of a computer\n- Description automatically generated\n- Approvals\n- AI Governance Council\n- Finance (BIR)\n- AI intake\n- Global Intake\n- C2P\n- WAB\n- Appendix A\n- Pricing Use Case.pptx"
+  },
+  {
+    "heading": "Pricing Tool MVP1 Scope Overview",
+    "level": 3,
+    "text": ""
+  },
+  {
+    "heading": "What’s included",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "The MVP1 scope addresses the following key activities",
+    "level": 3,
+    "text": ""
+  },
+  {
+    "heading": "Supplier Price Book Upload",
+    "level": 1,
+    "text": "Upload supplier price book PDF files for pricing extraction."
+  },
+  {
+    "heading": "Updated Pricing Generation",
+    "level": 1,
+    "text": "Generation of a standardized Updated Pricing worksheet with discounts applied based on configured buy‑in discount files."
+  },
+  {
+    "heading": "Multi‑Supplier Format Support",
+    "level": 1,
+    "text": "Support for multiple supplier price book formats with human‑in‑the‑loop review for validation and correction."
+  },
+  {
+    "heading": "How it works",
+    "level": 3,
+    "text": "Pricing Analysts upload a supplier price book PDF into the tool.\nThe system automatically parses the PDF and extracts pricing data.\nExtracted data is transformed into a standardized Updated Pricing worksheet.\nDiscount rules from buy‑in discount files are applied.\nPricing Analysts review the output and make adjustments if required before approval."
+  },
+  {
+    "heading": "Data sources for MVP",
+    "level": 3,
+    "text": "- Supplier price book PDFs\n- Buy‑in discount files\n- Reference pricing templates and configuration files"
+  },
+  {
+    "heading": "Access and Security",
+    "level": 3,
+    "text": "Azure AD authentication for application access.\nRole‑based access for Pricing Analyst and Pricing Admin.\nRestricted access to supplier pricing and discount data.\n- What’s not included\n- No current pricing retrieval from IAP\n- No price comparison or validation logic\n- No automated workflow orchestration\n- No downstream system updates or write‑back\n- No analytics, dashboards, or benefit tracking"
+  },
+  {
+    "heading": "Low fidelity wireframes (MVP1)",
+    "level": 3,
+    "text": "- A screenshot of a login form\n- Description automatically generated\n- A screenshot of a computer\n- Description automatically generated\n- A screenshot of a computer\n- Description automatically generated"
+  }
+]

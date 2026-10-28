@@ -1,0 +1,132 @@
+[
+  {
+    "heading": "(front matter)",
+    "level": 0,
+    "text": "- Test Strategy & Plan\n- Contract Intelligence\nVersion: 1.0\nApplication: Contract Intelligence\nPrepared by: QA Lead, Quality Engineering\nReviewed by: Test Manager\nTest phase: MVP1\nAudience: Business Stakeholders, Product Owners, Architects, Development Team and QA Team\nPurpose: This plan defines the quality approach for validating Contract Intelligence MVP1, from contract upload through storage, processing, extraction, RAG scoring and the Contract Overview page. Draft analysis, renewal alerts, CRM integration and bulk upload are MVP2 and not release blockers."
+  },
+  {
+    "heading": "Contract Extraction and RAG Scoring Validation",
+    "level": 1,
+    "text": "- Verify upload validations and storage of original contracts in blob storage.\n- Verify extraction of metadata and clauses with page references.\n- Validate RAG scoring of all seven P3 Levers against documented thresholds and the Legal golden dataset.\n- Validate Contract Overview search, filters, Summary and P3 Lever Status.\n- Validate persona-based access, especially Customer restrictions, and audit logging."
+  },
+  {
+    "heading": "Scope of Testing",
+    "level": 1,
+    "text": "In scope (functional): upload and validation; blob storage; processing statuses; OCR; metadata and clause extraction; RAG scoring; Contract Overview; contract details; Standard Clause Library change and recalculation; failure notification; Azure AD; persona RBAC.\nIn scope (non-functional): performance (50 pages in 15 minutes, overview in 3 seconds for 5,000 contracts), security, accessibility, observability, reliability and browser compatibility."
+  },
+  {
+    "heading": "Out of scope",
+    "level": 3,
+    "text": "- Editing clauses or overriding RAG scores.\n- E-signature and authoring.\n- Draft analysis, renewal alerts, CRM integration and bulk upload (MVP2)."
+  },
+  {
+    "heading": "Quality Risks, Assumptions and Dependencies",
+    "level": 1,
+    "text": "- Contracts may be scanned, long or use non-standard clause wording.\n- Golden dataset of contracts with Legal-approved lever colours is required.\n- Document Intelligence, Azure OpenAI, Service Bus and SendGrid must be available or mocked.\n- SBU/customer mappings seeded before testing."
+  },
+  {
+    "heading": "Approach",
+    "level": 1,
+    "text": "| Test level | Description |\n|---|---|\n| Unit testing | developer-owned tests for upload validators, lever scoring rules, overview aggregation and APIs. Target minimum coverage: 85%. |\n| Component testing | file service, processing service, extraction (Document Intelligence + Azure OpenAI), notification function and overview aggregation. |\n| API and contract testing | positive and negative behaviour, schemas, authentication, error codes, idempotency and versioning. |\n| Integration testing | UI–file service, file service–Blob Storage, Service Bus–processing service, processing–APIM–Document Intelligence/Azure OpenAI, processing–PostgreSQL, Function–SendGrid and Azure AD. |\n| System testing | end-to-end scenarios across upload, processing, extraction, scoring, overview and details. |\n| User acceptance testing | Legal users validate extraction and scoring; account managers validate the overview and restrictions. |\nTechniques: Use requirements-based testing, equivalence partitioning, boundary-value analysis, pairwise coverage, negative testing, exploratory testing, risk-based prioritisation, regression testing and data-driven automation."
+  },
+  {
+    "heading": "Test Coverage – Functional",
+    "level": 1,
+    "text": "- Upload and validation: Mandatory fields, PDF/DOCX only, 25 MB limit, password-protected file rejection, unique contract name per customer, Effective Date not after Expiration Date. Customer list filtered by SBU; confirmation message and Processing status after upload.\n- Processing and failure handling – Statuses Uploaded → Processing → Completed/Failed; unreadable scan fails with readable reason and email to uploader; resubmission succeeds. Processing logs in Datadog with contract reference.\n- Extraction: Parties, effective/expiration dates, renewal type, governing law, notice period; mismatch with user-entered values highlighted. Clauses with page references; clicking a reference opens the document at the page.\n- RAG scoring: Payment Terms 45 days → Green, 46 and 60 → Amber, 61 → Red, missing → Red 'Clause not found'. All seven levers scored; threshold change by Admin triggers recalculation with previous result in history.\n- Contract Overview: Search by customer, account number, contract name (min 3 characters), 'No contracts found' message. Active/Expired view, Expiring-in 30/60/90/180 days, Summary counts, P3 Lever Status counts, expand/collapse."
+  },
+  {
+    "heading": "Access Control Testing",
+    "level": 1,
+    "text": "| Role | Permitted actions | Restricted actions |\n|---|---|---|\n| Legal | Upload, view all contracts and analysis | Settings, user management |\n| Admin | All Legal actions, mappings, Standard Clause Library, users | Editing RAG results |\n| Customer | Read-only overview and contracts for assigned customers | Upload, Settings, unassigned customers |\nVerify hidden menus per persona, direct-URL access denied for Upload and Settings, customer-level data isolation and logout/back-button behaviour."
+  },
+  {
+    "heading": "Security & Compliance Testing",
+    "level": 1,
+    "text": "- Azure AD login, MFA, session timeout, token expiration, logout and JWT validation.\n- RBAC at UI and API layers; rate limiting; input validation; safe error messages; CSRF and XSS protection.\n- Verify uploaded files cannot be executed or accessed without authorisation (signed URLs only).\n- Test malicious files, injection in contract names and oversized uploads.\n- Verify no contract text in application logs.\n- Dependency scanning, SAST/DAST and penetration testing before release."
+  },
+  {
+    "heading": "AI and Data Quality Validation",
+    "level": 1,
+    "text": "Use a Legal golden dataset of contracts with approved lever colours and metadata. Targets: ≥90% lever colour accuracy and ≥95% metadata accuracy.\n- Measure per-lever accuracy and confusion between Amber and Red.\n- Verify reasons and page references support each score.\n- Re-run golden set after model, prompt or library changes."
+  },
+  {
+    "heading": "Non-Functional Testing",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Performance and scalability",
+    "level": 2,
+    "text": "- 50-page contract processed within 15 minutes.\n- Contract Overview within 3 seconds for 5,000 contracts.\n- 10, 25 and 50 concurrent users."
+  },
+  {
+    "heading": "Reliability and recovery",
+    "level": 2,
+    "text": "- Service restart during processing, network interruption, dependency failure, retry/idempotency and recovery from partial failure.\n- Backup/restore, data reconciliation after recovery, alerting and runbooks."
+  },
+  {
+    "heading": "Accessibility and compatibility",
+    "level": 2,
+    "text": "- Screen reader labels, keyboard-only navigation, focus order, colour contrast, error identification and zoom/reflow.\n- Current enterprise-supported versions of Edge, Chrome and Firefox."
+  },
+  {
+    "heading": "Logging, Monitoring & Audit",
+    "level": 1,
+    "text": "Verify structured logs, metrics, traces, correlation IDs, dashboards and alerts. Audit records must capture user, persona, contract identifier, SBU, customer, action (upload, view, archive), model version and library version. Confirm timestamps, access controls, retention and exportability."
+  },
+  {
+    "heading": "Test Data and Environment Strategy",
+    "level": 1,
+    "text": "| Data category | Examples |\n|---|---|\n| Valid | Golden contracts with approved lever colours |\n| Invalid | Password-protected, XLSX, >25 MB, unreadable scans |\n| Boundary | Payment terms 45/46/60/61 days, names of 2/3/120/121 characters |\n| Security | Restricted persona accounts, direct URLs |\n| Production-like | 5,000 masked contracts across SBUs |\nIsolated development, QA/integration, performance and UAT environments; versioned test data and expected results; record build, configuration, dataset and model version for every execution."
+  },
+  {
+    "heading": "Entry / Exit Criteria",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Entry criteria",
+    "level": 2,
+    "text": "- BRD approved and requirements baselined; acceptance criteria and thresholds agreed.\n- Environment, integrations, monitoring and access provisioned; test data available.\n- Golden dataset approved by Legal; SBU/customer mappings seeded.\n- Build deployed with unit-test evidence and known limitations documented."
+  },
+  {
+    "heading": "Exit criteria",
+    "level": 2,
+    "text": "- At least 95% of planned test cases passed, with all critical-path cases passed.\n- No open Critical defects and no open High-severity security defects.\n- ≥90% lever accuracy and ≥95% metadata accuracy on golden set.\n- Customer persona isolation verified.\n- Performance targets met.\n- All UAT scenarios approved and business sign-off completed."
+  },
+  {
+    "heading": "Defect Severity & Process",
+    "level": 1,
+    "text": "| Severity | Definition | Example |\n|---|---|---|\n| Critical | Wrong RAG colour shown as correct, data leak across customers | Customer user sees another customer's contract |\n| High | Upload or processing blocked | All scanned contracts fail |\n| Medium | Workaround exists | Filter needs page refresh |\n| Low | Cosmetic | Badge colour shade |\nEach defect includes steps, expected/actual results, evidence, severity, environment, build, owner and retest result."
+  },
+  {
+    "heading": "Risks and Mitigations",
+    "level": 1,
+    "text": "| Risk | Mitigation |\n|---|---|\n| Poor scan quality | OCR tests and failure flow |\n| Scoring inaccuracy | Golden dataset and reason review |\n| Access leakage | Persona isolation tests |\n| Performance at scale | Volume tests with 5,000 contracts |"
+  },
+  {
+    "heading": "Deliverables and Reporting",
+    "level": 1,
+    "text": "- Master Test Plan and Test Strategy\n- Requirements Traceability Matrix (RTM)\n- Test scenarios, cases, scripts and automation report\n- Versioned test data and golden dataset\n- Defect report, daily status report and test execution report\n- Performance, security, accessibility and reliability test reports\n- UAT evidence and sign-off\n- Test closure report with residual risks and lessons learned"
+  },
+  {
+    "heading": "Recommended MVP1 Traceability and Metrics",
+    "level": 1,
+    "text": "Map every BRD requirement to test cases and evidence. Report weekly planned/executed/passed/failed/blocked cases, coverage by requirement and risk, defect severity and ageing, lever accuracy, extraction accuracy, processing SLA compliance, failure rate, accessibility and security findings and UAT completion."
+  },
+  {
+    "heading": "Schedule",
+    "level": 1,
+    "text": "- MVP1 build: Apr–Jun 2025\n- UAT: Jul 2025\n- MVP2: Q4 2025\n- Test execution and UAT aligned to MVP1 milestones above."
+  },
+  {
+    "heading": "Sample E2E Flow",
+    "level": 1,
+    "text": "- Sign in as Legal.\n- Upload a contract with attributes.\n- Verify storage and processing.\n- Verify metadata and clauses.\n- Verify RAG scores.\n- Verify Contract Overview as Customer persona.\n- Verify audit log."
+  },
+  {
+    "heading": "Approvals",
+    "level": 1,
+    "text": "| Role | Name | Signature / Date |\n|---|---|---|\n| QA Lead |  |  |\n| Product Owner |  |  |\n| Business Owner |  |  |\nGo/No-Go: MVP1 should not be released until the exit criteria are met or deviations are formally accepted by Legal Operations and Product."
+  }
+]

@@ -1,0 +1,103 @@
+{
+  "project": "P06_Rebate_Validation",
+  "structure": 1.0,
+  "missing_sections": [],
+  "coverage": 0.93125,
+  "coverage_all": 0.9183673469387755,
+  "guard_downgrades": 2,
+  "missed_facts": [
+    {
+      "id": "F053",
+      "category": "data",
+      "fact": "Calculations owner is Supplier Programs and security classification is Confidential"
+    },
+    {
+      "id": "F090",
+      "category": "integration",
+      "fact": "Data stores listed are Azure Blob Storage, Azure PostgreSQL, Delta Lake EUDM/IAP (Databricks SQL)"
+    }
+  ],
+  "coverage_by_category": {
+    "acceptance": 1.0,
+    "ai_quality": 1.0,
+    "architecture": 0.75,
+    "assumption": 1.0,
+    "business_rule": 0.71,
+    "compliance": 1.0,
+    "data": 0.65,
+    "dependency": 1.0,
+    "functional": 1.0,
+    "integration": 0.96,
+    "nfr_availability": 1.0,
+    "nfr_performance": 1.0,
+    "out_of_scope": 1.0,
+    "risk": 1.0,
+    "role": 0.92,
+    "scope_mvp1": 1.0,
+    "scope_mvp2": 1.0,
+    "security_access": 1.0,
+    "timeline": 1.0
+  },
+  "faithfulness": 0.9636363636363636,
+  "claims": 63,
+  "requirement_claims": 55,
+  "test_design_claims": 8,
+  "invented": 2,
+  "unverified_supported": 2,
+  "invented_claims": [
+    {
+      "claim": "Worked tier example: threshold USD 1,000,000 -> rate 2%",
+      "kind": "requirement",
+      "verdict": "supported"
+    },
+    {
+      "claim": "Worked tier example: threshold USD 2,000,000 -> rate 3%",
+      "kind": "requirement",
+      "verdict": "supported"
+    }
+  ],
+  "similarity": 0.9636363636363636,
+  "embedding_sim": 0.7171893086931644,
+  "section_scores": {
+    "references": 1.0,
+    "objectives": 1.0,
+    "scope_in": 1.0,
+    "scope_out": 1.0,
+    "assumptions_dependencies": 1.0,
+    "test_strategy": 1.0,
+    "functional_coverage": 0.8,
+    "rbac_testing": 1.0,
+    "security_compliance": 0.6,
+    "ai_data_quality": 1.0,
+    "nfr_performance": 1.0,
+    "nfr_reliability": 0.8,
+    "nfr_accessibility_compat": 1.0,
+    "observability_audit": 1.0,
+    "test_data_environment": 1.0,
+    "entry_exit_criteria": 1.0,
+    "defect_management": 1.0,
+    "risks": 1.0,
+    "deliverables_reporting": 1.0,
+    "traceability_metrics": 1.0,
+    "schedule": 1.0,
+    "e2e_scenario": 1.0
+  },
+  "missing_points": {
+    "functional_coverage": [
+      "Explicit test case covering returns and credit notes handling in spend calculation",
+      "The specific BRD worked numeric example: spend = USD 2.1M \u2192 retroactive USD 63,000 and incremental USD 23,000 (exact example not included)"
+    ],
+    "security_compliance": [
+      "Explicit MFA, session timeout and JWT validation test cases",
+      "CSRF and XSS specific test cases called out",
+      "Rate limiting / throttling enforcement tests (explicit)",
+      "Explicit test to verify spend data is not written to logs / sensitive-data redaction verification",
+      "A defined penetration test schedule/results (plan references SAST/DAST but no explicit pentest timeline/results)"
+    ],
+    "nfr_reliability": [
+      "Explicit backup & restore tests and verification of restore data reconciliation",
+      "Documented runbooks and drill tests for operational recovery (explicit runbook validation)"
+    ]
+  },
+  "overall": 0.9233114669421487
+}

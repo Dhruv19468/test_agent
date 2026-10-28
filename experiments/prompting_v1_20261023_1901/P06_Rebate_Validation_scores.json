@@ -1,0 +1,166 @@
+{
+  "project": "P06_Rebate_Validation",
+  "structure": 0.85,
+  "missing_sections": [
+    "scope_out",
+    "nfr_accessibility_compat",
+    "e2e_scenario"
+  ],
+  "coverage": 0.83125,
+  "coverage_all": 0.7857142857142857,
+  "guard_downgrades": 1,
+  "missed_facts": [
+    {
+      "id": "F013",
+      "category": "nfr_performance",
+      "fact": "Cut claim preparation time from 3 days to 4 hours per supplier"
+    },
+    {
+      "id": "F047",
+      "category": "data",
+      "fact": "Rebate agreements security classification is Restricted"
+    },
+    {
+      "id": "F049",
+      "category": "data",
+      "fact": "Purchase data owner is Finance Data and security classification is Confidential"
+    },
+    {
+      "id": "F051",
+      "category": "data",
+      "fact": "Product line mapping owner is Program Admin and security classification is Internal"
+    },
+    {
+      "id": "F052",
+      "category": "data",
+      "fact": "Calculations data source is Tool output and frequency is Per run"
+    },
+    {
+      "id": "F083",
+      "category": "integration",
+      "fact": "Calculation Service must call Delta Lake EUDM/IAP (Databricks SQL) using HTTPS/443 OAuth 2.0"
+    },
+    {
+      "id": "F095",
+      "category": "integration",
+      "fact": "Agreement Service connects to APIM using HTTPS/443 Managed Identity"
+    }
+  ],
+  "coverage_by_category": {
+    "acceptance": 1.0,
+    "ai_quality": 1.0,
+    "architecture": 0.88,
+    "assumption": 1.0,
+    "business_rule": 0.71,
+    "compliance": 0.5,
+    "data": 0.35,
+    "dependency": 0.75,
+    "functional": 0.96,
+    "integration": 0.83,
+    "nfr_availability": 1.0,
+    "nfr_performance": 0.67,
+    "out_of_scope": 0.0,
+    "risk": 1.0,
+    "role": 0.83,
+    "scope_mvp1": 1.0,
+    "scope_mvp2": 1.0,
+    "security_access": 1.0,
+    "timeline": 0.5
+  },
+  "faithfulness": 0.8709677419354839,
+  "claims": 79,
+  "requirement_claims": 62,
+  "test_design_claims": 17,
+  "invented": 8,
+  "unverified_supported": 0,
+  "invented_claims": [
+    {
+      "claim": "Use stubs/mocks for Azure Document Intelligence and Azure OpenAI during most functional tests",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Functional testing will cover 100% of MVP1 functional requirements",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Test tools include Postman, RestAssured, pytest, and Databricks SQL connector",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "UI automation tool preference: Playwright",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Load testing tools: JMeter, k6, or Azure Load Testing",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Security tools: Burp Suite and Snyk scans",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Automation coverage target: automate approximately 70\u201380% of functional tests",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Golden dataset for testing will comprise at least 100 annotated PDFs with ground-truth JSON",
+      "kind": "requirement",
+      "verdict": "not_found"
+    }
+  ],
+  "similarity": 0.9363636363636364,
+  "embedding_sim": 0.5389740385270195,
+  "section_scores": {
+    "references": 0.4,
+    "objectives": 1.0,
+    "scope_in": 1.0,
+    "scope_out": 1.0,
+    "assumptions_dependencies": 1.0,
+    "test_strategy": 1.0,
+    "functional_coverage": 0.8,
+    "rbac_testing": 1.0,
+    "security_compliance": 1.0,
+    "ai_data_quality": 1.0,
+    "nfr_performance": 1.0,
+    "nfr_reliability": 1.0,
+    "nfr_accessibility_compat": 0.4,
+    "observability_audit": 1.0,
+    "test_data_environment": 1.0,
+    "entry_exit_criteria": 1.0,
+    "defect_management": 1.0,
+    "risks": 1.0,
+    "deliverables_reporting": 1.0,
+    "traceability_metrics": 1.0,
+    "schedule": 1.0,
+    "e2e_scenario": 1.0
+  },
+  "missing_points": {
+    "references": [
+      "Explicit list of reference documents (Rebate Claim Validation BRD) and architecture diagram with versions/links",
+      "Clear pointer to the exact BRD section/page references used in test design"
+    ],
+    "test_strategy": [
+      "Specific unit-test coverage target (85%) called out in reference is not explicitly stated"
+    ],
+    "functional_coverage": [
+      "Explicit numeric worked examples from the BRD (retroactive/incremental calculation sample numbers) as named test vectors",
+      "Explicit tests for returns and credit notes handling called out in reference",
+      "Clear amendment-precedence test cases spelled out (amendments override base terms with examples)"
+    ],
+    "nfr_accessibility_compat": [
+      "Detailed accessibility acceptance criteria (screen reader labels, keyboard-only navigation, focus order, color contrast checks, error identification)",
+      "Explicit browser compatibility matrix (enterprise-supported Edge/Chrome/Firefox versions) and test cases"
+    ],
+    "observability_audit": [
+      "Explicit retention/exportability policy for audit records (minor omission)"
+    ]
+  },
+  "overall": 0.7555397727272727
+}

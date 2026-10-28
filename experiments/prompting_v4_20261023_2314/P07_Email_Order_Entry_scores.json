@@ -1,0 +1,105 @@
+{
+  "project": "P07_Email_Order_Entry",
+  "structure": 1.0,
+  "missing_sections": [],
+  "coverage": 0.9642857142857143,
+  "coverage_all": 0.9565217391304348,
+  "guard_downgrades": 0,
+  "missed_facts": [
+    {
+      "id": "F005",
+      "category": "data",
+      "fact": "Customer Service receives about 6,000 PO emails per week"
+    },
+    {
+      "id": "F006",
+      "category": "data",
+      "fact": "PO emails across 40 branches"
+    }
+  ],
+  "coverage_by_category": {
+    "acceptance": 1.0,
+    "architecture": 1.0,
+    "assumption": 1.0,
+    "business_rule": 1.0,
+    "data": 0.4,
+    "dependency": 1.0,
+    "functional": 1.0,
+    "integration": 1.0,
+    "nfr_availability": 1.0,
+    "nfr_performance": 1.0,
+    "out_of_scope": 1.0,
+    "risk": 1.0,
+    "role": 1.0,
+    "scope_mvp1": 1.0,
+    "scope_mvp2": 1.0,
+    "security_access": 1.0,
+    "timeline": 1.0
+  },
+  "faithfulness": 0.9577464788732394,
+  "claims": 76,
+  "requirement_claims": 71,
+  "test_design_claims": 5,
+  "invented": 3,
+  "unverified_supported": 3,
+  "invented_claims": [
+    {
+      "claim": "Audience includes CS Admins",
+      "kind": "requirement",
+      "verdict": "supported"
+    },
+    {
+      "claim": "Audience includes CS Supervisors",
+      "kind": "requirement",
+      "verdict": "supported"
+    },
+    {
+      "claim": "Audience includes CSRs",
+      "kind": "requirement",
+      "verdict": "supported"
+    }
+  ],
+  "similarity": 0.9333333333333333,
+  "embedding_sim": 0.7122535261916583,
+  "section_scores": {
+    "references": 1.0,
+    "objectives": 1.0,
+    "scope_in": 1.0,
+    "scope_out": 1.0,
+    "assumptions_dependencies": 1.0,
+    "test_strategy": 0.8,
+    "functional_coverage": 1.0,
+    "rbac_testing": 1.0,
+    "security_compliance": 0.6,
+    "ai_data_quality": 1.0,
+    "nfr_performance": 1.0,
+    "nfr_reliability": 1.0,
+    "nfr_accessibility_compat": 0.2,
+    "observability_audit": 1.0,
+    "test_data_environment": 1.0,
+    "entry_exit_criteria": 1.0,
+    "defect_management": 1.0,
+    "risks": 1.0,
+    "deliverables_reporting": 1.0,
+    "traceability_metrics": 1.0,
+    "e2e_scenario": 1.0
+  },
+  "missing_points": {
+    "test_strategy": [
+      "Explicit unit-test coverage target (reference: 85% minimum) is not stated.",
+      "Some owner-level specifics for test responsibilities and automation tool choices are left TBD (though mentioned)."
+    ],
+    "security_compliance": [
+      "Explicit MFA/session timeout and JWT validation tests (exact requirements).",
+      "Specific CSRF and XSS test cases and input validation coverage called out.",
+      "Dependency scanning / SAST / DAST and penetration testing schedule and acceptance criteria.",
+      "Explicit spoofed-sender-domain test cases and prompt-injection test cases called out with expected blocking behaviour."
+    ],
+    "nfr_accessibility_compat": [
+      "Detailed accessibility tests (screen reader labels, keyboard-only navigation, focus order, colour contrast, error identification).",
+      "Explicit browser compatibility matrix with enterprise-supported versions and Zoom/reflow/responsive checks.",
+      "Acceptance criteria for accessibility (WCAG levels) or required compliance targets."
+    ]
+  },
+  "overall": 0.9231991951710261
+}

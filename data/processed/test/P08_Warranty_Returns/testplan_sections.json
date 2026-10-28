@@ -1,0 +1,122 @@
+[
+  {
+    "heading": "(front matter)",
+    "level": 0,
+    "text": "- QA Test Plan\n- RMA Assistant\n1.0 · RMA Assistant · QA Lead, Quality Engineering\nThis plan defines the quality approach for validating RMA Assistant MVP1: request intake, SAP invoice lookup, policy retrieval (RAG), eligibility recommendation with citations, restocking fee, approvals, RMA creation and customer notification. Supplier claims, customer portal, labels and analytics are MVP2."
+  },
+  {
+    "heading": "Quality Objectives",
+    "level": 1,
+    "text": "Verify request intake and SAP invoice lookup. Validate policy retrieval uses only active policy versions and every recommendation cites a valid clause. Verify eligibility rules (30-day window, warranty periods, non-returnable categories) and restocking fee logic. Validate approvals for exceptions and returns above USD 10,000. Validate RMA creation in SAP only after approval, notification email, security and Responsible AI controls."
+  },
+  {
+    "heading": "Scope",
+    "level": 1,
+    "text": "In scope (functional): web form and mailbox intake; SAP invoice lookup; policy ingestion and versioning; retrieval; recommendation with citations; eligibility and fee rules; approvals; RMA creation; email notification; Azure AD; RBAC.\nIn scope (non-functional): performance (recommendation 15 s, RMA 10 s), Responsible AI, security, accessibility, observability, reliability."
+  },
+  {
+    "heading": "Out of scope",
+    "level": 3,
+    "text": "Refunds, inventory disposition and credit memos. Supplier claims, customer portal, shipping labels and analytics (MVP2)."
+  },
+  {
+    "heading": "Test Assumptions",
+    "level": 1,
+    "text": "- Policies vary by supplier and change over time.\n- Golden decisions from coordinators available.\n- SAP RMA API and SendGrid available or mocked."
+  },
+  {
+    "heading": "Test Strategy",
+    "level": 1,
+    "text": "| Test level | Description |\n|---|---|\n| Unit testing | developer-owned tests for eligibility rules, fee calculator, citation validator and APIs. Target minimum coverage: 85%. |\n| Component testing | returns service, policy ingestion and indexing, recommendation component and notification service. |\n| API and contract testing | positive and negative behaviour, schemas, authentication, error codes, idempotency and versioning. |\n| Integration testing | UI–returns service, Graph mailbox–returns service, returns–APIM–SAP/AI Search/Azure OpenAI, policy ingestion–Document Intelligence/AI Search/Blob, Service Bus–notification–SendGrid and Azure AD. |\n| System testing | end-to-end scenarios across intake, invoice lookup, policy retrieval, recommendation, approval, RMA and notification. |\n| User acceptance testing | Returns Coordinators and Managers validate recommendations, citations and approvals. |\nTechniques: Use requirements-based testing, equivalence partitioning, boundary-value analysis, pairwise coverage, negative testing, exploratory testing, risk-based prioritisation, regression testing and data-driven automation."
+  },
+  {
+    "heading": "Role-Based Access and Workflow",
+    "level": 1,
+    "text": "- Returns Coordinator: Permitted actions: Review, approve within policy, create RMA; Restricted actions: Exceptions, returns above USD 10,000, policy admin\n- Returns Manager: Permitted actions: Approve exceptions and high-value returns; Restricted actions: Policy administration\n- Policy Admin: Permitted actions: Upload, version and retire policies; fee rules; Restricted actions: Approving returns\nVerify approval thresholds, exception approvals, policy admin restrictions and audit of overrides."
+  },
+  {
+    "heading": "Features to be Tested",
+    "level": 1,
+    "text": "| Area | Coverage |\n|---|---|\n| Request intake and invoice lookup | Form and email requests, missing invoice number, invoice not found, partial quantity return, photos attached. |\n| Policy ingestion and retrieval | Upload new version, retire old version; retired policy must never be cited; supplier and category filters applied. |\n| Recommendation and citations | Every recommendation includes document, clause and effective date; citation text exists in the active policy; no recommendation when no policy found. |\n| Eligibility and fees | Non-defective return on day 30 eligible, day 31 not eligible; custom cut cable not returnable; defective within warranty → fee waived; non-defective → 15% fee. |\n| Approval, RMA and notification | Exception requires Returns Manager with reason; USD 10,000.01 requires manager; RMA created only after approval; email sent with RMA number. |"
+  },
+  {
+    "heading": "AI, Retrieval and Responsible AI Validation",
+    "level": 1,
+    "text": "Use golden decisions from coordinators with expected citations. Targets ≥90% decision agreement and 100% valid citations from active policies.\n- Retrieval recall@5 for the correct policy clause.\n- Citation validity checks against source text.\n- Consistency across repeated runs; version tracking for model, prompt and index."
+  },
+  {
+    "heading": "Non-Functional Requirements Testing",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Performance",
+    "level": 2,
+    "text": "- Recommendation within 15 seconds; RMA creation within 10 seconds; 25 and 50 concurrent users."
+  },
+  {
+    "heading": "Resilience",
+    "level": 2,
+    "text": "- Service restart during processing, network interruption, dependency failure, retry/idempotency and recovery from partial failure.\n- Backup/restore, data reconciliation after recovery, alerting and runbooks."
+  },
+  {
+    "heading": "Accessibility and compatibility",
+    "level": 2,
+    "text": "Screen reader labels, keyboard-only navigation, focus order, colour contrast, error identification and zoom/reflow. Current enterprise-supported versions of Edge, Chrome and Firefox."
+  },
+  {
+    "heading": "Security",
+    "level": 2,
+    "text": "- Azure AD login, MFA, session timeout, token expiration, logout and JWT validation.\n- RBAC at UI and API layers; rate limiting; input validation; safe error messages; CSRF and XSS protection.\n- Prompt-injection text in customer requests must not change recommendations.\n- Verify customer data not stored in prompts or logs.\n- Dependency scanning, SAST/DAST and penetration testing before release."
+  },
+  {
+    "heading": "Audit and Observability",
+    "level": 1,
+    "text": "Verify structured logs, metrics, traces, correlation IDs, dashboards and alerts. Audit records must capture user, request identifier, invoice, policy document and version cited, recommendation, decision, approver, RMA number. Confirm timestamps, access controls, retention and exportability."
+  },
+  {
+    "heading": "Test Data Management",
+    "level": 1,
+    "text": "- Valid: Requests with golden decisions and citations\n- Invalid: Missing invoice, unknown supplier\n- Boundary: Day 30/31, USD 10,000.00/10,000.01\n- Security – Injection text, restricted roles\n- Production-like: Monthly volume with 300 policies indexed\nIsolated development, QA/integration, performance and UAT environments; versioned test data and expected results; record build, configuration, dataset and model version for every execution."
+  },
+  {
+    "heading": "Entry and Exit Criteria",
+    "level": 1,
+    "text": "| Entry criteria | Exit criteria |\n|---|---|\n| BRD approved and requirements baselined; acceptance criteria and thresholds agreed. | At least 95% of planned test cases passed, with all critical-path cases passed. |\n| Environment, integrations, monitoring and access provisioned; test data available. | No open Critical defects and no open High-severity security defects. |\n| Policy index loaded with active and retired versions; golden decisions approved. | ≥90% decision agreement. |\n| Build deployed with unit-test evidence and known limitations documented. | 100% valid citations; no retired policy cited. |\n|  | Fee logic 100% correct. |\n|  | No RMA without approval. |\n|  | All UAT scenarios approved and business sign-off completed. |"
+  },
+  {
+    "heading": "Defect Tracking",
+    "level": 1,
+    "text": "| Severity | Definition | Example |\n|---|---|---|\n| Critical | Wrong eligibility executed or retired policy cited | RMA created for non-returnable item |\n| High | Flow blocked | SAP RMA creation fails |\n| Medium | Workaround | Manual invoice search needed |\n| Low | Cosmetic | Citation formatting |\nEach defect includes steps, expected/actual results, evidence, severity, environment, build, owner and retest result."
+  },
+  {
+    "heading": "Risk Register",
+    "level": 1,
+    "text": "| Risk | Mitigation |\n|---|---|\n| Outdated policies | Versioning tests |\n| Hallucinated terms | Citation validation |\n| Ambiguous policies | Human approval and golden set |\n| SAP dependency | Mocks and retries |"
+  },
+  {
+    "heading": "Test Deliverables",
+    "level": 1,
+    "text": "Master Test Plan and Test Strategy. Requirements Traceability Matrix (RTM). Test scenarios, cases, scripts and automation report. Versioned test data and golden dataset. Defect report, daily status report and test execution report. Performance, security, accessibility and reliability test reports. UAT evidence and sign-off. Test closure report with residual risks and lessons learned."
+  },
+  {
+    "heading": "Test Metrics",
+    "level": 1,
+    "text": "Map every BRD requirement to test cases and evidence. Report weekly planned/executed/passed/failed/blocked cases, coverage by requirement and risk, defect severity and ageing, decision agreement, citation validity, retrieval recall, handling time, accessibility and security findings and UAT completion."
+  },
+  {
+    "heading": "Schedule",
+    "level": 1,
+    "text": "MVP1: Apr–Jul 2026. MVP2: 2027. Test execution and UAT aligned to MVP1 milestones above."
+  },
+  {
+    "heading": "Representative End-to-End Scenario",
+    "level": 1,
+    "text": "- Customer submits a return request.\n- Coordinator signs in.\n- Invoice retrieved from SAP.\n- Policy clauses retrieved and recommendation shown with citation.\n- Fee calculated.\n- Coordinator approves; RMA created in SAP.\n- Customer receives email.\n- Verify audit trail."
+  },
+  {
+    "heading": "Document Approval",
+    "level": 1,
+    "text": "| Role | Name | Signature / Date |\n|---|---|---|\n| QA Lead |  |  |\n| Product Owner |  |  |\n| Business Owner |  |  |\nGo/No-Go: MVP1 should not be released until the exit criteria are met or deviations are accepted by Returns & Warranty Operations and Product."
+  }
+]

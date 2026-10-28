@@ -1,0 +1,184 @@
+{
+  "project": "P06_Rebate_Validation",
+  "structure": 0.7,
+  "missing_sections": [
+    "rbac_testing",
+    "security_compliance",
+    "ai_data_quality",
+    "nfr_performance",
+    "nfr_reliability",
+    "nfr_accessibility_compat"
+  ],
+  "coverage": 0.85625,
+  "coverage_all": 0.8214285714285714,
+  "guard_downgrades": 2,
+  "missed_facts": [
+    {
+      "id": "F013",
+      "category": "nfr_performance",
+      "fact": "Cut claim preparation time from 3 days to 4 hours per supplier"
+    },
+    {
+      "id": "F047",
+      "category": "data",
+      "fact": "Rebate agreements security classification is Restricted"
+    },
+    {
+      "id": "F049",
+      "category": "data",
+      "fact": "Purchase data owner is Finance Data and security classification is Confidential"
+    },
+    {
+      "id": "F096",
+      "category": "integration",
+      "fact": "Calculation Service communicates with Azure PostgreSQL for results"
+    }
+  ],
+  "coverage_by_category": {
+    "acceptance": 1.0,
+    "ai_quality": 1.0,
+    "architecture": 0.75,
+    "assumption": 1.0,
+    "business_rule": 0.64,
+    "compliance": 0.0,
+    "data": 0.5,
+    "dependency": 1.0,
+    "functional": 1.0,
+    "integration": 0.83,
+    "nfr_availability": 1.0,
+    "nfr_performance": 0.67,
+    "out_of_scope": 1.0,
+    "risk": 1.0,
+    "role": 0.83,
+    "scope_mvp1": 1.0,
+    "scope_mvp2": 1.0,
+    "security_access": 1.0,
+    "timeline": 0.5
+  },
+  "faithfulness": 0.7659574468085106,
+  "claims": 51,
+  "requirement_claims": 47,
+  "test_design_claims": 4,
+  "invented": 11,
+  "unverified_supported": 0,
+  "invented_claims": [
+    {
+      "claim": "Provision a Databricks test warehouse pointing to a copy of Delta Lake test data.",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Provision test Azure AD tenants with test users for roles.",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Non-production environments must use masked or anonymized PII.",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Use k6 or Apache JMeter for performance and load testing.",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Use Playwright or Cypress for UI automation.",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Use Postman or REST Assured for API/integration testing.",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Run security scans with OWASP ZAP and Snyk on code and dependencies.",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Regression exit criteria require automated regression pass rate thresholds.",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Severity 1 defects must have a 2-hour response and 24-hour resolution SLA.",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "QA environments include Dev, CI, QA(Integration), Staging (Pre-prod) and Production.",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Production data must not be used in non-prod unless masked and approved.",
+      "kind": "requirement",
+      "verdict": "not_found"
+    }
+  ],
+  "similarity": 0.9181818181818181,
+  "embedding_sim": 0.457610300659705,
+  "section_scores": {
+    "references": 0.8,
+    "objectives": 1.0,
+    "scope_in": 1.0,
+    "scope_out": 1.0,
+    "assumptions_dependencies": 1.0,
+    "test_strategy": 0.8,
+    "functional_coverage": 0.8,
+    "rbac_testing": 1.0,
+    "security_compliance": 0.8,
+    "ai_data_quality": 1.0,
+    "nfr_performance": 1.0,
+    "nfr_reliability": 0.8,
+    "nfr_accessibility_compat": 0.2,
+    "observability_audit": 1.0,
+    "test_data_environment": 1.0,
+    "entry_exit_criteria": 1.0,
+    "defect_management": 1.0,
+    "risks": 1.0,
+    "deliverables_reporting": 1.0,
+    "traceability_metrics": 1.0,
+    "schedule": 1.0,
+    "e2e_scenario": 1.0
+  },
+  "missing_points": {
+    "references": [
+      "Explicit reference list/links to BRD and the architecture diagram (document IDs/locations)",
+      "Versioned architecture diagram and integration flow references"
+    ],
+    "test_strategy": [
+      "Explicit unit-test coverage target (85%) not stated",
+      "API/contract tests detail missing (idempotency, versioning, explicit error code mappings)",
+      "Component test targets (explicit list and owners)"
+    ],
+    "functional_coverage": [
+      "Concrete worked numeric examples (e.g., USD 2.1M retroactive vs incremental calculations) not enumerated as canonical test cases",
+      "Explicit timeout/retry behavior for Databricks queries (timeouts, retry counts/intervals)",
+      "More explicit boundary-case lists (exact threshold values called out)"
+    ],
+    "rbac_testing": [
+      "Explicit role-permission matrix table formatting is not present (roles/actions are covered in text)"
+    ],
+    "security_compliance": [
+      "Explicit MFA, session timeout and JWT/logout behaviour tests",
+      "CSRF/XSS specific test cases and rate-limiting checks",
+      "Verification that spend data is not written to logs"
+    ],
+    "nfr_reliability": [
+      "Explicit tests for service restart/processing mid-run and recovery from partial failures",
+      "Idempotency test cases for retries and clear retry policies",
+      "Runbooks/alerting playbook validation steps"
+    ],
+    "nfr_accessibility_compat": [
+      "Accessibility-specific tests: screen-reader labels, keyboard-only navigation, focus order, colour contrast and error annunciation",
+      "Browser compatibility matrix and explicit supported versions testing"
+    ],
+    "observability_audit": [
+      "Retention/exportability policies and explicit correlation ID propagation tests (minor)"
+    ]
+  },
+  "overall": 0.640161992263056
+}

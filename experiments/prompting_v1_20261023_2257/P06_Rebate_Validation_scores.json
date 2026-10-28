@@ -1,0 +1,203 @@
+{
+  "project": "P06_Rebate_Validation",
+  "structure": 0.85,
+  "missing_sections": [
+    "scope_out",
+    "nfr_accessibility_compat",
+    "e2e_scenario"
+  ],
+  "coverage": 0.83125,
+  "coverage_all": 0.7755102040816326,
+  "guard_downgrades": 2,
+  "missed_facts": [
+    {
+      "id": "F002",
+      "category": "scope_mvp1",
+      "fact": "MVP1 extracts tier rules from agreements"
+    },
+    {
+      "id": "F013",
+      "category": "nfr_performance",
+      "fact": "Cut claim preparation time from 3 days to 4 hours per supplier"
+    },
+    {
+      "id": "F047",
+      "category": "data",
+      "fact": "Rebate agreements security classification is Restricted"
+    },
+    {
+      "id": "F049",
+      "category": "data",
+      "fact": "Purchase data owner is Finance Data and security classification is Confidential"
+    },
+    {
+      "id": "F052",
+      "category": "data",
+      "fact": "Calculations data source is Tool output and frequency is Per run"
+    },
+    {
+      "id": "F053",
+      "category": "data",
+      "fact": "Calculations owner is Supplier Programs and security classification is Confidential"
+    },
+    {
+      "id": "F091",
+      "category": "integration",
+      "fact": "App Gateway is entry point for Rebate Analysts and Finance Managers over HTTPS/443 with AD/SSO"
+    }
+  ],
+  "coverage_by_category": {
+    "acceptance": 1.0,
+    "ai_quality": 1.0,
+    "architecture": 1.0,
+    "assumption": 0.75,
+    "business_rule": 0.64,
+    "compliance": 0.5,
+    "data": 0.4,
+    "dependency": 1.0,
+    "functional": 0.96,
+    "integration": 0.85,
+    "nfr_availability": 1.0,
+    "nfr_performance": 0.67,
+    "out_of_scope": 0.0,
+    "risk": 1.0,
+    "role": 0.83,
+    "scope_mvp1": 0.83,
+    "scope_mvp2": 0.75,
+    "security_access": 1.0,
+    "timeline": 0.5
+  },
+  "faithfulness": 0.8051948051948052,
+  "claims": 137,
+  "requirement_claims": 77,
+  "test_design_claims": 60,
+  "invented": 15,
+  "unverified_supported": 5,
+  "invented_claims": [
+    {
+      "claim": "QA Lead is responsible for test plan execution and reporting",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "QA Engineers create and execute test cases and automation",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Developers write unit tests and fix defects",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Security Team performs security reviews and penetration tests",
+      "kind": "requirement",
+      "verdict": "derived"
+    },
+    {
+      "claim": "Release Manager coordinates deployments to QA/UAT/Staging",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Test management will use Azure DevOps or Jira",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "API testing tooling includes Postman, Newman, or REST-assured",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "UI automation will prefer Playwright (or Selenium)",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Backend SQL verification will use pytest with Databricks connectors or Databricks notebooks",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Performance/load testing will use Locust or JMeter",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "AI validation tooling will use custom Python scripts to compute metrics",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Blob storage access controls will restrict agreement access to permitted roles",
+      "kind": "requirement",
+      "verdict": "derived"
+    },
+    {
+      "claim": "Data-at-rest and in-transit encryption must be verified",
+      "kind": "requirement",
+      "verdict": "derived"
+    },
+    {
+      "claim": "Access to confidential data must be logged and auditable",
+      "kind": "requirement",
+      "verdict": "derived"
+    },
+    {
+      "claim": "Entry criteria include dev unit tests passed, QA environment provisioned, golden dataset loaded, AI services accessible",
+      "kind": "requirement",
+      "verdict": "derived"
+    }
+  ],
+  "similarity": 0.9272727272727272,
+  "embedding_sim": 0.5533099664839782,
+  "section_scores": {
+    "references": 0.4,
+    "objectives": 1.0,
+    "scope_in": 1.0,
+    "scope_out": 1.0,
+    "assumptions_dependencies": 1.0,
+    "test_strategy": 1.0,
+    "functional_coverage": 1.0,
+    "rbac_testing": 1.0,
+    "security_compliance": 0.8,
+    "ai_data_quality": 1.0,
+    "nfr_performance": 1.0,
+    "nfr_reliability": 0.8,
+    "nfr_accessibility_compat": 0.4,
+    "observability_audit": 1.0,
+    "test_data_environment": 1.0,
+    "entry_exit_criteria": 1.0,
+    "defect_management": 1.0,
+    "risks": 1.0,
+    "deliverables_reporting": 1.0,
+    "traceability_metrics": 1.0,
+    "schedule": 1.0,
+    "e2e_scenario": 1.0
+  },
+  "missing_points": {
+    "references": [
+      "Explicit listing / links to the BRD and the Rebate Claim Validation architecture diagram referenced in the BRD",
+      "Reference versioning and document locations (where reviewers can find the BRD/diagram)"
+    ],
+    "security_compliance": [
+      "Explicit tests for MFA, session timeout and JWT/token validation (refresh/expiry) called out",
+      "CSRF and XSS specific test cases and input-validation fuzzing",
+      "Rate-limiting and throttling test cases",
+      "Explicit verification that spend data is not written to logs (sensitive data redaction tests)",
+      "Clear SAST/DAST test plan (only a basic pentest/dependency scan is referenced)"
+    ],
+    "nfr_reliability": [
+      "Explicit backup & restore tests and validation of restore correctness",
+      "Documented runbooks / incident response test cases (exercise runbooks)",
+      "Explicit end-to-end recovery and data-reconciliation tests after restore (beyond retries)"
+    ],
+    "nfr_accessibility_compat": [
+      "Detailed accessibility test cases: screen reader labels, keyboard-only navigation, focus order and ARIA attributes",
+      "Colour contrast, error identification and zoom/reflow test cases",
+      "Explicit supported-browser matrix and compatibility test cases (Edge/Chrome/Firefox versions)"
+    ]
+  },
+  "overall": 0.6962876328217238
+}

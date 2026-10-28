@@ -1,0 +1,172 @@
+[
+  {
+    "heading": "(front matter)",
+    "level": 0,
+    "text": "- Business Requirements Document (BRD)\n- Supplier Invoice Matching Automation\nVersion: 1.1\nDate: 14 Jan 2026\nBusiness Owner: Accounts Payable Operations\nStatus: Approved"
+  },
+  {
+    "heading": "Summary",
+    "level": 1,
+    "text": "The Invoice Matching Automation solution will automate three-way matching of supplier invoices against purchase orders (PO) and goods receipts (GR), reducing manual effort for the Accounts Payable (AP) team and shortening invoice cycle time.\nThe solution extracts header and line-level data from supplier invoices received as PDF, matches them with SAP PO and GR data, flags price and quantity variances, and routes exceptions to AP Analysts for review. MVP1 focuses on invoice extraction and matching; MVP2 adds automated posting to SAP, exception workflow and supplier self-service status."
+  },
+  {
+    "heading": "Problem Statement",
+    "level": 1,
+    "text": "The AP team processes roughly 18,000 supplier invoices per month across all business units. Around 40% arrive as PDF attachments by email and are keyed manually into SAP.\nManual matching causes late payments, missed early-payment discounts and duplicate payments. Audit findings in FY25 highlighted inconsistent variance handling between AP teams.\nAn automated matching tool with clear tolerance rules and human-in-the-loop review provides consistent, auditable invoice processing."
+  },
+  {
+    "heading": "Goals",
+    "level": 1,
+    "text": "- Automate extraction of invoice header and line data from supplier PDFs\n- Perform three-way match (invoice, PO, GR) with configurable price and quantity tolerances\n- Reduce invoice processing cycle time from 6 days to under 2 days\n- Prevent duplicate payments and improve capture of early-payment discounts"
+  },
+  {
+    "heading": "In-Scope / Out-of-Scope",
+    "level": 1,
+    "text": "| Phase | Scope |\n|---|---|\n| In scope (MVP1) | Invoice PDF ingestion from the AP shared mailbox and manual upload, header and line extraction, retrieval of PO and GR data from SAP, three-way matching with tolerance rules, match result worksheet and exception list for review |\n| In scope (MVP2) | Automated invoice posting to SAP for fully matched invoices, exception workflow with assignment and SLA tracking, duplicate invoice detection across suppliers, supplier status notifications, audit logging and reporting |\n| Out of scope | Payment execution, changes to SAP payment run, non-PO invoices, travel and expense claims |"
+  },
+  {
+    "heading": "Stakeholders & Personas",
+    "level": 1,
+    "text": "- AP Analyst: Upload or review incoming invoices, review match results, resolve exceptions, and approve invoices for posting\n- AP Supervisor: Approve invoices above the approval limit, override tolerance exceptions, and monitor team SLAs\n- AP Admin: Configure tolerance rules, supplier mappings, mailbox settings and user roles"
+  },
+  {
+    "heading": "Key Use Cases",
+    "level": 1,
+    "text": "- As an AP Analyst, I can see each invoice extracted into header and line fields with the source page reference, so I can quickly verify the data.\n- As an AP Analyst, I can see whether each invoice line matches the PO and GR within tolerance, and why a line failed.\n- As an AP Supervisor, I can approve or override exceptions above USD 25,000 with a mandatory comment.\n- As an AP Admin, I can configure price tolerance (default ±2%) and quantity tolerance (default 0 units) per supplier category."
+  },
+  {
+    "heading": "Functional Requirements",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "MVP1",
+    "level": 2,
+    "text": "- Automated ingestion of invoice PDFs from the AP shared mailbox (Microsoft Graph) and manual upload in the web UI.\n- Extraction of invoice number, supplier, invoice date, PO number, currency, tax, total and line items (item, quantity, unit price, amount).\n- Retrieval of PO and GR data from SAP through the enterprise API layer.\n- Three-way matching with configurable price and quantity tolerances and a match result worksheet showing matched, partially matched and unmatched lines."
+  },
+  {
+    "heading": "MVP2",
+    "level": 2,
+    "text": "- Automated posting of fully matched invoices to SAP.\n- Exception workflow with assignment, comments, SLA timers and escalation to AP Supervisor after 2 business days.\n- Duplicate invoice detection using supplier, invoice number, amount and date.\n- Supplier notification of invoice status by email.\n- Audit logging of extraction, match decisions, overrides and approvals."
+  },
+  {
+    "heading": "Admin",
+    "level": 2,
+    "text": "- Admin UI for tolerance rules, approval limits, supplier mapping and mailbox configuration."
+  },
+  {
+    "heading": "Non-Functional Requirements (NFR)",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Availability",
+    "level": 2,
+    "text": "- 99.5% availability during business hours (06:00–22:00 CET and EST)."
+  },
+  {
+    "heading": "Security",
+    "level": 2,
+    "text": "- Enterprise authentication via Azure AD with MFA.\n- Role-based access for AP Analyst, AP Supervisor and AP Admin.\n- Bank and tax identifiers masked in UI and logs."
+  },
+  {
+    "heading": "Performance",
+    "level": 2,
+    "text": "- Extraction and matching of a 10-page invoice within 60 seconds.\n- Batch of 500 invoices processed within 1 hour."
+  },
+  {
+    "heading": "Observability",
+    "level": 2,
+    "text": "- End-to-end traceability per invoice from receipt to match decision.\n- Audit logs for overrides and approvals (from MVP2)."
+  },
+  {
+    "heading": "Compliance",
+    "level": 2,
+    "text": "- SOX controls for invoice approval and segregation of duties.\n- Adherence to AI Governance Council guidance."
+  },
+  {
+    "heading": "Architecture",
+    "level": 1,
+    "text": "Refer to the solution architecture diagram (P01_Invoice_Matching_Architecture.png). The web UI and processing services run on the shared AKS non-production cluster. Azure Document Intelligence extracts invoice data; Azure OpenAI is used to normalise supplier line descriptions. SAP is accessed through APIM."
+  },
+  {
+    "heading": "Data Sources",
+    "level": 1,
+    "text": "The source data managed by the AP team includes supplier invoices, PO and GR data from SAP, supplier master data and tolerance rules required to perform matching.\n- Supplier invoices – Description: Invoice header and lines; Source: AP mailbox, manual upload; Frequency: Daily; Owner: AP Operations; Security: Confidential\n- Purchase orders – Description: PO header and lines; Source: SAP S/4HANA; Frequency: On demand; Owner: Procurement; Security: Confidential\n- Goods receipts: Description: Received quantities; Source: SAP S/4HANA; Frequency: On demand; Owner: Warehouse Ops; Security: Internal\n- Supplier master: Description: Supplier IDs, bank, tax data; Source: SAP S/4HANA; Frequency: Daily; Owner: Master Data; Security: Restricted\n- Tolerance rules: Description: Price and quantity tolerances; Source: Tool configuration; Frequency: As needed; Owner: AP Admin; Security: Internal\n- Match results: Description: Line match status and variances; Source: Tool output; Frequency: Per invoice; Owner: AP Operations; Security: Confidential\n- Quality checks – Schema validation of extracted fields, mandatory field checks (invoice number, PO number, total), and reconciliation of line totals to invoice total\n- RBAC: Role-based access for AP Analyst, AP Supervisor and AP Admin with audit trails for configuration changes"
+  },
+  {
+    "heading": "Interfaces and Dependencies on Systems",
+    "level": 1,
+    "text": "| Area | Requirement |\n|---|---|\n| Identity & Access | Azure AD for authentication and role assignment. |\n| Enterprise Systems | SAP S/4HANA for PO, GR and supplier master data through APIM. AP shared mailbox via Microsoft Graph API. |\n| Data & Storage | Azure Blob Storage for invoice files; Azure PostgreSQL for extracted data and match results. |\n| Orchestration | Azure Service Bus queue between ingestion and matching services (to be validated with backend architects). |"
+  },
+  {
+    "heading": "Reporting & Monitoring",
+    "level": 1,
+    "text": "- Capture per-invoice metadata: supplier, pages, processing time, match outcome, exception reason\n- Monthly reporting: invoices processed, touchless match rate, cycle time, discounts captured\n- Dashboards for AP leadership once data matures"
+  },
+  {
+    "heading": "Security",
+    "level": 1,
+    "text": "- Follow AI Governance Council approvals and guardrails\n- SOX applicability assessed via C2P\n- Masked or synthetic invoices used for development and testing"
+  },
+  {
+    "heading": "Assumptions",
+    "level": 1,
+    "text": "- SAP PO and GR APIs are available through APIM in non-production\n- At least 70% of invoices are machine-readable PDFs\n- Suppliers continue to send one invoice per PDF"
+  },
+  {
+    "heading": "Key Dependencies",
+    "level": 1,
+    "text": "- SAP integration team for API access\n- AI Governance Council approval\n- AP team availability for validation and UAT\n- Internal Audit review of tolerance rules"
+  },
+  {
+    "heading": "Milestones",
+    "level": 1,
+    "text": "- MVP1 build: Feb–Apr 2026\n- MVP1 UAT: May 2026\n- MVP2: Q3 2026"
+  },
+  {
+    "heading": "Definition of Done",
+    "level": 1,
+    "text": "- ≥95% field-level extraction accuracy for header fields and ≥90% for line items on pilot suppliers\n- ≥60% touchless match rate for pilot suppliers\n- 100% of variances above tolerance flagged as exceptions\n- No duplicate invoices posted during UAT"
+  },
+  {
+    "heading": "Risk Register",
+    "level": 1,
+    "text": "| Risk | Mitigation |\n|---|---|\n| Variable invoice layouts | Document Intelligence custom models and human review |\n| SAP API latency | Caching of PO data per batch and retry logic |\n| Incorrect tolerance configuration | Admin change approval and audit trail |"
+  },
+  {
+    "heading": "Approvals",
+    "level": 1,
+    "text": "- AI Governance Council\n- Finance (BIR)\n- AI intake\n- Global Intake\n- C2P\n- WAB"
+  },
+  {
+    "heading": "Appendix",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Invoice Matching Automation MVP1 Scope Overview",
+    "level": 2,
+    "text": "- Invoice Intake: Collect invoice PDFs from the AP mailbox or manual upload.\n- Extraction and Matching – Extract invoice data and perform three-way matching against SAP PO and GR.\n- Exception List – Show unmatched and out-of-tolerance lines for AP review."
+  },
+  {
+    "heading": "How it works",
+    "level": 2,
+    "text": "- Invoices arrive in the AP mailbox or are uploaded by an AP Analyst.\n- The system extracts header and line data.\n- PO and GR data are retrieved from SAP.\n- Lines are matched using tolerance rules.\n- AP Analysts review the match worksheet and exceptions before approval."
+  },
+  {
+    "heading": "Data sources for MVP",
+    "level": 3,
+    "text": "- Supplier invoice PDFs\n- SAP PO and GR data\n- Tolerance configuration"
+  },
+  {
+    "heading": "Access and Security",
+    "level": 3,
+    "text": "- Azure AD authentication\n- Role-based access for AP roles\n- Restricted access to supplier bank data"
+  },
+  {
+    "heading": "Exclusions",
+    "level": 2,
+    "text": "- No posting to SAP\n- No exception workflow or SLA tracking\n- No duplicate detection across suppliers\n- No supplier notifications"
+  }
+]

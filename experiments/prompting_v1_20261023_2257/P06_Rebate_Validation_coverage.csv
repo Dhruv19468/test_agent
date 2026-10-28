@@ -1,0 +1,113 @@
+category,mvp,fact,source_quote,source,must_test,id,quote_score,verified,judge,verdict,quote_ok,plan_quote,points
+scope_mvp1,MVP1,MVP1 reads rebate agreements,"MVP1 reads rebate agreements, extracts tier rules, calculates earned rebates",brd,True,F001,1.0,True,yes,yes,1.0,PDF agreement upload (including amendments),1.0
+scope_mvp1,MVP1,MVP1 extracts tier rules from agreements,"MVP1 reads rebate agreements, extracts tier rules, calculates earned rebates",brd,True,F002,1.0,True,yes,no,0.58,"Extraction via Azure Document Intelligence & Azure OpenAI: Supplier, period, tiers (threshold + rate)",0.0
+scope_mvp1,MVP1,MVP1 calculates earned rebates from sales and purchase data in the enterprise data lake,calculates earned rebates from sales and purchase data in the enterprise data lake,brd,True,F003,1.0,True,yes,yes,1.0,Calculation service (runs Databricks SQL; reads Delta Lake; writes results),1.0
+scope_mvp1,MVP1,MVP1 produces a claim worksheet for review,and produces a claim worksheet for review,brd,True,F004,1.0,True,yes,yes,1.0,"Claim worksheet with supporting purchase lines, Excel export, variance to accrual",1.0
+out_of_scope,,Customer rebates (sell-side) are out of scope,Customer rebates (sell-side),brd,False,F005,1.0,True,no,no,0.0,,0.0
+out_of_scope,,Price protection claims are out of scope,price protection claims,brd,False,F006,1.0,True,no,no,0.0,,0.0
+out_of_scope,,Supplier payment collection is out of scope,supplier payment collection,brd,False,F007,1.0,True,no,no,0.0,,0.0
+business_rule,All,Wesco manages over 400 supplier rebate agreements,Wesco manages over 400 supplier rebate agreements,brd,False,F008,1.0,True,yes,yes,1.0,month-end batch (400 agreements) ,1.0
+data,All,Agreement terms are in PDF contracts and amendments,Agreement terms are in PDF contracts and amendments,brd,True,F009,1.0,True,yes,yes,1.0,PDF agreement upload (including amendments),1.0
+business_rule,All,An estimated 2–3% of earned rebates are never claimed,an estimated 2–3% of earned rebates are never claimed,brd,False,F010,1.0,True,no,no,0.0,,0.0
+business_rule,MVP1,Calculate earned rebates automatically for all active agreements,Calculate earned rebates automatically for all active agreements,brd,True,F011,1.0,True,partial,partial,1.0,month-end batch (400 agreements) ,0.5
+business_rule,MVP1,Recover unclaimed rebates target is +1.5% of rebate income,Recover unclaimed rebates (target +1.5% of rebate income),brd,False,F012,1.0,True,no,no,0.0,,0.0
+nfr_performance,MVP1,Cut claim preparation time from 3 days to 4 hours per supplier,Cut claim preparation time from 3 days to 4 hours per supplier,brd,True,F013,1.0,True,no,no,0.0,,0.0
+business_rule,MVP1,Provide auditable calculations,Provide auditable calculations,brd,True,F014,1.0,True,yes,yes,1.0,Auditability: every calculation reproducible with agreement version + data snapshot date.,1.0
+scope_mvp1,MVP1,Upload of rebate agreements (PDF) is in scope for MVP1,Upload of rebate agreements (PDF),brd,True,F015,1.0,True,yes,yes,1.0,PDF agreement upload (including amendments),1.0
+ai_quality,MVP1,"AI extraction of tiers, rates, eligible product lines and periods is in scope for MVP1","AI extraction of tiers, rates, eligible product lines and periods",brd,True,F016,1.0,True,yes,yes,0.62,"Extraction via Azure Document Intelligence & Azure OpenAI: Supplier, period, tiers (threshold + rate), retroactive vs incremental, eligible product lines",1.0
+functional,MVP1,Analyst review of extracted terms is in scope for MVP1,analyst review of extracted terms,brd,True,F017,1.0,True,yes,yes,1.0,Analyst confirmation workflow,1.0
+integration,MVP1,Calculation from Delta Lake purchase data is in scope for MVP1,calculation from Delta Lake purchase data,brd,True,F018,1.0,True,yes,yes,1.0,Calculation service (runs Databricks SQL; reads Delta Lake; writes results),1.0
+functional,MVP1,Claim worksheet with tier reached and earned amount is in scope for MVP1,claim worksheet with tier reached and earned amount,brd,True,F019,1.0,True,yes,yes,0.61,"FR: Claim worksheet with tier reached and earned amount -> Tests: Excel formatting, supporting lines, variance to accrual, snapshot metadata",1.0
+scope_mvp2,MVP2,Supplier portal submission is in scope for MVP2,Supplier portal submission,brd,False,F020,1.0,True,yes,yes,1.0,Out of scope (MVP1): - Supplier portal submission,1.0
+scope_mvp2,MVP2,Dispute tracking is in scope for MVP2,Dispute tracking,brd,False,F021,1.0,True,yes,no,0.59,Out of scope (MVP1): - Dispute tracking,0.0
+scope_mvp2,MVP2,Accrual posting to finance is in scope for MVP2,accrual posting to finance,brd,False,F022,1.0,True,yes,yes,0.61,Out of scope (MVP1): - Accrual posting,1.0
+scope_mvp2,MVP2,Amendment comparison is in scope for MVP2,amendment comparison,brd,False,F023,1.0,True,yes,yes,0.66,Out of scope (MVP1): - Amendment comparison (beyond upload),1.0
+role,MVP1,Rebate Analyst uploads agreements,"Rebate Analyst | Upload agreements, review extracted terms, run calculations and prepare claim worksheets",brd,True,F024,1.0,True,yes,yes,1.0,Preconditions: User logged in as Rebate Analyst,1.0
+role,MVP1,Rebate Analyst reviews extracted terms,"Rebate Analyst | Upload agreements, review extracted terms, run calculations and prepare claim worksheets",brd,True,F025,1.0,True,yes,yes,1.0,Analyst confirmation workflow,1.0
+role,MVP1,Rebate Analyst runs calculations and prepares claim worksheets,"Rebate Analyst | Upload agreements, review extracted terms, run calculations and prepare claim worksheets",brd,True,F026,1.0,True,yes,yes,1.0,Preconditions: User logged in as Rebate Analyst,1.0
+role,All,"Finance Manager approves claim worksheets above USD 50,000","Finance Manager | Approve claim worksheets above USD 50,000 and review accrual variances",brd,True,F027,1.0,True,yes,yes,1.0,"Approvals > USD 50,000 require Finance Manager",1.0
+role,All,Finance Manager reviews accrual variances,"Finance Manager | Approve claim worksheets above USD 50,000 and review accrual variances",brd,True,F028,1.0,True,partial,partial,1.0,T-WKS-03: Variance to accrual report,0.5
+role,All,"Program Admin maintains supplier mappings, product line mappings and calculation settings","Program Admin | Maintain supplier mappings, product line mappings and calculation settings",brd,False,F029,1.0,True,partial,partial,1.0,product line mapping matrices for Program Admin tests,0.5
+functional,MVP1,"Upload of agreement PDFs and amendments must extract supplier, period, tiers (threshold, rate), retroactive vs incremental, eligible product lines and exclusions","extraction of supplier, period, tiers (threshold, rate), retroactive vs incremental, eligible product lines and exclusions",brd,True,F030,1.0,True,yes,yes,1.0,"Supplier, period, tiers (threshold + rate), retroactive vs incremental, eligible product lines, exclusions",1.0
+integration,MVP1,Extraction must use Azure Document Intelligence and Azure OpenAI,using Azure Document Intelligence and Azure OpenAI,brd,True,F031,1.0,True,yes,yes,1.0,Extraction via Azure Document Intelligence & Azure OpenAI,1.0
+functional,MVP1,Only confirmed terms are used in calculations (analyst confirmation step),Analyst confirmation step; only confirmed terms are used,brd,True,F032,1.0,True,yes,yes,1.0,Unconfirmed terms cannot be used to run calculation,1.0
+integration,MVP1,Calculations use purchase data from Delta Lake (EUDM) via Databricks SQL,Calculation using purchase data from Delta Lake (EUDM) via Databricks SQL,brd,True,F033,1.0,True,yes,yes,1.0,Calculation Service (runs Databricks SQL; reads Delta Lake; writes results),1.0
+functional,MVP1,"Calculation outputs must include eligible spend, tier reached, earned rebate","eligible spend, tier reached, earned rebate",brd,True,F034,1.0,True,yes,yes,1.0,"Eligible spend, tier reached, earned rebate (retroactive vs incremental)",1.0
+business_rule,MVP1,Retroactive calculation applies rate to full spend,retroactive applies rate to full spend,brd,True,F035,1.0,True,yes,yes,1.0,Earned rebate = rate at reached tier * total eligible spend (full spend),1.0
+business_rule,MVP1,Incremental calculation applies rate per tier band,incremental applies rate per tier band,brd,True,F036,1.0,True,yes,yes,1.0,Each tier band calculated separately,1.0
+functional,MVP1,Claim worksheet must include supporting purchase lines,"Claim worksheet with supporting purchase lines, export to Excel, and variance to accrual",brd,True,F037,1.0,True,yes,yes,1.0,Claim worksheet with supporting purchase lines,1.0
+functional,MVP1,Claim worksheet must support export to Excel,export to Excel,brd,True,F038,1.0,True,yes,yes,1.0,Excel export,1.0
+functional,MVP1,Claim worksheet must show variance to accrual,variance to accrual,brd,True,F039,1.0,True,yes,yes,1.0,T-WKS-03: Variance to accrual report,1.0
+nfr_availability,All,Availability requirement is 99% business hours,Availability: 99% business hours.,brd,True,F040,1.0,True,yes,yes,1.0,Availability target: 99% business hours,1.0
+security_access,All,Security uses Azure AD,Security – Azure AD; agreements and spend data restricted.,brd,True,F041,1.0,True,yes,yes,1.0,Azure AD authentication & SSO,1.0
+nfr_performance,MVP1,Calculation for one supplier-year must complete within 2 minutes,Calculation for one supplier-year within 2 minutes.,brd,True,F042,1.0,True,yes,yes,1.0,single supplier-year calc ≤ 2 minutes,1.0
+nfr_performance,MVP1,Month-end batch of 400 agreements must complete within 8 hours,Month-end batch of 400 agreements within 8 hours.,brd,True,F043,1.0,True,yes,yes,1.0,month-end batch (400 agreements) ≤ 8 hours,1.0
+acceptance,MVP1,Every calculation must be reproducible with agreement version and data snapshot date,Every calculation reproducible with agreement version and data snapshot date.,brd,True,F044,1.0,True,yes,yes,1.0,Reproducibility: rerun calculation with same data snapshot & agreement version -> same result,1.0
+data,MVP1,Rebate agreements data source is Upload and frequency is Ad-hoc,"Rebate agreements | Terms, tiers, eligibility | Upload | Ad-hoc | Supplier Programs | Restricted",brd,True,F045,1.0,True,partial,partial,1.0,PDF agreement upload (including amendments),0.5
+data,MVP1,Rebate agreements data owner is Supplier Programs,"Rebate agreements | Terms, tiers, eligibility | Upload | Ad-hoc | Supplier Programs | Restricted",brd,True,F046,1.0,True,yes,yes,1.0,"Product Owner / Supplier Programs SME: Provide golden dataset, validate UAT acceptance, sign-off",1.0
+data,MVP1,Rebate agreements security classification is Restricted,Supplier Programs | Restricted,brd,True,F047,1.0,True,no,no,0.0,,0.0
+data,MVP1,Purchase data source is Delta Lake (EUDM) and frequency is Daily,"Purchase data | PO lines, spend by product line | Delta Lake (EUDM) | Daily | Finance Data | Confidential",brd,True,F048,1.0,True,partial,partial,1.0,Databricks SQL / Delta Lake — purchase data,0.5
+data,MVP1,Purchase data owner is Finance Data and security classification is Confidential,Daily | Finance Data | Confidential,brd,True,F049,1.0,True,no,no,0.0,,0.0
+data,MVP1,Product line mapping source is Configuration and frequency is Monthly,Product line mapping | Supplier lines to items | Configuration | Monthly | Program Admin | Internal,brd,True,F050,1.0,True,partial,partial,1.0,"Postgres test DB with schema and seeded configurations (product line mappings, supplier mappings)",0.5
+data,MVP1,Product line mapping owner is Program Admin and security classification is Internal,Monthly | Program Admin | Internal,brd,True,F051,1.0,True,partial,partial,1.0,sample product line mapping matrices for Program Admin tests,0.5
+data,MVP1,Calculations data source is Tool output and frequency is Per run,"Calculations | Spend, tier, rebate | Tool output | Per run | Supplier Programs | Confidential",brd,True,F052,1.0,True,no,no,0.0,,0.0
+data,MVP1,Calculations owner is Supplier Programs and security classification is Confidential,Per run | Supplier Programs | Confidential,brd,True,F053,1.0,True,no,no,0.0,,0.0
+functional,MVP1,Quality checks include agreement term completeness,"Quality checks: Agreement term completeness, tier thresholds ascending, purchase data reconciliation to GL totals",brd,True,F054,1.0,True,partial,partial,1.0,missing fields,0.5
+functional,MVP1,Quality checks include tier thresholds ascending,tier thresholds ascending,brd,True,F055,1.0,True,yes,yes,1.0,constraints enforced (tier thresholds ascending),1.0
+functional,MVP1,Quality checks include purchase data reconciliation to GL totals,purchase data reconciliation to GL totals,brd,True,F056,1.0,True,yes,yes,1.0,Reconciliation reports show totals and discrepancies,1.0
+security_access,All,"RBAC requires Finance Manager approval for claims above USD 50,000","RBAC – Approval above USD 50,000 by Finance Manager; analysts cannot approve own claims",brd,True,F057,1.0,True,yes,yes,1.0,"Approvals > USD 50,000 require Finance Manager",1.0
+security_access,All,Analysts cannot approve their own claims,analysts cannot approve own claims,brd,True,F058,1.0,True,yes,yes,1.0,analysts cannot approve their own claims,1.0
+integration,MVP1,Identity & Access interface required is Azure AD,Azure AD.,brd,True,F059,1.0,True,yes,yes,1.0,"Azure AD test tenant accounts for Analyst, Finance Manager, Program Admin",1.0
+integration,MVP1,Enterprise Data dependency is Delta Lake (EUDM/IAP) purchase data through Databricks SQL warehouse,Delta Lake (EUDM/IAP) purchase data through Databricks SQL warehouse.,brd,True,F060,1.0,True,yes,yes,1.0,Databricks SQL / Delta Lake — purchase data,1.0
+integration,MVP1,AI Services required are Azure Document Intelligence and Azure OpenAI,"Azure Document Intelligence, Azure OpenAI.",brd,True,F061,1.0,True,yes,yes,1.0,Azure Document Intelligence & Azure OpenAI,1.0
+integration,MVP1,Data & Storage must use Azure PostgreSQL for terms and calculations,Azure PostgreSQL for terms and calculations; Blob Storage for agreements.,brd,True,F062,1.0,True,yes,yes,1.0,Azure PostgreSQL — confirmed terms and results,1.0
+integration,MVP1,Blob Storage must be used for agreements,Blob Storage for agreements.,brd,True,F063,1.0,True,yes,yes,1.0,Azure Blob Storage — agreements,1.0
+compliance,All,AI Governance Council approval is required,AI Governance Council approval; SOX relevance assessed via C2P,brd,False,F064,1.0,True,no,no,0.0,,0.0
+compliance,All,SOX relevance will be assessed via C2P,SOX relevance assessed via C2P,brd,False,F065,1.0,True,yes,yes,1.0,SOX-relevant controls review (C2P),1.0
+assumption,MVP1,Delta Lake purchase data is complete for the last 24 months,Delta Lake purchase data is complete for the last 24 months,brd,True,F066,1.0,True,yes,yes,1.0,copy/masked subset of Delta Lake purchase data (last 24 months),1.0
+assumption,MVP1,Agreements are mostly digital PDFs,Agreements are mostly digital PDFs,brd,True,F067,1.0,True,partial,partial,0.7,agreement PDF upload (including amendments),0.5
+dependency,MVP1,Data platform team is required for Databricks access,Data platform team for Databricks access,brd,True,F068,1.0,True,yes,yes,1.0,Data platform team access,1.0
+dependency,MVP1,Supplier Programs SMEs are required for golden dataset,Supplier Programs SMEs for golden dataset,brd,True,F069,1.0,True,yes,yes,1.0,Supplier Programs SMEs for golden dataset,1.0
+timeline,MVP1,MVP1 timeline is Mar–Jun 2026,MVP1: Mar–Jun 2026,brd,False,F070,1.0,True,yes,yes,1.0,Assuming MVP1 March–June 2026,1.0
+timeline,MVP2,MVP2 timeline is Q4 2026,MVP2: Q4 2026,brd,False,F071,1.0,True,no,no,0.0,,0.0
+acceptance,MVP1,Acceptance: ≥95% accuracy of extracted tier terms on golden agreements,≥95% accuracy of extracted tier terms on golden agreements,brd,True,F072,1.0,True,yes,yes,1.0,Extraction accuracy: ≥95% of tier terms on golden agreements.,1.0
+acceptance,MVP1,Acceptance: 100% calculation accuracy against analyst-verified examples,100% calculation accuracy against analyst-verified examples,brd,True,F073,1.0,True,yes,yes,1.0,Calculation accuracy: 100% against analyst-verified examples.,1.0
+acceptance,MVP1,Acceptance: Reproducible calculations with snapshot date,Reproducible calculations with snapshot date,brd,True,F074,1.0,True,yes,yes,1.0,every calculation reproducible with agreement version + data snapshot date.,1.0
+risk,MVP1,Complex agreement language risk is mitigated by mandatory analyst confirmation,Complex agreement language | Mandatory analyst confirmation,brd,True,F075,1.0,True,yes,yes,1.0,Mitigation: Mandatory analyst confirmation; iterative AI tuning,1.0
+risk,MVP1,Data lake gaps risk is mitigated by reconciliation checks,Data lake gaps | Reconciliation checks,brd,True,F076,1.0,True,yes,yes,1.0,Mitigation: Data completeness checks; reconciliation to GL; error/warning for missing days,1.0
+risk,MVP1,Retroactive vs incremental misread risk is mitigated by explicit field and tests,Retroactive vs incremental misread | Explicit field and tests,brd,True,F077,1.0,True,yes,yes,1.0,Expected: Correct flag set; page ref returned,1.0
+scope_mvp1,MVP1,Appendix: Agreement Extraction must extract tier terms with page references,Agreement Extraction: Extract tier terms with page references.,brd,True,F078,1.0,True,yes,yes,1.0,"tiers (threshold + rate), retroactive vs incremental, eligible product lines, exclusions, page references",1.0
+functional,MVP1,Analyst uploads agreement and terms are extracted before confirmation,"Analyst uploads agreement.
+- Terms extracted.
+- Analyst confirms.",brd,True,F079,1.0,True,yes,yes,1.0,"agreement PDF upload, AI extraction of terms (tiers/rates/periods/product lines/exclusions), analyst confirmation",1.0
+integration,MVP1,Agreement Service must store confirmed terms in Azure PostgreSQL,Agreement Service -> Azure PostgreSQL | confirmed terms,architecture,True,F080,1.0,True,yes,yes,1.0,"Agreement Service (uploads, store to Blob, persisted terms to PostgreSQL)",1.0
+integration,MVP1,Agreement Service must store agreements in Azure Blob Storage,Agreement Service -> Azure Blob Storage | agreements,architecture,True,F081,1.0,True,yes,yes,1.0,"Agreement Service (uploads, store to Blob, persisted terms to PostgreSQL)",1.0
+integration,MVP1,Calculation Service must store results in Azure PostgreSQL,Calculation Service -> Azure PostgreSQL | results,architecture,True,F082,1.0,True,yes,yes,1.0,Azure PostgreSQL — confirmed terms and results,1.0
+integration,MVP1,Calculation Service must call Delta Lake EUDM/IAP (Databricks SQL) using HTTPS/443 OAuth 2.0,Calculation Service -> Delta Lake EUDM/IAP (Databricks SQL) | HTTPS/443 OAuth 2.0,architecture,True,F083,1.0,True,partial,partial,1.0,Calculation Service connects to Databricks SQL warehouse with OAuth,0.5
+integration,MVP1,APIM must call Azure Document Intelligence for layout,APIM -> Azure Document Intelligence | layout,architecture,True,F084,1.0,True,yes,yes,1.0,Azure Document Intelligence & Azure OpenAI – extraction pipeline via APIM,1.0
+integration,MVP1,APIM must call Azure OpenAI for term extraction,APIM -> Azure OpenAI | term extraction,architecture,True,F085,1.0,True,yes,yes,1.0,Azure Document Intelligence & Azure OpenAI – extraction pipeline via APIM,1.0
+architecture,All,Users include Rebate Analysts and Finance Managers,"Rebate Analysts
+Finance Managers",architecture,False,F086,1.0,True,yes,yes,1.0,"Azure AD test tenant accounts for Analyst, Finance Manager, Program Admin",1.0
+integration,All,Identity & entry points include Azure AD (Entra ID) and App Gateway,"Azure AD (Entra ID)
+App Gateway",architecture,True,F087,1.0,True,partial,partial,1.0,Azure AD integration / RBAC,0.5
+architecture,All,"Application services include Web UI, Agreement Service, Calculation Service, Azure Function (Batch Scheduler), APIM","Web UI
+Agreement Service
+Calculation Service
+Azure Function (Batch Scheduler)
+APIM",architecture,True,F088,1.0,True,yes,yes,1.0,"Web UI (upload, term review, run calc, worksheet view, export)",1.0
+integration,All,AI Services listed are Azure Document Intelligence and Azure OpenAI,"Azure Document Intelligence
+Azure OpenAI",architecture,True,F089,1.0,True,yes,yes,1.0,Azure Document Intelligence & Azure OpenAI – extraction pipeline via APIM,1.0
+integration,All,"Data stores listed are Azure Blob Storage, Azure PostgreSQL, Delta Lake EUDM/IAP (Databricks SQL)","Azure Blob Storage
+Azure PostgreSQL
+Delta Lake EUDM/IAP (Databricks SQL)",architecture,True,F090,1.0,True,yes,yes,1.0,Databricks SQL / Delta Lake — purchase data,1.0
+integration,MVP1,App Gateway is entry point for Rebate Analysts and Finance Managers over HTTPS/443 with AD/SSO,Rebate Analysts -> App Gateway | HTTPS/443 AD/SSO,architecture,True,F091,1.0,True,no,no,0.0,,0.0
+integration,MVP1,Web UI communicates with Agreement Service using REST,Web UI -> Agreement Service | REST,architecture,True,F092,1.0,True,partial,partial,1.0,API testing: Postman / Newman / REST-assured,0.5
+integration,MVP1,Web UI communicates with Calculation Service to run calculations,Web UI -> Calculation Service | run calculation,architecture,True,F093,1.0,True,yes,yes,1.0,"Web UI (upload, term review, run calc, worksheet view, export)",1.0
+integration,MVP1,Azure Function (Batch Scheduler) calls Agreement Service for month-end batch,Azure Function (Batch Scheduler) -> Agreement Service | month-end batch,architecture,True,F094,1.0,True,partial,partial,1.0,Batch Scheduler (Azure Function) — month-end runs,0.5
+integration,MVP1,Agreement Service connects to APIM using HTTPS/443 Managed Identity,Agreement Service -> APIM | HTTPS/443 Managed Identity,architecture,True,F095,1.0,True,partial,partial,1.0,APIM connection to Azure Document Intelligence & Azure OpenAI (or test mode/mocks),0.5
+integration,MVP1,Calculation Service communicates with Azure PostgreSQL for results,Calculation Service -> Azure PostgreSQL | results,architecture,True,F096,1.0,True,yes,yes,1.0,Calculation Service (runs Databricks SQL; reads Delta Lake; writes results),1.0
+architecture,All,"Supporting services include Datadog, GitHub Actions, Key Vault, Azure Monitor","Datadog
+GitHub Actions
+Key Vault
+Azure Monitor",architecture,False,F097,1.0,True,yes,yes,1.0,"Monitoring/Logging/Telemetry (Datadog, Azure Monitor)",1.0
+architecture,All,Solution environment is labeled as Non-production,Solution labeled as Non-production.,architecture,False,F098,1.0,True,yes,yes,1.0,QA/Integration: non-production subscription as per architecture,1.0

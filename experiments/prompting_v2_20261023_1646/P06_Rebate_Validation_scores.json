@@ -1,0 +1,113 @@
+{
+  "project": "P06_Rebate_Validation",
+  "structure": 1.0,
+  "missing_sections": [],
+  "coverage": 0.9375,
+  "coverage_all": 0.9030612244897959,
+  "guard_downgrades": 3,
+  "missed_facts": [
+    {
+      "id": "F013",
+      "category": "nfr_performance",
+      "fact": "Cut claim preparation time from 3 days to 4 hours per supplier"
+    },
+    {
+      "id": "F019",
+      "category": "functional",
+      "fact": "Claim worksheet with tier reached and earned amount is in scope for MVP1"
+    },
+    {
+      "id": "F075",
+      "category": "risk",
+      "fact": "Complex agreement language risk is mitigated by mandatory analyst confirmation"
+    }
+  ],
+  "coverage_by_category": {
+    "acceptance": 1.0,
+    "ai_quality": 1.0,
+    "architecture": 0.75,
+    "assumption": 1.0,
+    "business_rule": 0.57,
+    "compliance": 1.0,
+    "data": 1.0,
+    "dependency": 1.0,
+    "functional": 0.92,
+    "integration": 0.96,
+    "nfr_availability": 1.0,
+    "nfr_performance": 0.67,
+    "out_of_scope": 1.0,
+    "risk": 0.67,
+    "role": 0.92,
+    "scope_mvp1": 1.0,
+    "scope_mvp2": 1.0,
+    "security_access": 1.0,
+    "timeline": 0.5
+  },
+  "faithfulness": 0.9696969696969697,
+  "claims": 55,
+  "requirement_claims": 33,
+  "test_design_claims": 22,
+  "invented": 1,
+  "unverified_supported": 0,
+  "invented_claims": [
+    {
+      "claim": "Audience includes QA Team",
+      "kind": "requirement",
+      "verdict": "not_found"
+    }
+  ],
+  "similarity": 0.9363636363636364,
+  "embedding_sim": 0.6725766219987572,
+  "section_scores": {
+    "references": 1.0,
+    "objectives": 1.0,
+    "scope_in": 1.0,
+    "scope_out": 1.0,
+    "assumptions_dependencies": 1.0,
+    "test_strategy": 0.8,
+    "functional_coverage": 0.8,
+    "rbac_testing": 1.0,
+    "security_compliance": 0.8,
+    "ai_data_quality": 1.0,
+    "nfr_performance": 1.0,
+    "nfr_reliability": 1.0,
+    "nfr_accessibility_compat": 0.6,
+    "observability_audit": 0.8,
+    "test_data_environment": 0.8,
+    "entry_exit_criteria": 1.0,
+    "defect_management": 1.0,
+    "risks": 1.0,
+    "deliverables_reporting": 1.0,
+    "traceability_metrics": 1.0,
+    "schedule": 1.0,
+    "e2e_scenario": 1.0
+  },
+  "missing_points": {
+    "test_strategy": [
+      "Explicit unit test coverage target (reference: developer-owned tests target minimum 85% coverage for tier calculator).",
+      "Detailed API/contract testing points such as idempotency and versioning called out explicitly (only general API integration referenced)."
+    ],
+    "functional_coverage": [
+      "Explicit test of returns and credit notes handling called out in reference (generated plan mentions exclusions but does not explicitly call out returns/credit notes).",
+      "The reference included concrete numeric worked examples (retroactive vs incremental calculations with the USD 2.1M / thresholds and expected amounts) \u2014 generated plan relies on analyst\u2011verified examples but does not list the concrete examples."
+    ],
+    "security_compliance": [
+      "Specific web security controls explicitly named in reference (CSRF, XSS protection) are not called out explicitly in generated plan.",
+      "Explicit mention of MFA requirement and spend data not exposed in logs (generated references token/session behaviour and secrets but not those exact items).",
+      "Explicit rate limiting tests and dependency scanning/SAST/DAST timing are left as TBD rather than detailed test points."
+    ],
+    "nfr_accessibility_compat": [
+      "Detailed accessibility tests from reference (screen reader labels, keyboard-only navigation, focus order, colour contrast, error identification, zoom/reflow) are not specified \u2014 generated plan only notes basic accessibility and 'TBD' standards.",
+      "Explicit browser matrix with enterprise-supported versions (Edge/Chrome/Firefox) is left as TBD."
+    ],
+    "observability_audit": [
+      "Explicit mention of correlation IDs and trace propagation across services (reference requires traces/correlation IDs) is not explicit.",
+      "Concrete retention/exportability policies and specific dashboard/alert thresholds are left as TBD rather than specified."
+    ],
+    "test_data_environment": [
+      "Explicit invalid and boundary test dataset enumeration from reference (e.g., unreadable agreements, missing tiers, boundary examples like USD 50,000.00/50,000.01) is not detailed in the generated plan.",
+      "Explicit mention of security \u2013 restricted accounts dataset and exact masking rules are left as TBD rather than enumerated."
+    ]
+  },
+  "overall": 0.9239118457300276
+}

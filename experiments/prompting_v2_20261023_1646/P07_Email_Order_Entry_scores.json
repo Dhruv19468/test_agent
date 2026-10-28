@@ -1,0 +1,110 @@
+{
+  "project": "P07_Email_Order_Entry",
+  "structure": 1.0,
+  "missing_sections": [],
+  "coverage": 0.9553571428571429,
+  "coverage_all": 0.9347826086956522,
+  "guard_downgrades": 1,
+  "missed_facts": [
+    {
+      "id": "F001",
+      "category": "business_rule",
+      "fact": "Reduce order entry time by 60%"
+    },
+    {
+      "id": "F002",
+      "category": "business_rule",
+      "fact": "Reduce order entry errors by 50%"
+    }
+  ],
+  "coverage_by_category": {
+    "acceptance": 1.0,
+    "architecture": 0.96,
+    "assumption": 1.0,
+    "business_rule": 0.33,
+    "data": 0.8,
+    "dependency": 1.0,
+    "functional": 1.0,
+    "integration": 1.0,
+    "nfr_availability": 1.0,
+    "nfr_performance": 1.0,
+    "out_of_scope": 0.75,
+    "risk": 1.0,
+    "role": 1.0,
+    "scope_mvp1": 1.0,
+    "scope_mvp2": 1.0,
+    "security_access": 1.0,
+    "timeline": 1.0
+  },
+  "faithfulness": 0.9863013698630136,
+  "claims": 108,
+  "requirement_claims": 73,
+  "test_design_claims": 35,
+  "invented": 1,
+  "unverified_supported": 1,
+  "invented_claims": [
+    {
+      "claim": "Integrations must work end-to-end per architecture connections",
+      "kind": "requirement",
+      "verdict": "supported"
+    }
+  ],
+  "similarity": 0.9142857142857144,
+  "embedding_sim": 0.6800143498567627,
+  "section_scores": {
+    "references": 1.0,
+    "objectives": 1.0,
+    "scope_in": 1.0,
+    "scope_out": 1.0,
+    "assumptions_dependencies": 1.0,
+    "test_strategy": 0.8,
+    "functional_coverage": 0.8,
+    "rbac_testing": 1.0,
+    "security_compliance": 0.8,
+    "ai_data_quality": 0.8,
+    "nfr_performance": 1.0,
+    "nfr_reliability": 0.8,
+    "nfr_accessibility_compat": 0.4,
+    "observability_audit": 1.0,
+    "test_data_environment": 0.8,
+    "entry_exit_criteria": 1.0,
+    "defect_management": 1.0,
+    "risks": 1.0,
+    "deliverables_reporting": 1.0,
+    "traceability_metrics": 1.0,
+    "e2e_scenario": 1.0
+  },
+  "missing_points": {
+    "test_strategy": [
+      "Unit test coverage target (85%) not specified",
+      "API/contract testing specifics (schemas, error codes, idempotency, versioning) not detailed"
+    ],
+    "functional_coverage": [
+      "Mailbox outage and non-PO email handling scenarios not explicitly detailed in this section",
+      "30-minute ageing flag (ageing rule) not explicitly listed under functional coverage",
+      "Explicit multi-page PO extraction tests not clearly called out"
+    ],
+    "security_compliance": [
+      "Tests for spoofed sender domains to prevent auto-trusting not explicitly defined",
+      "Prompt-injection / adversarial email content tests not specified",
+      "Explicit MFA, session timeout, JWT validation, CSRF/XSS protections and rate limiting checks not detailed"
+    ],
+    "ai_data_quality": [
+      "Field-level accuracy broken down by input format (body, PDF, Excel) per BRD",
+      "Version tracking / model and dataset version recorded per email execution not specified"
+    ],
+    "nfr_reliability": [
+      "Backup/restore and data reconciliation after recovery not explicitly covered",
+      "Runbooks / operational recovery procedures not explicitly listed"
+    ],
+    "nfr_accessibility_compat": [
+      "Concrete accessibility test criteria (screen reader labels, keyboard navigation, focus order, colour contrast, zoom/reflow)",
+      "Supported browser versions and explicit compatibility test cases"
+    ],
+    "test_data_environment": [
+      "Versioned test data and golden dataset + model version per execution not explicitly mandated",
+      "Explicit separation/naming of isolated Dev/QA/Performance/UAT environments not fully specified"
+    ]
+  },
+  "overall": 0.9411252446183953
+}

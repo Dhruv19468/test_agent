@@ -1,0 +1,180 @@
+{
+  "project": "P07_Email_Order_Entry",
+  "structure": 0.65,
+  "missing_sections": [
+    "scope_out",
+    "rbac_testing",
+    "security_compliance",
+    "ai_data_quality",
+    "nfr_reliability",
+    "nfr_accessibility_compat",
+    "observability_audit"
+  ],
+  "coverage": 0.8482142857142857,
+  "coverage_all": 0.8623188405797102,
+  "guard_downgrades": 0,
+  "missed_facts": [
+    {
+      "id": "F001",
+      "category": "business_rule",
+      "fact": "Reduce order entry time by 60%"
+    },
+    {
+      "id": "F002",
+      "category": "business_rule",
+      "fact": "Reduce order entry errors by 50%"
+    },
+    {
+      "id": "F005",
+      "category": "data",
+      "fact": "Customer Service receives about 6,000 PO emails per week"
+    },
+    {
+      "id": "F006",
+      "category": "data",
+      "fact": "PO emails across 40 branches"
+    },
+    {
+      "id": "F061",
+      "category": "timeline",
+      "fact": "MVP1: Apr\u2013Jul 2026"
+    }
+  ],
+  "coverage_by_category": {
+    "acceptance": 1.0,
+    "architecture": 0.96,
+    "assumption": 1.0,
+    "business_rule": 0.33,
+    "data": 0.4,
+    "dependency": 1.0,
+    "functional": 0.85,
+    "integration": 1.0,
+    "nfr_availability": 1.0,
+    "nfr_performance": 1.0,
+    "out_of_scope": 1.0,
+    "risk": 1.0,
+    "role": 0.67,
+    "scope_mvp1": 1.0,
+    "scope_mvp2": 1.0,
+    "security_access": 0.83,
+    "timeline": 0.0
+  },
+  "faithfulness": 0.9027777777777778,
+  "claims": 94,
+  "requirement_claims": 72,
+  "test_design_claims": 22,
+  "invented": 7,
+  "unverified_supported": 6,
+  "invented_claims": [
+    {
+      "claim": "System implements retries and dead-letter handling for transient failures.",
+      "kind": "requirement",
+      "verdict": "supported"
+    },
+    {
+      "claim": "Text-based PDFs and scanned image PDFs are supported by extraction.",
+      "kind": "requirement",
+      "verdict": "supported"
+    },
+    {
+      "claim": "CSRs can only view and edit drafts for their branch.",
+      "kind": "requirement",
+      "verdict": "supported"
+    },
+    {
+      "claim": "Validate TLS encryption and Key Vault policies for secrets.",
+      "kind": "requirement",
+      "verdict": "supported"
+    },
+    {
+      "claim": "QA Lead will finalize test plan and own acceptance sign-off.",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "CSRs will participate as business testers in UAT and pilot.",
+      "kind": "requirement",
+      "verdict": "supported"
+    },
+    {
+      "claim": "Release to production requires BRD acceptance criteria met in pilot.",
+      "kind": "requirement",
+      "verdict": "supported"
+    }
+  ],
+  "similarity": 0.8571428571428571,
+  "embedding_sim": 0.38076925912768583,
+  "section_scores": {
+    "references": 0.8,
+    "objectives": 1.0,
+    "scope_in": 1.0,
+    "scope_out": 1.0,
+    "assumptions_dependencies": 1.0,
+    "test_strategy": 0.8,
+    "functional_coverage": 1.0,
+    "rbac_testing": 0.6,
+    "security_compliance": 0.6,
+    "ai_data_quality": 1.0,
+    "nfr_performance": 1.0,
+    "nfr_reliability": 0.8,
+    "nfr_accessibility_compat": 0.4,
+    "observability_audit": 0.8,
+    "test_data_environment": 1.0,
+    "entry_exit_criteria": 0.8,
+    "defect_management": 0.8,
+    "risks": 1.0,
+    "deliverables_reporting": 0.8,
+    "traceability_metrics": 0.8,
+    "e2e_scenario": 1.0
+  },
+  "missing_points": {
+    "references": [
+      "Explicit References section listing documents (architecture diagram link/version), document owners and locations"
+    ],
+    "test_strategy": [
+      "Explicit unit-test coverage target (85%)",
+      "API/contract test specifics: idempotency/versioning test cases"
+    ],
+    "rbac_testing": [
+      "Explicit tests that CS Admin cannot release orders and admin-restriction verification",
+      "Supervisor permission matrix tests (reassign vs release)"
+    ],
+    "security_compliance": [
+      "MFA, session timeout and JWT/session expiry tests",
+      "CSRF/XSS and input-sanitisation test cases",
+      "Rate-limiting/test for throttling abuse",
+      "Prompt-injection tests for Azure OpenAI and specific spoofed-sender anti-spoof tests",
+      "SAST/DAST/dependency-scanning gating details"
+    ],
+    "nfr_reliability": [
+      "Explicit backup/restore and data reconciliation test cases after recovery",
+      "More detail on idempotency verification across retries (test matrix)"
+    ],
+    "nfr_accessibility_compat": [
+      "Screen-reader and AT (WCAG) test cases (keyboard navigation, focus order)",
+      "Colour-contrast, zoom/reflow and error identification tests",
+      "Browser compatibility matrix and tests for supported Edge/Chrome/Firefox versions"
+    ],
+    "observability_audit": [
+      "Audit record requirements: retention, exportability and access-control tests",
+      "Explicit verification that audit captures extraction/model version and CSR corrections/releases"
+    ],
+    "entry_exit_criteria": [
+      "Explicit entry criterion: BRD approved / requirements baselined callout",
+      "Requirement that >=95% of planned test cases pass as exit criterion and 'unit-test evidence' threshold"
+    ],
+    "defect_management": [
+      "Defect report template fields (steps, expected/actual, evidence, environment, build, owner) spelled out as mandatory",
+      "Mapping of severity definitions to the reference examples"
+    ],
+    "deliverables_reporting": [
+      "Daily status report cadence/content (explicit)",
+      "Separate named reports for accessibility/security/reliability with expected contents"
+    ],
+    "traceability_metrics": [
+      "Explicit weekly metrics breakdown (planned/executed/passed/failed/blocked) in the plan",
+      "Inclusion of accessibility and security finding metrics in the standard weekly report"
+    ]
+  },
+  "overall": 0.7234312996031746
+}

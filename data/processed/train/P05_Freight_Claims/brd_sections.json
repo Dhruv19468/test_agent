@@ -1,0 +1,172 @@
+[
+  {
+    "heading": "Business Requirements Document – Freight Damage Claims Automation",
+    "level": 1,
+    "text": "Version: 1.0\nDate: 09 Mar 2026\nBusiness Owner: Logistics & Transportation\nStatus: Baselined"
+  },
+  {
+    "heading": "Introduction",
+    "level": 1,
+    "text": "Freight Claims Automation will help branch and distribution centre staff file carrier damage and shortage claims faster and with complete evidence.\nMVP1 provides a claim intake form with photo and document upload, AI-assisted damage description, automatic claim value calculation from the sales order, and claim packet generation for submission to the carrier. MVP2 adds carrier API submission, claim status tracking and recovery reporting."
+  },
+  {
+    "heading": "Business Context",
+    "level": 1,
+    "text": "Wesco files about 900 freight claims per month. 30% are rejected by carriers due to missing evidence or late filing (carrier deadline is 9 months, many carriers require notice within 5 days for concealed damage).\nClaim information is collected through email and spreadsheets, making recovery tracking difficult."
+  },
+  {
+    "heading": "Objectives",
+    "level": 1,
+    "text": "- Reduce claim rejection rate from 30% to under 10%\n- Ensure claims are filed within carrier deadlines\n- Reduce effort per claim from 45 to 15 minutes\n- Improve recovery visibility"
+  },
+  {
+    "heading": "Project Scope",
+    "level": 1,
+    "text": "| Phase | Scope |\n|---|---|\n| In scope (MVP1) | Claim intake form linked to shipment (PRO number / BOL), photo and document upload, AI-generated damage description from photos, claim value calculation from sales order lines, deadline calculation, claim packet PDF, email to carrier claims address, claim register |\n| In scope (MVP2) | Carrier API submission for top 5 carriers, status tracking, reminders for overdue responses, recovery reporting, integration with finance for credit posting |\n| Out of scope | Customer-facing claim portal, litigation handling, insurance claims |"
+  },
+  {
+    "heading": "Appendix A",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Freight Claims Automation MVP1 Scope Overview",
+    "level": 2,
+    "text": "- Claim Intake: Shipment lookup and form.\n- Evidence & AI Description: Photo upload and suggested description.\n- Claim Packet: Value calculation, packet PDF and carrier email."
+  },
+  {
+    "heading": "How it works",
+    "level": 2,
+    "text": "- User enters PRO number.\n- Shipment and order data pre-filled.\n- Photos uploaded and description suggested.\n- Claim value calculated.\n- Packet generated and emailed (approval above USD 5,000)."
+  },
+  {
+    "heading": "Data sources",
+    "level": 3,
+    "text": "- TMS\n- ERP sales orders\n- Evidence uploads"
+  },
+  {
+    "heading": "Security",
+    "level": 3,
+    "text": "- Azure AD\n- Branch-scoped access"
+  },
+  {
+    "heading": "Not in MVP1",
+    "level": 3,
+    "text": "- No carrier API submission\n- No status tracking or reminders\n- No recovery reporting\n- No finance posting"
+  },
+  {
+    "heading": "Users and Roles",
+    "level": 1,
+    "text": "| Persona | Responsibilities |\n|---|---|\n| Branch User | Create claims, upload evidence, review AI description and submit claim packet |\n| Claims Specialist | Review and approve claims above USD 5,000, follow up with carriers, close claims |\n| Logistics Admin | Maintain carrier list, claim deadlines and email templates |"
+  },
+  {
+    "heading": "Key Use Cases",
+    "level": 1,
+    "text": "- As a Branch User, I can enter a PRO number and see shipment, carrier and order lines pre-filled.\n- As a Branch User, I can upload up to 10 photos and get a suggested damage description that I can edit.\n- As a Claims Specialist, I must approve claims above USD 5,000 before they are sent.\n- As a Branch User, I see a warning when a concealed damage claim is created more than 5 days after delivery."
+  },
+  {
+    "heading": "Functional Requirements",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "MVP1",
+    "level": 2,
+    "text": "- Shipment lookup by PRO number or BOL from the Transportation Management System (TMS) API, including carrier, delivery date and order number.\n- Upload of up to 10 photos (JPG/PNG, max 10 MB each) and documents (BOL, delivery receipt, invoice as PDF).\n- Damage description suggested by Azure OpenAI vision from photos, editable by the user.\n- Claim value calculation = damaged quantity × unit cost from the ERP sales order, plus freight charge where applicable.\n- Deadline calculation per carrier rules and warning for late concealed damage claims.\n- Claim packet PDF generation and email to the carrier claims address; claim register with status Draft, Submitted, Pending approval."
+  },
+  {
+    "heading": "MVP2",
+    "level": 2,
+    "text": "- Carrier API submission for top 5 carriers.\n- Status tracking and reminders.\n- Recovery reporting.\n- Finance credit posting integration."
+  },
+  {
+    "heading": "Configuration",
+    "level": 2,
+    "text": "- Admin UI for carriers, claim email addresses, deadlines and templates."
+  },
+  {
+    "heading": "NFRs",
+    "level": 1,
+    "text": "- Availability: 99.5% during 05:00–23:00 local time.\n- Security – Azure AD SSO; branch users limited to their branch claims.\n- Performance – Shipment lookup within 3 seconds. Damage description within 20 seconds for 10 photos. Claim packet within 10 seconds.\n- Usability: Usable on tablets in the warehouse (responsive layout).\n- Observability – Trace per claim."
+  },
+  {
+    "heading": "Architecture Overview",
+    "level": 1,
+    "text": "Refer to P05_Freight_Claims_Architecture.png.\nNote: to be validated with the backend architects."
+  },
+  {
+    "heading": "Data Sources",
+    "level": 1,
+    "text": "Data includes shipment data, sales order lines, claim evidence and the claim register.\n| Data | Description | Source | Frequency | Owner | Security |\n|---|---|---|---|---|---|\n| Shipments | PRO, BOL, carrier, delivery date | TMS | On demand | Logistics | Internal |\n| Sales order lines | Items, quantity, unit cost | ERP | On demand | Finance | Confidential |\n| Evidence | Photos and documents | Upload | Per claim | Branch | Internal |\n| Claims register | Claim details and status | Tool | Per claim | Logistics | Confidential |\n| Carrier rules | Deadlines, addresses | Configuration | As needed | Logistics Admin | Internal |\n- Quality checks: Mandatory evidence per claim type (photos for damage, delivery receipt for shortage); claim value reconciliation to order\n- RBAC: Branch scope enforced; approvals by Claims Specialist above USD 5,000"
+  },
+  {
+    "heading": "Integrations",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Identity & Access",
+    "level": 2,
+    "text": "- Azure AD."
+  },
+  {
+    "heading": "Enterprise Systems",
+    "level": 2,
+    "text": "- TMS API (shipment), ERP sales order API (unit cost) through APIM.\n- SendGrid for carrier emails."
+  },
+  {
+    "heading": "AI Services",
+    "level": 2,
+    "text": "- Azure OpenAI vision for damage description."
+  },
+  {
+    "heading": "Data & Storage",
+    "level": 2,
+    "text": "- Azure Blob Storage for photos and packets; Azure PostgreSQL for claims."
+  },
+  {
+    "heading": "Orchestration",
+    "level": 2,
+    "text": "- Azure Service Bus for packet generation and email sending."
+  },
+  {
+    "heading": "Compliance",
+    "level": 1,
+    "text": "- AI Governance Council approval\n- Unit cost data confidential"
+  },
+  {
+    "heading": "Assumptions",
+    "level": 1,
+    "text": "- TMS has PRO numbers for 95% of LTL shipments\n- Carrier claim addresses are current"
+  },
+  {
+    "heading": "Dependencies",
+    "level": 3,
+    "text": "TMS and ERP API access. Logistics team for UAT. Carrier rules from Transportation."
+  },
+  {
+    "heading": "High-Level Plan",
+    "level": 1,
+    "text": "MVP1: Apr–Jun 2026. MVP2: Q4 2026."
+  },
+  {
+    "heading": "Success Criteria",
+    "level": 1,
+    "text": "- ≥95% of claims contain all mandatory evidence\n- Claim value calculation 100% correct on test set\n- Damage description rated acceptable by users in ≥85% of cases\n- Late concealed damage warnings 100% correct"
+  },
+  {
+    "heading": "Risks",
+    "level": 1,
+    "text": "| Risk | Mitigation |\n|---|---|\n| Poor photo quality | Guidance and manual description |\n| TMS data gaps | Manual entry fallback |\n| Carrier rule changes | Configurable deadlines |"
+  },
+  {
+    "heading": "Cost & ROI Summary",
+    "level": 1,
+    "text": "- Recovered claim value increase\n- Effort saved per claim\n(TBD – pending SME review)"
+  },
+  {
+    "heading": "Approvers",
+    "level": 1,
+    "text": "- AI Governance Council\n- Finance (BIR)\n- AI intake\n- Global Intake\n- C2P\n- WAB"
+  }
+]

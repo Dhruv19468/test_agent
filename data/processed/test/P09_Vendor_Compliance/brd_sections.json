@@ -1,0 +1,152 @@
+[
+  {
+    "heading": "(front matter)",
+    "level": 0,
+    "text": "- BUSINESS REQUIREMENT SPECIFICATION\n- Vendor Onboarding Compliance Screening\nVersion: 1.1\nDate: 06 Apr 2026\nBusiness Owner: Global Procurement – Supplier Risk\nStatus: For review"
+  },
+  {
+    "heading": "Overview",
+    "level": 1,
+    "text": "Vendor Compliance Screening will automate document checks and sanctions screening during supplier onboarding.\nMVP1 extracts data from onboarding documents (tax certificates, insurance certificates, bank letters), validates them against the onboarding form, screens the supplier and its owners against sanctions lists through a third-party screening API, and produces a risk summary for Supplier Risk Analysts. MVP2 adds continuous monitoring and SAP Ariba integration."
+  },
+  {
+    "heading": "Background",
+    "level": 1,
+    "text": "Supplier onboarding takes 4–6 weeks; manual document checks are a major bottleneck.\nAudit requires evidence of sanctions screening for every new supplier."
+  },
+  {
+    "heading": "Goals & Objectives",
+    "level": 1,
+    "text": "- Reduce document review time by 70%\n- Screen 100% of new suppliers before approval\n- Produce audit-ready evidence\n- Reduce onboarding time to under 2 weeks"
+  },
+  {
+    "heading": "Scope of Work",
+    "level": 1,
+    "text": "| Phase | Scope |\n|---|---|\n| In scope (MVP1) | Onboarding package upload, document classification and extraction, cross-checks against onboarding form (name, tax ID, address, bank account holder), expiry checks, sanctions screening via API, risk summary with Low/Medium/High rating, analyst decision and evidence pack |\n| In scope (MVP2) | Continuous sanctions monitoring, SAP Ariba integration, supplier self-service upload, document expiry reminders |\n| Out of scope | Supplier performance management, contract negotiation, payment setup in ERP |"
+  },
+  {
+    "heading": "Users and Roles",
+    "level": 1,
+    "text": "| Persona | Responsibilities |\n|---|---|\n| Supplier Risk Analyst | Upload packages, review checks and screening results, decide approve/reject/request info |\n| Compliance Manager | Approve High-risk suppliers and clear potential sanctions matches |\n| Risk Admin | Maintain document types, risk rules and screening settings |"
+  },
+  {
+    "heading": "Sample Use Cases & User Stories",
+    "level": 1,
+    "text": "- As an analyst, I see each document classified with extracted fields and mismatches against the form highlighted.\n- As an analyst, I see screening results as No Match, Potential Match or Confirmed Match.\n- As a Compliance Manager, I must clear every Potential Match with a reason before approval.\n- As an analyst, I can download an evidence pack (PDF) for audit.\nOpen question: confirm with business owner."
+  },
+  {
+    "heading": "Functional Requirements",
+    "level": 1,
+    "text": "| Phase | Requirement |\n|---|---|\n| MVP1 | Upload of onboarding package (PDF, JPG, PNG; max 15 MB per file). |\n| MVP1 | Document classification (W-9/tax certificate, insurance certificate, bank letter, certificate of incorporation) and field extraction with Azure Document Intelligence. |\n| MVP1 | Cross-checks: legal name, tax ID format and match, address, bank account holder = legal name; insurance coverage ≥ USD 2M and not expired. |\n| MVP1 | Sanctions screening of supplier and listed owners via third-party screening API through APIM. |\n| MVP1 | Risk rating: High if any Confirmed Match, expired insurance or tax ID mismatch; Medium if Potential Match or minor mismatch; else Low. |\n| MVP1 | Analyst decision and evidence pack PDF; High risk requires Compliance Manager approval. |\n| MVP2 | Continuous monitoring. |\n| MVP2 | SAP Ariba integration. |\n| MVP2 | Supplier self-service. |\n| MVP2 | Expiry reminders. |"
+  },
+  {
+    "heading": "NFRs",
+    "level": 1,
+    "text": "| Area | Requirement |\n|---|---|\n| Availability | 99.5%. |\n| Security | Azure AD; bank and tax data masked; evidence packs access-controlled. |\n| Performance | Package with 10 documents processed within 2 minutes. Screening API response within 10 seconds. |\n| Compliance | Screening evidence retained for 7 years. SOX and audit requirements. |"
+  },
+  {
+    "heading": "Architecture",
+    "level": 1,
+    "text": "Refer to P09_Vendor_Compliance_Architecture.png."
+  },
+  {
+    "heading": "Data Requirements",
+    "level": 1,
+    "text": "Data includes onboarding documents, extracted fields, screening results and decisions.\n| Data | Description | Source | Frequency | Owner | Security |\n|---|---|---|---|---|---|\n| Onboarding documents | Tax, insurance, bank letters | Upload | Per supplier | Supplier Risk | Restricted |\n| Onboarding form | Supplier details | Procurement | Per supplier | Procurement | Confidential |\n| Screening results | Matches and scores | Screening API | Per supplier | Supplier Risk | Restricted |\n| Evidence packs | PDF audit evidence | Tool output | Per supplier | Compliance | Restricted |\n- Quality checks – Mandatory documents per supplier type, extracted field completeness\n- RBAC: High-risk approvals and match clearance by Compliance Manager only"
+  },
+  {
+    "heading": "System Integrations",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Identity & Access",
+    "level": 2,
+    "text": "- Azure AD."
+  },
+  {
+    "heading": "External",
+    "level": 2,
+    "text": "- Sanctions screening API (key-based auth via APIM)."
+  },
+  {
+    "heading": "AI Services",
+    "level": 2,
+    "text": "- Azure Document Intelligence (classification and extraction)."
+  },
+  {
+    "heading": "Data & Storage",
+    "level": 2,
+    "text": "- Azure PostgreSQL, Azure Blob Storage (evidence, 7-year retention policy)."
+  },
+  {
+    "heading": "Analytics, Logging & Observability",
+    "level": 1,
+    "text": "- Suppliers screened, risk distribution, review time"
+  },
+  {
+    "heading": "Security, Privacy & Compliance",
+    "level": 1,
+    "text": "- AI Governance Council approval; data privacy review for owner personal data\nOpen question: confirm with business owner."
+  },
+  {
+    "heading": "Assumptions",
+    "level": 1,
+    "text": "- Screening provider sandbox available\n- Most documents are digital PDFs"
+  },
+  {
+    "heading": "Dependencies",
+    "level": 3,
+    "text": "- Screening vendor contract and sandbox\n- Compliance team for golden data\n- Records retention approval\n(TBD – pending SME review)"
+  },
+  {
+    "heading": "High-Level Plan",
+    "level": 1,
+    "text": "- MVP1: May–Jul 2026\n- MVP2: Q1 2027\n(TBD – pending SME review)"
+  },
+  {
+    "heading": "Acceptance & Success Metrics",
+    "level": 1,
+    "text": "- ≥95% document classification accuracy\n- ≥93% field extraction accuracy\n- 100% of suppliers screened before decision\n- Risk rating rules 100% correct on test set\n(TBD – pending SME review)"
+  },
+  {
+    "heading": "Risk Register",
+    "level": 1,
+    "text": "- Poor document quality: Manual review route\n- False positive matches: Compliance clearance workflow\n- Screening API outage: Retry and block approval until screened"
+  },
+  {
+    "heading": "Business Value",
+    "level": 1,
+    "text": "- Analyst time saved\n- Faster onboarding\nOpen question: confirm with business owner."
+  },
+  {
+    "heading": "Appendix",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Vendor Compliance Screening MVP1 Scope Overview",
+    "level": 2,
+    "text": "- Document Checks – Classification, extraction and cross-checks.\n- Sanctions Screening: Supplier and owners screened.\n- Risk Summary – Rating, decision and evidence pack."
+  },
+  {
+    "heading": "How it works",
+    "level": 3,
+    "text": "- Analyst uploads package.\n- Documents classified and extracted.\n- Cross-checks run.\n- Screening performed.\n- Risk summary and decision."
+  },
+  {
+    "heading": "Data sources for MVP",
+    "level": 3,
+    "text": "- Onboarding documents\n- Onboarding form\n- Screening API"
+  },
+  {
+    "heading": "Security",
+    "level": 3,
+    "text": "- Azure AD\n- Masked sensitive data"
+  },
+  {
+    "heading": "Exclusions",
+    "level": 2,
+    "text": "- No continuous monitoring\n- No Ariba integration\n- No supplier self-service\n- No expiry reminders\n(TBD – pending SME review)"
+  }
+]

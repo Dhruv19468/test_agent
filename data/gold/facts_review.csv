@@ -1,0 +1,945 @@
+﻿project,id,category,mvp,must_test,fact,source_quote,keep
+P08_Warranty_Returns,F001,business_rule,All,True,The RMA Assistant will help Returns Coordinators decide whether customer return requests are eligible,The RMA Assistant will help Returns Coordinators decide whether customer return requests are eligible,Y
+P08_Warranty_Returns,F002,scope_mvp1,MVP1,True,MVP1 reads return requests,MVP1 reads return requests,Y
+P08_Warranty_Returns,F003,integration,MVP1,True,MVP1 retrieves the original invoice from SAP,retrieves the original invoice from SAP,Y
+P08_Warranty_Returns,F004,functional,MVP1,True,MVP1 checks eligibility against return policies held in a policy knowledge base (RAG),checks eligibility against return policies held in a policy knowledge base (RAG),Y
+P08_Warranty_Returns,F005,functional,MVP1,True,MVP1 recommends approve/reject with reasons,recommends approve/reject with reasons,Y
+P08_Warranty_Returns,F006,functional,MVP1,True,MVP1 creates the RMA after coordinator approval,creates the RMA after coordinator approval,Y
+P08_Warranty_Returns,F007,scope_mvp2,MVP2,False,MVP2 adds supplier warranty claim submission,MVP2 adds supplier warranty claim submission and a customer self-service portal,Y
+P08_Warranty_Returns,F008,scope_mvp2,MVP2,False,MVP2 adds a customer self-service portal,MVP2 adds supplier warranty claim submission and a customer self-service portal,Y
+P08_Warranty_Returns,F009,risk,All,False,"Around 4,000 return requests per month are handled manually","Around 4,000 return requests per month are handled manually",Y
+P08_Warranty_Returns,F010,risk,All,False,Coordinators look up supplier policies across 300+ PDF documents,coordinators look up supplier policies across 300+ PDF documents,Y
+P08_Warranty_Returns,F011,business_rule,All,True,Reduce handling time per request from 20 to 8 minutes,Reduce handling time per request from 20 to 8 minutes,Y
+P08_Warranty_Returns,F012,business_rule,All,False,Increase supplier warranty recovery by 15%,Increase supplier warranty recovery by 15%,Y
+P08_Warranty_Returns,F013,ai_quality,All,True,Provide policy citations for every decision,Provide policy citations for every decision,Y
+P08_Warranty_Returns,F014,scope_mvp1,MVP1,True,Return request intake (web form and email) is in-scope for MVP1,Return request intake (web form and email),Y
+P08_Warranty_Returns,F015,scope_mvp1,MVP1,True,Invoice lookup in SAP is in-scope for MVP1,invoice lookup in SAP,Y
+P08_Warranty_Returns,F016,scope_mvp1,MVP1,True,Policy retrieval from the policy knowledge base is in-scope for MVP1,policy retrieval from the policy knowledge base,Y
+P08_Warranty_Returns,F017,scope_mvp1,MVP1,True,Eligibility recommendation with cited policy clauses is in-scope for MVP1,eligibility recommendation with cited policy clauses,Y
+P08_Warranty_Returns,F018,scope_mvp1,MVP1,True,Restocking fee calculation is in-scope for MVP1,restocking fee calculation,Y
+P08_Warranty_Returns,F019,scope_mvp1,MVP1,True,Coordinator approval is in-scope for MVP1,coordinator approval,Y
+P08_Warranty_Returns,F020,scope_mvp1,MVP1,True,RMA creation in SAP is in-scope for MVP1,RMA creation in SAP,Y
+P08_Warranty_Returns,F021,scope_mvp1,MVP1,True,Customer notification email is in-scope for MVP1,customer notification email,Y
+P08_Warranty_Returns,F022,scope_mvp2,MVP2,False,Return shipping label generation is in-scope for MVP2,return shipping label generation,Y
+P08_Warranty_Returns,F023,out_of_scope,NA,False,Refund processing is out of scope,Refund processing,Y
+P08_Warranty_Returns,F024,out_of_scope,NA,False,Inventory disposition is out of scope,inventory disposition,Y
+P08_Warranty_Returns,F025,out_of_scope,NA,False,Credit memo posting is out of scope,credit memo posting,Y
+P08_Warranty_Returns,F026,role,MVP1,True,"Returns Coordinator can review requests and AI recommendations, approve or reject, create RMA","Returns Coordinator | Review requests and AI recommendations, approve or reject, create RMA",Y
+P08_Warranty_Returns,F027,role,MVP1,True,"Returns Manager approves exceptions (outside policy) and returns above USD 10,000","Returns Manager | Approve exceptions (outside policy) and returns above USD 10,000",Y
+P08_Warranty_Returns,F028,role,MVP1,True,Policy Admin can upload and retire supplier policy documents and maintain restocking fee rules,"Policy Admin | Upload and retire supplier policy documents, maintain restocking fee rules",Y
+P08_Warranty_Returns,F029,functional,MVP1,True,As a Returns Coordinator I see the recommendation with the policy clause and document cited,I see the recommendation (eligible/not eligible) with the policy clause and document cited,Y
+P08_Warranty_Returns,F030,business_rule,MVP1,True,Restocking fee standard 15%,restocking fee calculated (standard 15%,Y
+P08_Warranty_Returns,F031,business_rule,MVP1,True,Restocking fee waived for defective items under warranty,waived for defective items under warranty,Y
+P08_Warranty_Returns,F032,business_rule,MVP1,True,As a Returns Manager I approve exceptions with a mandatory reason,"As a Returns Manager, I approve exceptions with a mandatory reason",Y
+P08_Warranty_Returns,F033,nfr_availability,MVP1,True,Availability 99.5% business hours,99.5% business hours.,Y
+P08_Warranty_Returns,F034,security_access,MVP1,True,Security: Azure AD; customer data confidential,Azure AD; customer data confidential.,Y
+P08_Warranty_Returns,F035,nfr_performance,MVP1,True,Recommendation within 15 seconds,Recommendation within 15 seconds.,Y
+P08_Warranty_Returns,F036,nfr_performance,MVP1,True,RMA creation within 10 seconds,RMA creation within 10 seconds.,Y
+P08_Warranty_Returns,F037,ai_quality,MVP1,True,Every recommendation must cite at least one policy clause,Every recommendation must cite at least one policy clause; no decision is executed without human approval.,Y
+P08_Warranty_Returns,F038,compliance,MVP1,True,No decision is executed without human approval,Every recommendation must cite at least one policy clause; no decision is executed without human approval.,Y
+P08_Warranty_Returns,F039,functional,MVP1,True,"Request intake via web form and returns mailbox (Graph API) with invoice number, items, quantity, reason code and photos","Request intake via web form and returns mailbox (Graph API) with invoice number, items, quantity, reason code and photos.",Y
+P08_Warranty_Returns,F040,integration,MVP1,True,Invoice and purchase date lookup in SAP via APIM,Invoice and purchase date lookup in SAP via APIM.,Y
+P08_Warranty_Returns,F041,integration,MVP1,True,"Policy retrieval from Azure AI Search (policy chunks with supplier, product category, effective dates)","Policy retrieval from Azure AI Search (policy chunks with supplier, product category, effective dates)",Y
+P08_Warranty_Returns,F042,integration,MVP1,True,Recommendation by Azure OpenAI with citations,recommendation by Azure OpenAI with citations,Y
+P08_Warranty_Returns,F043,business_rule,MVP1,True,Only active policy versions used,only active policy versions used.,Y
+P08_Warranty_Returns,F044,business_rule,MVP1,True,Eligibility return window default 30 days from invoice for non-defective,return window (default 30 days from invoice for non-defective,Y
+P08_Warranty_Returns,F045,business_rule,MVP1,True,Eligibility warranty period per supplier for defective items,warranty period per supplier for defective,Y
+P08_Warranty_Returns,F046,business_rule,MVP1,True,Non-returnable categories include custom cut cable and special orders,"non-returnable categories (custom cut cable, special orders)",Y
+P08_Warranty_Returns,F047,business_rule,MVP1,True,"Manager approval required for exceptions and returns above USD 10,000","manager approval for exceptions and returns above USD 10,000.",Y
+P08_Warranty_Returns,F048,integration,MVP1,True,RMA creation in SAP and customer email notification via SendGrid,RMA creation in SAP and customer email notification via SendGrid.,Y
+P08_Warranty_Returns,F049,functional,MVP2,False,MVP2 includes Supplier warranty claims,MVP2 – Supplier warranty claims.,Y
+P08_Warranty_Returns,F050,functional,MVP2,False,MVP2 includes Customer portal,MVP2: Customer portal.,Y
+P08_Warranty_Returns,F051,integration,All,True,Identity & Access integration: Azure AD,Azure AD.,Y
+P08_Warranty_Returns,F052,integration,All,True,"Enterprise Systems: SAP S/4HANA (invoices, RMA) via APIM","SAP S/4HANA (invoices, RMA) via APIM; returns mailbox via Graph API; SendGrid.",Y
+P08_Warranty_Returns,F053,integration,All,True,Returns mailbox integration via Graph API,returns mailbox via Graph API,Y
+P08_Warranty_Returns,F054,integration,All,True,"AI Services include Azure OpenAI, Azure AI Search, Azure Document Intelligence","Azure OpenAI, Azure AI Search (policy index), Azure Document Intelligence for policy PDFs.",Y
+P08_Warranty_Returns,F055,data,All,True,Azure PostgreSQL for requests and decisions,Azure PostgreSQL for requests and decisions; Blob Storage for policies and photos.,Y
+P08_Warranty_Returns,F056,data,All,True,Azure Blob Storage for policies and photos,Blob Storage for policies and photos.,Y
+P08_Warranty_Returns,F057,data,All,True,"Quality checks require policy metadata completeness: supplier, category, effective dates","Quality checks – Policy metadata completeness (supplier, category, effective dates); citation present for every recommendation",Y
+P08_Warranty_Returns,F058,assumption,MVP1,False,Policy documents for top 50 suppliers available as PDFs,Policy documents for top 50 suppliers available as PDFs,Y
+P08_Warranty_Returns,F059,assumption,MVP1,True,Invoice numbers provided in 90% of requests,Invoice numbers provided in 90% of requests,Y
+P08_Warranty_Returns,F060,acceptance,MVP1,True,≥90% agreement between recommendation and coordinator golden decisions,≥90% agreement between recommendation and coordinator golden decisions,Y
+P08_Warranty_Returns,F061,acceptance,MVP1,True,100% of recommendations include a valid citation from an active policy,100% of recommendations include a valid citation from an active policy,Y
+P08_Warranty_Returns,F062,acceptance,MVP1,True,Restocking fee 100% correct on test set,Restocking fee 100% correct on test set,Y
+P08_Warranty_Returns,F063,acceptance,MVP1,True,No RMA created without coordinator approval,No RMA created without coordinator approval,Y
+P08_Warranty_Returns,F064,timeline,MVP1,False,MVP1: Apr–Jul 2026,MVP1: Apr–Jul 2026,Y
+P08_Warranty_Returns,F065,timeline,MVP2,False,MVP2: 2027,MVP2: 2027,Y
+P08_Warranty_Returns,F066,architecture,NA,False,Architecture diagram is explicitly labeled Non-production,Diagram is explicitly labeled Non-production.,Y
+P08_Warranty_Returns,F067,architecture,All,True,"Users/Clients include Returns Coordinators, Returns Managers, Policy Admins","Returns Coordinators
+Returns Managers
+Policy Admins",Y
+P08_Warranty_Returns,F068,architecture,All,True,Identity & entry points include Azure AD (Entra ID) and App Gateway,"Azure AD (Entra ID)
+App Gateway",Y
+P08_Warranty_Returns,F069,architecture,All,True,"Application services include Web UI, Returns Service, Policy Ingestion Service, Notification Service, APIM","Web UI
+Returns Service
+Policy Ingestion Service
+Notification Service
+APIM",Y
+P08_Warranty_Returns,F070,architecture,All,True,"AI Services include Azure Document Intelligence, Azure OpenAI, Azure AI Search","Azure Document Intelligence
+Azure OpenAI
+Azure AI Search",Y
+P08_Warranty_Returns,F071,architecture,All,True,Data stores include Azure PostgreSQL and Azure Blob Storage,"Azure PostgreSQL
+Azure Blob Storage",Y
+P08_Warranty_Returns,F072,architecture,All,True,Integration messaging includes Azure Service Bus,Azure Service Bus,Y
+P08_Warranty_Returns,F073,integration,All,True,Notification Service -> SendGrid uses SMTP/587,Notification Service -> SendGrid | SMTP/587,Y
+P08_Warranty_Returns,F074,integration,All,True,Returns Coordinators access App Gateway over HTTPS/443 with AD/SSO,Returns Coordinators -> App Gateway | HTTPS/443 AD/SSO,Y
+P08_Warranty_Returns,F075,integration,All,True,Azure AD (Entra ID) -> App Gateway uses OAuth 2.0,Azure AD (Entra ID) -> App Gateway | OAuth 2.0,Y
+P08_Warranty_Returns,F076,integration,All,True,Web UI -> Returns Service uses REST,Web UI -> Returns Service | REST,Y
+P08_Warranty_Returns,F077,integration,All,True,Returns Service -> APIM uses HTTPS/443 Managed Identity,Returns Service -> APIM | HTTPS/443 Managed Identity,Y
+P08_Warranty_Returns,F078,integration,All,True,APIM -> Azure OpenAI used for recommendation,APIM -> Azure OpenAI | recommendation,Y
+P08_Warranty_Returns,F079,integration,All,True,Policy Ingestion Service -> Returns Mailbox uses Graph API,Policy Ingestion Service -> Returns Mailbox (Graph API) | Graph API,Y
+P08_Warranty_Returns,F080,integration,All,True,Azure AI Search -> Azure PostgreSQL used for decisions,Azure AI Search -> Azure PostgreSQL | decisions,Y
+P08_Warranty_Returns,F081,architecture,All,False,Shared Services Subscription contains Azure AD (Entra ID) and App Gateway,Shared Services Subscription contains Azure AD (Entra ID) and App Gateway.,Y
+P08_Warranty_Returns,F082,architecture,All,False,"Non-production Subscription contains Web UI, Returns Service, Policy Ingestion Service, Notification Service, APIM, Azure Document Intelligence, Azure OpenAI, Azure AI Search, Azure PostgreSQL, Azure Blob Storage, Azure Service Bus","Non-production Subscription contains Shared AKS Non-prod (Web UI, Returns Service, Policy Ingestion Service, Notification Service), Azure AI Landing Zone (APIM, Azure Document Intelligence, Azure OpenAI, Azure AI Search), Data Stores (Azure PostgreSQL, Azure Blob Storage), and Integration & Eventing (Azure Service Bus).",Y
+P09_Vendor_Compliance,F001,scope_mvp1,MVP1,True,"MVP1 extracts data from onboarding documents: tax certificates, insurance certificates, bank letters","MVP1 extracts data from onboarding documents (tax certificates, insurance certificates, bank letters)",Y
+P09_Vendor_Compliance,F002,scope_mvp1,MVP1,True,MVP1 validates extracted data against the onboarding form,validates them against the onboarding form,Y
+P09_Vendor_Compliance,F003,integration,MVP1,True,MVP1 screens the supplier and its owners against sanctions lists through a third-party screening API,screens the supplier and its owners against sanctions lists through a third-party screening API,Y
+P09_Vendor_Compliance,F004,scope_mvp1,MVP1,True,MVP1 produces a risk summary for Supplier Risk Analysts,and produces a risk summary for Supplier Risk Analysts,Y
+P09_Vendor_Compliance,F005,compliance,All,True,Audit requires evidence of sanctions screening for every new supplier,Audit requires evidence of sanctions screening for every new supplier.,Y
+P09_Vendor_Compliance,F006,business_rule,All,True,Reduce document review time by 70%,Reduce document review time by 70%,Y
+P09_Vendor_Compliance,F007,business_rule,All,True,Screen 100% of new suppliers before approval,Screen 100% of new suppliers before approval,Y
+P09_Vendor_Compliance,F008,compliance,All,True,Produce audit-ready evidence,Produce audit-ready evidence,Y
+P09_Vendor_Compliance,F009,timeline,All,True,Reduce onboarding time to under 2 weeks,Reduce onboarding time to under 2 weeks,Y
+P09_Vendor_Compliance,F010,scope_mvp1,MVP1,True,In scope MVP1: Onboarding package upload,"Onboarding package upload, document classification and extraction, cross-checks against onboarding form",Y
+P09_Vendor_Compliance,F011,scope_mvp1,MVP1,True,In scope MVP1: Document classification and extraction,"Onboarding package upload, document classification and extraction, cross-checks against onboarding form",Y
+P09_Vendor_Compliance,F012,scope_mvp1,MVP1,True,"In scope MVP1: Cross-checks against onboarding form (name, tax ID, address, bank account holder)","cross-checks against onboarding form (name, tax ID, address, bank account holder)",Y
+P09_Vendor_Compliance,F013,scope_mvp1,MVP1,True,In scope MVP1: Expiry checks,expiry checks,Y
+P09_Vendor_Compliance,F014,scope_mvp1,MVP1,True,In scope MVP1: Sanctions screening via API,sanctions screening via API,Y
+P09_Vendor_Compliance,F015,scope_mvp1,MVP1,True,In scope MVP1: Risk summary with Low/Medium/High rating,risk summary with Low/Medium/High rating,Y
+P09_Vendor_Compliance,F016,scope_mvp1,MVP1,True,In scope MVP1: Analyst decision and evidence pack,analyst decision and evidence pack,Y
+P09_Vendor_Compliance,F017,scope_mvp2,MVP2,False,In scope MVP2: Continuous sanctions monitoring,Continuous sanctions monitoring,Y
+P09_Vendor_Compliance,F018,scope_mvp2,MVP2,False,In scope MVP2: SAP Ariba integration,SAP Ariba integration,Y
+P09_Vendor_Compliance,F019,scope_mvp2,MVP2,False,In scope MVP2: Supplier self-service upload,supplier self-service upload,Y
+P09_Vendor_Compliance,F020,scope_mvp2,MVP2,False,In scope MVP2: Document expiry reminders,document expiry reminders,Y
+P09_Vendor_Compliance,F021,out_of_scope,NA,False,Out of scope: Supplier performance management,Supplier performance management,Y
+P09_Vendor_Compliance,F022,out_of_scope,NA,False,Out of scope: Contract negotiation,contract negotiation,Y
+P09_Vendor_Compliance,F023,out_of_scope,NA,False,Out of scope: Payment setup in ERP,payment setup in ERP,Y
+P09_Vendor_Compliance,F024,role,All,True,"Supplier Risk Analyst: Upload packages, review checks and screening results, decide approve/reject/request info","Supplier Risk Analyst | Upload packages, review checks and screening results, decide approve/reject/request info",Y
+P09_Vendor_Compliance,F025,role,All,True,Compliance Manager: Approve High-risk suppliers and clear potential sanctions matches,Compliance Manager | Approve High-risk suppliers and clear potential sanctions matches,Y
+P09_Vendor_Compliance,F026,role,All,True,"Risk Admin: Maintain document types, risk rules and screening settings","Risk Admin | Maintain document types, risk rules and screening settings",Y
+P09_Vendor_Compliance,F027,functional,MVP1,True,Analyst views each document classified with extracted fields and mismatches highlighted,"As an analyst, I see each document classified with extracted fields and mismatches against the form highlighted.",Y
+P09_Vendor_Compliance,F028,functional,MVP1,True,"Screening results displayed as No Match, Potential Match or Confirmed Match","As an analyst, I see screening results as No Match, Potential Match or Confirmed Match.",Y
+P09_Vendor_Compliance,F029,business_rule,MVP1,True,Compliance Manager must clear every Potential Match with a reason before approval,"As a Compliance Manager, I must clear every Potential Match with a reason before approval.",Y
+P09_Vendor_Compliance,F030,functional,MVP1,True,Analyst can download an evidence pack (PDF) for audit,"As an analyst, I can download an evidence pack (PDF) for audit.",Y
+P09_Vendor_Compliance,F031,functional,MVP1,True,"Upload allowed file types: PDF, JPG, PNG","Upload of onboarding package (PDF, JPG, PNG; max 15 MB per file).",Y
+P09_Vendor_Compliance,F032,functional,MVP1,True,Upload max file size 15 MB per file,"Upload of onboarding package (PDF, JPG, PNG; max 15 MB per file).",Y
+P09_Vendor_Compliance,F033,integration,MVP1,True,Document classification and field extraction performed with Azure Document Intelligence,"Document classification (W-9/tax certificate, insurance certificate, bank letter, certificate of incorporation) and field extraction with Azure Document Intelligence.",Y
+P09_Vendor_Compliance,F034,functional,MVP1,True,"Document classification types include W-9/tax certificate, insurance certificate, bank letter, certificate of incorporation","Document classification (W-9/tax certificate, insurance certificate, bank letter, certificate of incorporation)",Y
+P09_Vendor_Compliance,F035,business_rule,MVP1,True,Cross-check legal name against onboarding form,"Cross-checks: legal name, tax ID format and match, address, bank account holder = legal name; insurance coverage ≥ USD 2M and not expired.",Y
+P09_Vendor_Compliance,F036,business_rule,MVP1,True,Cross-check tax ID format and match against onboarding form,"Cross-checks: legal name, tax ID format and match, address, bank account holder = legal name; insurance coverage ≥ USD 2M and not expired.",Y
+P09_Vendor_Compliance,F037,business_rule,MVP1,True,Cross-check address against onboarding form,"Cross-checks: legal name, tax ID format and match, address, bank account holder = legal name; insurance coverage ≥ USD 2M and not expired.",Y
+P09_Vendor_Compliance,F038,business_rule,MVP1,True,Bank account holder must equal legal name,bank account holder = legal name,Y
+P09_Vendor_Compliance,F039,business_rule,MVP1,True,Insurance coverage must be ≥ USD 2M,insurance coverage ≥ USD 2M,Y
+P09_Vendor_Compliance,F040,business_rule,MVP1,True,Insurance must not be expired,insurance coverage ≥ USD 2M and not expired.,Y
+P09_Vendor_Compliance,F041,integration,MVP1,True,Sanctions screening performed for supplier and listed owners via third-party screening API through APIM,Sanctions screening of supplier and listed owners via third-party screening API through APIM.,Y
+P09_Vendor_Compliance,F042,business_rule,MVP1,True,Risk rating: High if any Confirmed Match,"Risk rating: High if any Confirmed Match, expired insurance or tax ID mismatch; Medium if Potential Match or minor mismatch; else Low.",Y
+P09_Vendor_Compliance,F043,business_rule,MVP1,True,Risk rating: High if expired insurance,"Risk rating: High if any Confirmed Match, expired insurance or tax ID mismatch; Medium if Potential Match or minor mismatch; else Low.",Y
+P09_Vendor_Compliance,F044,business_rule,MVP1,True,Risk rating: High if tax ID mismatch,"Risk rating: High if any Confirmed Match, expired insurance or tax ID mismatch; Medium if Potential Match or minor mismatch; else Low.",Y
+P09_Vendor_Compliance,F045,business_rule,MVP1,True,Risk rating: Medium if Potential Match,"Risk rating: High if any Confirmed Match, expired insurance or tax ID mismatch; Medium if Potential Match or minor mismatch; else Low.",Y
+P09_Vendor_Compliance,F046,business_rule,MVP1,True,Risk rating: Medium if minor mismatch,"Risk rating: High if any Confirmed Match, expired insurance or tax ID mismatch; Medium if Potential Match or minor mismatch; else Low.",Y
+P09_Vendor_Compliance,F047,business_rule,MVP1,True,Risk rating: Low if none of the High/Medium conditions apply,"Risk rating: High if any Confirmed Match, expired insurance or tax ID mismatch; Medium if Potential Match or minor mismatch; else Low.",Y
+P09_Vendor_Compliance,F048,functional,MVP1,True,System provides analyst decision and generates an evidence pack PDF,Analyst decision and evidence pack PDF; High risk requires Compliance Manager approval.,Y
+P09_Vendor_Compliance,F049,business_rule,MVP1,True,High risk requires Compliance Manager approval,High risk requires Compliance Manager approval.,Y
+P09_Vendor_Compliance,F050,nfr_availability,All,True,System availability requirement 99.5%,Availability | 99.5%.,Y
+P09_Vendor_Compliance,F051,security_access,All,True,Authentication via Azure AD,Security | Azure AD; bank and tax data masked; evidence packs access-controlled.,Y
+P09_Vendor_Compliance,F052,security_access,All,True,Bank and tax data must be masked,Security | Azure AD; bank and tax data masked; evidence packs access-controlled.,Y
+P09_Vendor_Compliance,F053,security_access,All,True,Evidence packs must be access-controlled,Security | Azure AD; bank and tax data masked; evidence packs access-controlled.,Y
+P09_Vendor_Compliance,F054,nfr_performance,MVP1,True,A package with 10 documents must be processed within 2 minutes,Package with 10 documents processed within 2 minutes.,Y
+P09_Vendor_Compliance,F055,nfr_performance,MVP1,True,Screening API response time must be within 10 seconds,Screening API response within 10 seconds.,Y
+P09_Vendor_Compliance,F056,compliance,All,True,Screening evidence retained for 7 years,Screening evidence retained for 7 years.,Y
+P09_Vendor_Compliance,F057,compliance,All,True,System must meet SOX and audit requirements,SOX and audit requirements.,Y
+P09_Vendor_Compliance,F058,integration,All,True,Identity and Access integration: Azure AD,Identity & Access - Azure AD.,Y
+P09_Vendor_Compliance,F059,integration,MVP1,True,External integration: Sanctions screening API (key-based auth via APIM),Sanctions screening API (key-based auth via APIM).,Y
+P09_Vendor_Compliance,F060,integration,MVP1,True,AI service integration: Azure Document Intelligence for classification and extraction,Azure Document Intelligence (classification and extraction).,Y
+P09_Vendor_Compliance,F061,data,All,True,Azure Blob Storage used for evidence with 7-year retention policy,"Azure Blob Storage (evidence, 7-year retention policy).",Y
+P09_Vendor_Compliance,F062,data,All,True,Azure PostgreSQL used as a data store,Azure PostgreSQL,Y
+P09_Vendor_Compliance,F063,architecture,All,True,Users access via App Gateway using HTTPS/443 AD/SSO MFA,Supplier Risk Analysts -> App Gateway | HTTPS/443 AD/SSO MFA,Y
+P09_Vendor_Compliance,F064,architecture,All,True,Web UI -> Document Service for upload,Web UI -> Document Service | upload,Y
+P09_Vendor_Compliance,F065,architecture,All,True,Document Service -> Azure Service Bus publishes documents ready,Document Service -> Azure Service Bus | documents ready,Y
+P09_Vendor_Compliance,F066,architecture,All,True,Azure Service Bus -> Screening Service uses a queue,Azure Service Bus -> Screening Service | queue,Y
+P09_Vendor_Compliance,F067,architecture,All,True,Screening Service -> APIM for screening,Screening Service -> APIM | screening,Y
+P09_Vendor_Compliance,F068,architecture,All,True,APIM -> Azure Document Intelligence for classify + extract,APIM -> Azure Document Intelligence | classify + extract,Y
+P09_Vendor_Compliance,F069,architecture,All,True,Evidence Service -> Azure Blob Storage stores documents/evidence PDF with 7-yr retention,Evidence Service -> Azure Blob Storage (7-yr retention) | documents/evidence PDF,Y
+P09_Vendor_Compliance,F070,architecture,All,True,Screening Service -> Azure PostgreSQL stores results,Screening Service -> Azure PostgreSQL | results,Y
+P09_Vendor_Compliance,F071,architecture,All,True,APIM -> Azure PostgreSQL uses HTTPS/443 key-based auth,APIM -> Azure PostgreSQL | HTTPS/443 key-based auth,Y
+P09_Vendor_Compliance,F072,architecture,All,True,Azure PostgreSQL -> Sanctions Screening API uses HTTPS/443 key-based auth,Azure PostgreSQL -> Sanctions Screening API | HTTPS/443 key-based auth,Y
+P09_Vendor_Compliance,F074,data,All,True,"Data includes onboarding documents, extracted fields, screening results and decisions","Data includes onboarding documents, extracted fields, screening results and decisions.",Y
+P09_Vendor_Compliance,F075,assumption,All,True,Assumption: Screening provider sandbox available,Screening provider sandbox available,Y
+P09_Vendor_Compliance,F076,dependency,All,True,Dependency: Screening vendor contract and sandbox,Screening vendor contract and sandbox,Y
+P09_Vendor_Compliance,F077,dependency,All,True,Dependency: Compliance team for golden data,Compliance team for golden data,Y
+P09_Vendor_Compliance,F078,dependency,All,True,Dependency: Records retention approval,Records retention approval,Y
+P09_Vendor_Compliance,F079,acceptance,All,True,Acceptance metric: ≥95% document classification accuracy,≥95% document classification accuracy,Y
+P09_Vendor_Compliance,F080,acceptance,All,True,Acceptance metric: ≥93% field extraction accuracy,≥93% field extraction accuracy,Y
+P09_Vendor_Compliance,F081,acceptance,All,True,Acceptance metric: 100% of suppliers screened before decision,100% of suppliers screened before decision,Y
+P09_Vendor_Compliance,F082,acceptance,All,True,Acceptance metric: Risk rating rules 100% correct on test set,Risk rating rules 100% correct on test set,Y
+P09_Vendor_Compliance,F083,risk,MVP1,True,Risk: Poor document quality -> Manual review route,Poor document quality: Manual review route,Y
+P09_Vendor_Compliance,F084,risk,MVP1,True,Risk: False positive matches -> Compliance clearance workflow,False positive matches: Compliance clearance workflow,Y
+P09_Vendor_Compliance,F085,risk,MVP1,True,Risk: Screening API outage -> Retry and block approval until screened,Screening API outage: Retry and block approval until screened,Y
+P09_Vendor_Compliance,F086,timeline,MVP1,True,MVP1 scheduled May–Jul 2026,MVP1: May–Jul 2026,Y
+P09_Vendor_Compliance,F087,timeline,MVP2,False,MVP2 scheduled Q1 2027,MVP2: Q1 2027,Y
+P09_Vendor_Compliance,F088,security_access,All,True,AI Governance Council approval required and data privacy review for owner personal data,AI Governance Council approval; data privacy review for owner personal data,Y
+P09_Vendor_Compliance,F089,architecture,All,True,External system: Sanctions Screening API is an external/enterprise system,EXTERNAL / ENTERPRISE SYSTEMS: Sanctions Screening API,Y
+P09_Vendor_Compliance,F090,architecture,All,True,Integration/messaging uses Azure Service Bus,INTEGRATION / MESSAGING: Azure Service Bus,Y
+P09_Vendor_Compliance,F092,data,All,True,Onboarding documents are uploaded per supplier and owned by Supplier Risk and are restricted,"Onboarding documents | Tax, insurance, bank letters | Upload | Per supplier | Supplier Risk | Restricted",Y
+P09_Vendor_Compliance,F093,data,All,True,Screening results are sourced from Screening API per supplier and owned by Supplier Risk,Screening results | Matches and scores | Screening API | Per supplier | Supplier Risk | Restricted,Y
+P09_Vendor_Compliance,F094,architecture,All,True,App Gateway is an identity/entry point component,"IDENTITY & ENTRY POINTS: (e.g. Azure AD, App Gateway)",Y
+P00_Pricing_Tool_UserSample,F001,scope_mvp1,All,True,Pricing Update Tool will automate supplier price book processing for lock and exit devices,The Pricing Update Tool will automate supplier price book processing for lock and exit devices,Y
+P00_Pricing_Tool_UserSample,F002,functional,MVP1,True,System extracts updated prices from supplier PDFs,extracts updated prices from supplier PDFs,Y
+P00_Pricing_Tool_UserSample,F003,functional,MVP1,True,System applies discounts to extracted prices,applies discounts,Y
+P00_Pricing_Tool_UserSample,F004,scope_mvp2,MVP2,False,System compares updated prices with current prices to generate validated final pricing worksheets,compares them with current prices to generate validated final pricing worksheets,Y
+P00_Pricing_Tool_UserSample,F005,scope_mvp1,MVP1,True,MVP focuses on automated price extraction,MVP focuses on automated price extraction,Y
+P00_Pricing_Tool_UserSample,F006,scope_mvp2,MVP2,False,MVP focuses on current price retrieval from database,current price retrieval from database,Y
+P00_Pricing_Tool_UserSample,F007,scope_mvp2,MVP2,False,MVP focuses on price comparison,and price comparison,Y
+P00_Pricing_Tool_UserSample,F008,business_rule,All,False,Pricing updates are repeated multiple times a year,Pricing updates are repeated multiple times a year,Y
+P00_Pricing_Tool_UserSample,F009,scope_mvp1,MVP1,True,In scope (MVP1): Supplier PDF price book ingestion,Supplier PDF price book ingestion,Y
+P00_Pricing_Tool_UserSample,F010,scope_mvp1,MVP1,True,In scope (MVP1): updated price extraction,updated price extraction,Y
+P00_Pricing_Tool_UserSample,F011,scope_mvp1,MVP1,True,In scope (MVP1): discount application,discount application,Y
+P00_Pricing_Tool_UserSample,F012,scope_mvp1,MVP1,True,In scope (MVP1): generation of updated pricing worksheet,generation of updated pricing worksheet,Y
+P00_Pricing_Tool_UserSample,F013,scope_mvp2,MVP2,False,In scope (MVP2): Current pricing retrieval,Current pricing retrieval,Y
+P00_Pricing_Tool_UserSample,F014,integration,MVP2,False,In scope (MVP2): Integration with CMT for comparison and validation of worksheets,"Integration with CMT (for comparison, and validation of worksheets)",Y
+P00_Pricing_Tool_UserSample,F015,functional,MVP2,False,In scope (MVP2): Workflow automation,Workflow automation,Y
+P00_Pricing_Tool_UserSample,F016,functional,MVP2,False,In scope (MVP2): Audit logging of pricing updates and approvals,"Audit logging of pricing updates, sources used, and approvals",Y
+P00_Pricing_Tool_UserSample,F017,scope_mvp2,MVP2,False,"In scope (MVP2): Scalability across suppliers, brands, and product categories","Scalability across suppliers, brands, and product categories",Y
+P00_Pricing_Tool_UserSample,F018,out_of_scope,NA,False,Out of scope (initial): Changes to mainframe pricing logic,Changes to mainframe pricing logic,Y
+P00_Pricing_Tool_UserSample,F019,out_of_scope,NA,False,Out of scope (initial): CORE integrations,CORE integrations,Y
+P00_Pricing_Tool_UserSample,F020,out_of_scope,NA,False,Out of scope (initial): non‑pricing operational processes,non‑pricing operational processes,Y
+P00_Pricing_Tool_UserSample,F021,role,MVP1,True,Pricing Analyst can upload supplier price books,Upload supplier price books,Y
+P00_Pricing_Tool_UserSample,F022,role,MVP1,True,Pricing Analyst can review extracted pricing,review extracted pricing,Y
+P00_Pricing_Tool_UserSample,F023,role,MVP2,False,Pricing Analyst can validate final worksheets,validate final worksheets,Y
+P00_Pricing_Tool_UserSample,F024,role,MVP2,False,Pricing Analyst can approve outputs,approve outputs,Y
+P00_Pricing_Tool_UserSample,F025,role,MVP1,True,Pricing Admin can configure supplier templates,Configure supplier templates,Y
+P00_Pricing_Tool_UserSample,F026,role,MVP1,True,Pricing Admin can manage discount rules,manage discount rules,Y
+P00_Pricing_Tool_UserSample,F027,role,MVP1,True,Pricing Admin can maintain reference data,maintain reference data,Y
+P00_Pricing_Tool_UserSample,F028,role,MVP1,True,Pricing Admin can control refresh cadence,control refresh cadence,Y
+P00_Pricing_Tool_UserSample,F029,functional,MVP1,True,Pricing Analyst can upload a supplier price book PDF and generate an updated pricing worksheet with discounts applied,upload a supplier price book (PDF) and generate an updated pricing worksheet with discounts applied,Y
+P00_Pricing_Tool_UserSample,F030,functional,MVP2,False,Pricing Analyst can identify whether a part exists in current pricing and see price differences across systems,"identify whether a part exists in current pricing, and see price differences between current and updated prices across systems",Y
+P00_Pricing_Tool_UserSample,F031,functional,MVP2,False,"Support/Pricing Ops can view which supplier price books, discount files, and systems were referenced to generate final pricing output","view which supplier price books, discount files, and systems were referenced to generate the final pricing output",Y
+P00_Pricing_Tool_UserSample,F032,functional,MVP1,True,"Admin can configure supplier data sources including price book PDFs, buy‑in discount files, IAP tables","configure supplier data sources (price book PDFs, buy‑in discount files, IAP tables)",Y
+P00_Pricing_Tool_UserSample,F033,functional,All,True,Admin can define refresh cadence and control validation thresholds,"define refresh cadence, and control validation thresholds",Y
+P00_Pricing_Tool_UserSample,F034,functional,MVP1,True,Automated ingestion and parsing of supplier price book PDFs is required,Automated ingestion and parsing of supplier price book PDFs,Y
+P00_Pricing_Tool_UserSample,F035,functional,MVP1,True,Generation of standardized Updated Pricing worksheet with discount application is required,Generation of standardized Updated Pricing worksheet with discount application,Y
+P00_Pricing_Tool_UserSample,F036,functional,MVP1,True,Support for multiple supplier formats with human‑in‑the‑loop review is required,Support for multiple supplier formats with human‑in‑the‑loop review,Y
+P00_Pricing_Tool_UserSample,F037,integration,MVP2,False,Retrieval of Current Pricing from database or DDP‑aligned data source is required in MVP2,Retrieval of Current Pricing from database (or DDP‑aligned data source),Y
+P00_Pricing_Tool_UserSample,F038,integration,MVP2,False,Integration with the CMT for automated comparison between updated and current prices is required in MVP2,Integration with the CMT for automated comparison between updated and current prices,Y
+P00_Pricing_Tool_UserSample,F039,functional,MVP2,False,Workflow automation for pricing worksheet finalization and downstream handoffs is required in MVP2,Workflow automation for pricing worksheet finalization and downstream handoffs,Y
+P00_Pricing_Tool_UserSample,F040,data,MVP2,False,"Audit logging of pricing updates, sources used, and approvals is required in MVP2","Audit logging of pricing updates, sources used, and approvals",Y
+P00_Pricing_Tool_UserSample,F041,nfr_availability,MVP1,True,99.5% uptime for MVP1 production usage is required,99.5% uptime for MVP1 production usage.,Y
+P00_Pricing_Tool_UserSample,F042,security_access,MVP1,True,Enterprise authentication via Azure AD is required,Enterprise authentication via Azure AD.,Y
+P00_Pricing_Tool_UserSample,F043,security_access,MVP1,True,Role‑based access for Pricing Analyst and Admin roles is required,Role‑based access for Pricing Analyst and Admin roles.,Y
+P00_Pricing_Tool_UserSample,F044,nfr_performance,MVP1,True,Pricing worksheet generation must complete within minutes for large supplier files,Pricing worksheet generation within minutes for large supplier files.,Y
+P00_Pricing_Tool_UserSample,F045,nfr_performance,MVP2,False,Price comparison and validation must complete within acceptable SLA thresholds,Price comparison and validation completed within acceptable SLA thresholds.,Y
+P00_Pricing_Tool_UserSample,F046,data,All,True,End‑to‑end processing traceability is required for each pricing run,End‑to‑end processing traceability for each pricing run.,Y
+P00_Pricing_Tool_UserSample,F047,data,MVP2,False,"Audit logs must capture inputs, transformations, and outputs (from MVP2)","Audit logs capturing inputs, transformations, and outputs (from MVP2).",Y
+P00_Pricing_Tool_UserSample,F048,compliance,All,True,Solution must adhere to AI Governance Council guidance,Adherence to AI Governance Council guidance.,Y
+P00_Pricing_Tool_UserSample,F049,integration,All,True,Azure AD is used for authentication and role assignment (to be validated with backend architects),Azure AD for authentication and role assignment (to be validated with backend architects),Y
+P00_Pricing_Tool_UserSample,F050,integration,MVP2,False,DDP‑aligned data sources are used for current pricing,DDP‑aligned data sources for current pricing.,Y
+P00_Pricing_Tool_UserSample,F051,data,MVP1,True,Supplier price book PDFs and buy‑in discount files are expected as inputs (SharePoint or equivalent),Supplier price book PDFs and buy‑in discount files (SharePoint or equivalent).,Y
+P00_Pricing_Tool_UserSample,F052,data,All,True,Structured storage is required for pricing worksheets and processing metadata,Structured storage for pricing worksheets and processing metadata.,Y
+P00_Pricing_Tool_UserSample,F053,architecture,All,False,Microservices or workflow orchestration for multi‑step pricing pipelines to be validated with backend architects,Microservices or workflow orchestration for multi‑step pricing pipelines (to be validated with backend architects),Y
+P00_Pricing_Tool_UserSample,F054,data,MVP1,True,Supplier price books source: Supplier PDFs SharePoint,Supplier PDFs SharePoint,Y
+P00_Pricing_Tool_UserSample,F055,data,MVP1,True,Supplier price books frequency: Ad‑hoc 2–3x per year,Ad‑hoc 2–3x per year,Y
+P00_Pricing_Tool_UserSample,F056,data,MVP1,True,Supplier price books owner: Pricing Team,Pricing Team,Y
+P00_Pricing_Tool_UserSample,F057,data,MVP1,True,Supplier price books security classification: Restricted,Restricted,Y
+P00_Pricing_Tool_UserSample,F058,data,MVP1,True,"Buy‑in discount files source: Supplier files emails, Teams","Supplier files emails, Teams",Y
+P00_Pricing_Tool_UserSample,F059,data,MVP1,True,Buy‑in discount files frequency: Annual Ad‑hoc,Annual Ad‑hoc,Y
+P00_Pricing_Tool_UserSample,F060,data,MVP1,True,Buy‑in discount files owner: Pricing Team,Pricing Team,Y
+P00_Pricing_Tool_UserSample,F061,data,MVP1,True,Buy‑in discount files security classification: Restricted,Restricted,Y
+P00_Pricing_Tool_UserSample,F062,data,MVP2,False,Current pricing source: IAP/DDP‑aligned tables,IAP/DDP‑aligned tables,Y
+P00_Pricing_Tool_UserSample,F063,data,MVP2,False,Current pricing frequency: On demand,On demand,Y
+P00_Pricing_Tool_UserSample,F064,data,MVP2,False,Current pricing owner: Pricing Team,Pricing Team,Y
+P00_Pricing_Tool_UserSample,F065,data,MVP1,True,Updated pricing worksheet is Pricing Tool output,"Updated pricing worksheet
+- Extracted prices with discounts applied
+- Pricing Tool output",Y
+P00_Pricing_Tool_UserSample,F066,data,MVP1,True,Updated pricing worksheet frequency: Per run,Per run,Y
+P00_Pricing_Tool_UserSample,F067,data,MVP2,False,Final pricing worksheet is Pricing Tool output,"Final pricing worksheet
+- Compared and validated prices
+- Pricing Tool output",Y
+P00_Pricing_Tool_UserSample,F068,data,MVP2,False,Final pricing worksheet frequency: Per run,Per run,Y
+P00_Pricing_Tool_UserSample,F069,data,MVP1,True,Validation rules include thresholds for percentage price change,Thresholds for percentage price change,Y
+P00_Pricing_Tool_UserSample,F070,data,MVP1,True,Validation rules owner: Pricing Admin,Pricing Admin,Y
+P00_Pricing_Tool_UserSample,F071,data,MVP1,True,Supplier metadata owner: Pricing Admin,Pricing Admin,Y
+P00_Pricing_Tool_UserSample,F072,data,MVP1,True,Quality checks: Schema validation and data quality checks for structured and unstructured (PDF) sources,Schema validation and data quality checks for both structured and unstructured (PDF) sources,Y
+P00_Pricing_Tool_UserSample,F073,security_access,MVP1,True,RBAC: Role‑based access for Pricing Analyst and Pricing Admin with audit trails for configuration and pricing changes,"RBAC: Role‑based access for Pricing Analyst and Pricing Admin, with audit trails for configuration and pricing changes",Y
+P00_Pricing_Tool_UserSample,F074,data,All,True,"Capture pricing run metadata: supplier, number of price books, processing time, validation flags","Capture pricing run metadata: supplier, number of price books, processing time, validation flags",Y
+P00_Pricing_Tool_UserSample,F075,data,All,False,"Monthly reporting must include price books processed, hours saved, cycle time reduction, analyst effort saved","Monthly reporting: price books processed, hours saved, cycle time reduction, analyst effort saved",Y
+P00_Pricing_Tool_UserSample,F076,data,All,False,Publish dashboards as data matures to track adoption and realized benefits,Publish dashboards as data matures to track adoption and realized benefits,Y
+P00_Pricing_Tool_UserSample,F077,compliance,All,False,"VRA, IPA, and SOX applicability assessed via C2P","VRA, IPA, and SOX applicability assessed via C2P",Y
+P00_Pricing_Tool_UserSample,F078,security_access,All,True,Synthetic or masked data used for development and testing,synthetic or masked data used for development and testing,Y
+P00_Pricing_Tool_UserSample,F079,assumption,MVP1,True,Supplier price books and discount files are available and accessible during MVP execution,Supplier price books and discount files are available and accessible during MVP execution,Y
+P00_Pricing_Tool_UserSample,F080,assumption,MVP2,False,IAP / DDP data sources provide reliable current pricing for comparison,IAP / DDP data sources provide reliable current pricing for comparison,Y
+P00_Pricing_Tool_UserSample,F081,assumption,MVP1,True,Supplier PDF formats will continue to vary and require human‑in‑the‑loop validation,Supplier PDF formats will continue to vary and require human‑in‑the‑loop validation,Y
+P00_Pricing_Tool_UserSample,F082,dependency,All,False,Dependency: AI Governance Council approval,AI Governance Council approval,Y
+P00_Pricing_Tool_UserSample,F083,dependency,All,False,Dependency: C2P routing and intake governance participation,C2P routing and intake governance participation,Y
+P00_Pricing_Tool_UserSample,F084,dependency,All,True,Dependency: Pricing team availability for validation and UAT,Pricing team availability for validation and UAT,Y
+P00_Pricing_Tool_UserSample,F085,dependency,All,False,"Dependency: Legal review for supplier document usage, if required","Legal review for supplier document usage, if required",Y
+P00_Pricing_Tool_UserSample,F086,timeline,All,False,To be presented in the AI council in Apr-26,To be presented in the AI council in Apr-26,Y
+P00_Pricing_Tool_UserSample,F087,acceptance,MVP1,True,Acceptance: ≥90% accuracy for extracted pricing fields on pilot suppliers,≥90% accuracy for extracted pricing fields on pilot suppliers,Y
+P00_Pricing_Tool_UserSample,F088,acceptance,MVP1,True,Acceptance: ≥95% successful pricing runs without manual rework,≥95% successful pricing runs without manual rework,Y
+P00_Pricing_Tool_UserSample,F089,acceptance,MVP1,True,Acceptance: Validation flags correctly identify out‑of‑range price changes,Validation flags correctly identify out‑of‑range price changes,Y
+P00_Pricing_Tool_UserSample,F090,risk,MVP1,True,Risk: Supplier format variability,Supplier format variability,Y
+P00_Pricing_Tool_UserSample,F091,risk,MVP1,True,Mitigation: Maintain human‑in‑the‑loop and configurable templates,Maintain human‑in‑the‑loop and configurable templates,Y
+P00_Pricing_Tool_UserSample,F092,out_of_scope,MVP1,True,MVP1 does not include current pricing retrieval from IAP,No current pricing retrieval from IAP,Y
+P00_Pricing_Tool_UserSample,F093,out_of_scope,MVP1,True,MVP1 does not include price comparison or validation logic,No price comparison or validation logic,Y
+P00_Pricing_Tool_UserSample,F094,out_of_scope,MVP1,True,MVP1 does not include automated workflow orchestration,No automated workflow orchestration,Y
+P00_Pricing_Tool_UserSample,F095,out_of_scope,MVP1,True,MVP1 does not include downstream system updates or write‑back,No downstream system updates or write‑back,Y
+P00_Pricing_Tool_UserSample,F096,out_of_scope,MVP1,True,"MVP1 does not include analytics, dashboards, or benefit tracking","No analytics, dashboards, or benefit tracking",Y
+P00_Pricing_Tool_UserSample,F097,architecture,NA,False,Architecture environment: Non-production Subscription,Non-production Subscription,Y
+P00_Pricing_Tool_UserSample,F098,architecture,NA,False,Users/Clients include Admin Users,Admin Users,Y
+P00_Pricing_Tool_UserSample,F099,architecture,NA,False,Users/Clients include Wesco Users,Wesco Users,Y
+P00_Pricing_Tool_UserSample,F100,architecture,NA,False,Users/Clients include Web UI,Web UI,Y
+P00_Pricing_Tool_UserSample,F101,architecture,NA,True,Identity & entry points include Active Directory,Active Directory,Y
+P00_Pricing_Tool_UserSample,F102,architecture,NA,True,AD/SSO labeled entry: https/443 AD/SSO,AD/SSO (label: https/443 AD/SSO),Y
+P00_Pricing_Tool_UserSample,F103,architecture,NA,False,Application services include Processing Service,Processing Service,Y
+P00_Pricing_Tool_UserSample,F104,architecture,NA,False,Application services include File Service,File Service,Y
+P00_Pricing_Tool_UserSample,F105,architecture,NA,False,AI services include Azure Document Intelligence,Azure Document Intelligence,Y
+P00_Pricing_Tool_UserSample,F106,architecture,NA,False,Data stores include Delta Lake EUDM/IAP,Delta Lake EUDM/IAP,Y
+P00_Pricing_Tool_UserSample,F107,architecture,NA,False,Integration services include Azure Service bus,Azure Service bus,Y
+P00_Pricing_Tool_UserSample,F108,architecture,NA,False,External systems include Google Vertex AI,Google Vertex AI,Y
+P00_Pricing_Tool_UserSample,F109,architecture,NA,False,Supporting services include DATADOG,DATADOG,Y
+P00_Pricing_Tool_UserSample,F110,architecture,NA,False,Connection: Admin Users -> Active Directory | https/443 AD/SSO,Admin Users -> Active Directory | https/443 AD/SSO,Y
+P00_Pricing_Tool_UserSample,F111,architecture,NA,False,Connection: Wesco Users -> Active Directory | https/443 AD/SSO,Wesco Users -> Active Directory | https/443 AD/SSO,Y
+P00_Pricing_Tool_UserSample,F112,architecture,NA,False,Connection: Active Directory -> App Gateway | https/443 AD/SSO,Active Directory -> App Gateway | https/443 AD/SSO,Y
+P00_Pricing_Tool_UserSample,F113,architecture,NA,False,Connection: App Gateway -> Web UI (implicit HTTP/HTTPS for user traffic),App Gateway -> Web UI | (implicit HTTP/HTTPS for user traffic),Y
+P00_Pricing_Tool_UserSample,F114,architecture,NA,False,Connection: Web UI -> Processing Service (internal HTTP),"Web UI -> Processing Service | (internal HTTP, arrow present between Web UI and Processing Service)",Y
+P00_Pricing_Tool_UserSample,F115,architecture,NA,False,Connection: Processing Service -> File Service (internal HTTP),"Processing Service -> File Service | (internal HTTP, arrow present)",Y
+P00_Pricing_Tool_UserSample,F116,architecture,NA,False,Connection: Processing Service -> Notification Service (internal HTTP),"Processing Service -> Notification Service | (internal HTTP, arrow present)",Y
+P00_Pricing_Tool_UserSample,F117,architecture,NA,False,Connection: Processing Service -> APIM (Shared) | HTTPS/443 Managed Identity,Processing Service -> APIM (Shared) | HTTPS/443 Managed Identity,Y
+P00_Pricing_Tool_UserSample,F118,architecture,NA,False,Connection: APIM (Shared) -> Cloud Interconnect | HTTPS/443 Key-based auth,APIM (Shared) -> Cloud Interconnect | HTTPS/443 Key-based auth,Y
+P00_Pricing_Tool_UserSample,F119,architecture,NA,False,Connection: APIM (Shared) -> Google Vertex AI (via Cloud Interconnect) | HTTPS/443 Key-based auth,APIM (Shared) -> Google Vertex AI (via Cloud Interconnect) | HTTPS/443 Key-based auth,Y
+P00_Pricing_Tool_UserSample,F120,architecture,NA,False,Connection: APIM (in Azure AI Landing Zone) -> Azure OpenAI | HTTPS/443 Managed Identity,APIM (in Azure AI Landing Zone) -> Azure OpenAI | HTTPS/443 Managed Identity,Y
+P00_Pricing_Tool_UserSample,F121,architecture,NA,False,Connection: APIM (in Azure AI Landing Zone) -> Azure Document Intelligence | HTTPS/443 Managed Identity,APIM (in Azure AI Landing Zone) -> Azure Document Intelligence | HTTPS/443 Managed Identity,Y
+P00_Pricing_Tool_UserSample,F122,architecture,NA,False,Connection: Azure Foundry Agent Service -> Azure Service bus | HTTPS/443 Managed Identity,Azure Foundry Agent Service -> Azure Service bus | HTTPS/443 Managed Identity,Y
+P00_Pricing_Tool_UserSample,F123,architecture,NA,False,Connection: Azure Service bus -> Azure PostgreSQL (data flow to persistence),Azure Service bus -> Azure PostgreSQL | (data flow to persistence),Y
+P00_Pricing_Tool_UserSample,F124,architecture,NA,False,Connection: Azure Service bus -> Azure Blob Storage (data flow to blob),Azure Service bus -> Azure Blob Storage | (data flow to blob),Y
+P00_Pricing_Tool_UserSample,F125,architecture,NA,False,Connection: Azure Function -> Azure Event Grid | HTTPS/443 Azure AD Managed Identity,Azure Function -> Azure Event Grid | HTTPS/443 Azure AD Managed Identity,Y
+P00_Pricing_Tool_UserSample,F126,architecture,NA,False,Connection: Azure Event Grid -> Processing Service | HTTPS/443 Managed Identity,Azure Event Grid -> Processing Service | HTTPS/443 Managed Identity,Y
+P00_Pricing_Tool_UserSample,F127,architecture,NA,False,Connection: Delta Lake EUDM/IAP -> Processing Service | HTTPS/443 (data access),Delta Lake EUDM/IAP -> Processing Service | HTTPS/443 (data access),Y
+P00_Pricing_Tool_UserSample,F128,architecture,NA,False,Connection: SendGrid -> Notification Service | SMTP/587,SendGrid -> Notification Service | SMTP/587,Y
+P01_Invoice_Matching,F001,data,All,True,"AP team processes roughly 18,000 supplier invoices per month across all business units.","AP team processes roughly 18,000 supplier invoices per month",Y
+P01_Invoice_Matching,F002,assumption,All,True,Around 40% of supplier invoices arrive as PDF attachments by email and are keyed manually into SAP.,Around 40% arrive as PDF attachments by email and are keyed manually into SAP.,Y
+P01_Invoice_Matching,F003,business_rule,All,True,Reduce invoice processing cycle time from 6 days to under 2 days.,Reduce invoice processing cycle time from 6 days to under 2 days,Y
+P01_Invoice_Matching,F004,functional,MVP1,True,Automate extraction of invoice header and line data from supplier PDFs.,Automate extraction of invoice header and line data from supplier PDFs,Y
+P01_Invoice_Matching,F005,functional,MVP1,True,"Perform three-way match (invoice, PO, GR) with configurable price and quantity tolerances.","Perform three-way match (invoice, PO, GR) with configurable price and quantity tolerances",Y
+P01_Invoice_Matching,F006,business_rule,All,False,Prevent duplicate payments and improve capture of early-payment discounts.,Prevent duplicate payments and improve capture of early-payment discounts,Y
+P01_Invoice_Matching,F008,functional,MVP1,True,"Extraction of invoice number, supplier, invoice date, PO number, currency, tax, total and line items (item, quantity, unit price, amount).","Extraction of invoice number, supplier, invoice date, PO number, currency, tax, total and line items (item, quantity, unit price, amount).",Y
+P01_Invoice_Matching,F009,integration,MVP1,True,Retrieval of PO and GR data from SAP through the enterprise API layer.,Retrieval of PO and GR data from SAP through the enterprise API layer.,Y
+P01_Invoice_Matching,F010,functional,MVP1,True,"Three-way matching with configurable price and quantity tolerances and a match result worksheet showing matched, partially matched and unmatched lines.","Three-way matching with configurable price and quantity tolerances and a match result worksheet showing matched, partially matched and unmatched lines.",Y
+P01_Invoice_Matching,F011,scope_mvp2,MVP2,False,Automated posting of fully matched invoices to SAP.,Automated posting of fully matched invoices to SAP.,Y
+P01_Invoice_Matching,F012,scope_mvp2,MVP2,False,"Exception workflow with assignment, comments, SLA timers and escalation to AP Supervisor after 2 business days.","Exception workflow with assignment, comments, SLA timers and escalation to AP Supervisor after 2 business days.",Y
+P01_Invoice_Matching,F013,scope_mvp2,MVP2,False,"Duplicate invoice detection using supplier, invoice number, amount and date.","Duplicate invoice detection using supplier, invoice number, amount and date.",Y
+P01_Invoice_Matching,F014,scope_mvp2,MVP2,False,Supplier notification of invoice status by email.,Supplier notification of invoice status by email.,Y
+P01_Invoice_Matching,F015,scope_mvp2,MVP2,False,"Audit logging of extraction, match decisions, overrides and approvals.","Audit logging of extraction, match decisions, overrides and approvals.",Y
+P01_Invoice_Matching,F016,functional,All,True,"Admin UI for tolerance rules, approval limits, supplier mapping and mailbox configuration.","Admin UI for tolerance rules, approval limits, supplier mapping and mailbox configuration.",Y
+P01_Invoice_Matching,F017,business_rule,All,True,Price tolerance default is ±2% per supplier category.,price tolerance (default ±2%),Y
+P01_Invoice_Matching,F018,business_rule,All,True,Quantity tolerance default is 0 units per supplier category.,quantity tolerance (default 0 units),Y
+P01_Invoice_Matching,F019,business_rule,All,True,"AP Supervisor can approve or override exceptions above USD 25,000 with a mandatory comment.","override exceptions above USD 25,000 with a mandatory comment.",Y
+P01_Invoice_Matching,F020,nfr_availability,All,True,System availability must be 99.5% during business hours 06:00–22:00 CET and EST.,99.5% availability during business hours (06:00–22:00 CET and EST).,Y
+P01_Invoice_Matching,F021,security_access,All,True,Enterprise authentication via Azure AD with MFA.,Enterprise authentication via Azure AD with MFA.,Y
+P01_Invoice_Matching,F022,role,All,True,"Role-based access for AP Analyst, AP Supervisor and AP Admin.","Role-based access for AP Analyst, AP Supervisor and AP Admin.",Y
+P01_Invoice_Matching,F023,security_access,All,True,Bank and tax identifiers masked in UI and logs.,Bank and tax identifiers masked in UI and logs.,Y
+P01_Invoice_Matching,F024,nfr_performance,All,True,Extraction and matching of a 10-page invoice within 60 seconds.,Extraction and matching of a 10-page invoice within 60 seconds.,Y
+P01_Invoice_Matching,F025,nfr_performance,All,True,Batch of 500 invoices processed within 1 hour.,Batch of 500 invoices processed within 1 hour.,Y
+P01_Invoice_Matching,F026,architecture,All,True,Provide end-to-end traceability per invoice from receipt to match decision.,End-to-end traceability per invoice from receipt to match decision.,Y
+P01_Invoice_Matching,F027,compliance,All,True,SOX controls required for invoice approval and segregation of duties.,SOX controls for invoice approval and segregation of duties.,Y
+P01_Invoice_Matching,F028,compliance,All,True,Adherence to AI Governance Council guidance is required.,Adherence to AI Governance Council guidance.,Y
+P01_Invoice_Matching,F029,architecture,All,True,The web UI and processing services run on the shared AKS non-production cluster.,The web UI and processing services run on the shared AKS non-production cluster.,Y
+P01_Invoice_Matching,F030,ai_quality,All,True,Azure Document Intelligence extracts invoice data and Azure OpenAI is used to normalise supplier line descriptions.,Azure Document Intelligence extracts invoice data; Azure OpenAI is used to normalise supplier line descriptions.,Y
+P01_Invoice_Matching,F031,integration,All,True,SAP is accessed through APIM.,SAP is accessed through APIM.,Y
+P01_Invoice_Matching,F032,data,MVP1,True,"Supplier invoices source: AP mailbox, manual upload; Frequency: Daily; Owner: AP Operations; Security: Confidential.","Supplier invoices – Description: Invoice header and lines; Source: AP mailbox, manual upload; Frequency: Daily; Owner: AP Operations; Security: Confidential",Y
+P01_Invoice_Matching,F033,data,MVP1,True,Purchase orders source: SAP S/4HANA; Frequency: On demand; Owner: Procurement; Security: Confidential.,Purchase orders – Description: PO header and lines; Source: SAP S/4HANA; Frequency: On demand; Owner: Procurement; Security: Confidential,Y
+P01_Invoice_Matching,F034,data,MVP1,True,Goods receipts source: SAP S/4HANA; Frequency: On demand; Owner: Warehouse Ops; Security: Internal.,Goods receipts: Description: Received quantities; Source: SAP S/4HANA; Frequency: On demand; Owner: Warehouse Ops; Security: Internal,Y
+P01_Invoice_Matching,F035,data,All,True,Supplier master source: SAP S/4HANA; Frequency: Daily; Owner: Master Data; Security: Restricted.,"Supplier master: Description: Supplier IDs, bank, tax data; Source: SAP S/4HANA; Frequency: Daily; Owner: Master Data; Security: Restricted",Y
+P01_Invoice_Matching,F036,data,All,True,Tolerance rules source: Tool configuration; Frequency: As needed; Owner: AP Admin; Security: Internal.,Tolerance rules: Description: Price and quantity tolerances; Source: Tool configuration; Frequency: As needed; Owner: AP Admin; Security: Internal,Y
+P01_Invoice_Matching,F037,data,MVP1,True,Match results source: Tool output; Frequency: Per invoice; Owner: AP Operations; Security: Confidential.,Match results: Description: Line match status and variances; Source: Tool output; Frequency: Per invoice; Owner: AP Operations; Security: Confidential,Y
+P01_Invoice_Matching,F038,functional,MVP1,True,"Quality checks include schema validation of extracted fields and mandatory field checks for invoice number, PO number, and total.","Quality checks – Schema validation of extracted fields, mandatory field checks (invoice number, PO number, total)",Y
+P01_Invoice_Matching,F039,functional,MVP1,True,Quality checks include reconciliation of line totals to invoice total.,and reconciliation of line totals to invoice total,Y
+P01_Invoice_Matching,F040,role,All,True,"RBAC with audit trails for configuration changes for AP Analyst, AP Supervisor and AP Admin.","RBAC: Role-based access for AP Analyst, AP Supervisor and AP Admin with audit trails for configuration changes",Y
+P01_Invoice_Matching,F041,integration,All,True,Identity & Access: Azure AD for authentication and role assignment.,Azure AD for authentication and role assignment.,Y
+P01_Invoice_Matching,F042,integration,MVP1,True,AP shared mailbox accessed via Microsoft Graph API.,AP shared mailbox via Microsoft Graph API.,Y
+P01_Invoice_Matching,F043,architecture,All,True,Azure Blob Storage for invoice files and Azure PostgreSQL for extracted data and match results.,Azure Blob Storage for invoice files; Azure PostgreSQL for extracted data and match results.,Y
+P01_Invoice_Matching,F044,integration,MVP1,True,Azure Service Bus queue between ingestion and matching services (to be validated with backend architects).,Azure Service Bus queue between ingestion and matching services (to be validated with backend architects).,Y
+P01_Invoice_Matching,F045,data,MVP1,True,"Capture per-invoice metadata: supplier, pages, processing time, match outcome, exception reason.","Capture per-invoice metadata: supplier, pages, processing time, match outcome, exception reason",Y
+P01_Invoice_Matching,F046,data,All,False,"Monthly reporting must include invoices processed, touchless match rate, cycle time, discounts captured.","Monthly reporting: invoices processed, touchless match rate, cycle time, discounts captured",Y
+P01_Invoice_Matching,F047,security_access,All,True,Masked or synthetic invoices used for development and testing.,Masked or synthetic invoices used for development and testing,Y
+P01_Invoice_Matching,F048,assumption,MVP1,True,Assumption: SAP PO and GR APIs are available through APIM in non-production.,SAP PO and GR APIs are available through APIM in non-production,Y
+P01_Invoice_Matching,F049,assumption,All,True,Assumption: At least 70% of invoices are machine-readable PDFs.,At least 70% of invoices are machine-readable PDFs,Y
+P01_Invoice_Matching,F050,assumption,All,True,Assumption: Suppliers continue to send one invoice per PDF.,Suppliers continue to send one invoice per PDF,Y
+P01_Invoice_Matching,F051,dependency,All,True,Key dependency: SAP integration team for API access.,SAP integration team for API access,Y
+P01_Invoice_Matching,F052,dependency,All,True,Key dependency: AI Governance Council approval.,AI Governance Council approval,Y
+P01_Invoice_Matching,F053,timeline,MVP1,False,MVP1 build scheduled Feb–Apr 2026.,MVP1 build: Feb–Apr 2026,Y
+P01_Invoice_Matching,F054,timeline,MVP1,False,MVP1 UAT scheduled May 2026.,MVP1 UAT: May 2026,Y
+P01_Invoice_Matching,F055,timeline,MVP2,False,MVP2 scheduled for Q3 2026.,MVP2: Q3 2026,Y
+P01_Invoice_Matching,F056,acceptance,MVP1,True,Definition of Done: ≥95% field-level extraction accuracy for header fields for pilot suppliers.,≥95% field-level extraction accuracy for header fields,Y
+P01_Invoice_Matching,F057,acceptance,MVP1,True,Definition of Done: ≥90% field-level extraction accuracy for line items for pilot suppliers.,≥90% for line items,Y
+P01_Invoice_Matching,F058,acceptance,MVP1,True,Definition of Done: ≥60% touchless match rate for pilot suppliers.,≥60% touchless match rate for pilot suppliers,Y
+P01_Invoice_Matching,F059,acceptance,MVP1,True,Definition of Done: 100% of variances above tolerance flagged as exceptions.,100% of variances above tolerance flagged as exceptions,Y
+P01_Invoice_Matching,F060,acceptance,MVP1,True,Definition of Done: No duplicate invoices posted during UAT.,No duplicate invoices posted during UAT,Y
+P01_Invoice_Matching,F061,risk,All,True,Risk: Variable invoice layouts; mitigation: Document Intelligence custom models and human review.,Variable invoice layouts | Document Intelligence custom models and human review,Y
+P01_Invoice_Matching,F062,risk,All,True,Risk: SAP API latency; mitigation: caching of PO data per batch and retry logic.,SAP API latency | Caching of PO data per batch and retry logic,Y
+P01_Invoice_Matching,F063,risk,All,True,Risk: Incorrect tolerance configuration; mitigation: Admin change approval and audit trail.,Incorrect tolerance configuration | Admin change approval and audit trail,Y
+P01_Invoice_Matching,F064,architecture,All,True,APIM -> Azure Document Intelligence connection used for extraction.,APIM -> Azure Document Intelligence | extract,Y
+P01_Invoice_Matching,F065,architecture,All,True,APIM -> Azure OpenAI connection used to normalise lines.,APIM -> Azure OpenAI | normalise lines,Y
+P01_Invoice_Matching,F066,architecture,All,True,Matching Service -> Azure PostgreSQL connection for match results storage.,Matching Service -> Azure PostgreSQL | match results,Y
+P01_Invoice_Matching,F067,architecture,MVP1,True,AP Shared Mailbox (Graph API) -> Notification Service uses Graph API poll.,AP Shared Mailbox (Graph API) -> Notification Service | Graph API poll,Y
+P01_Invoice_Matching,F068,role,All,True,"Users / Clients include Admin Users, AP Users and Web UI.","Admin Users
+AP Users
+Web UI",Y
+P01_Invoice_Matching,F069,architecture,All,False,Notification Service -> SendGrid uses SMTP/587.,Notification Service -> SendGrid | (SMTP/587),Y
+P01_Invoice_Matching,F070,architecture,All,True,App Gateway -> Web UI uses HTTPS/443.,App Gateway -> Web UI | HTTPS/443,Y
+P02_Quote_Assistant,F001,assumption,All,False,"Inside Sales receives about 2,500 RFQs per week.","Inside Sales receives about 2,500 RFQs per week.",Y
+P02_Quote_Assistant,F002,assumption,All,False,Representatives spend 25–40 minutes per RFQ searching the catalog and keying lines into Salesforce.,Representatives spend 25–40 minutes per RFQ searching the catalog and keying lines into Salesforce.,Y
+P02_Quote_Assistant,F003,business_rule,All,True,Customers expect a response within 4 business hours.,customers expect a response within 4 business hours.,Y
+P02_Quote_Assistant,F004,acceptance,All,True,Reduce average RFQ response time from 6 hours to under 2 hours.,Reduce average RFQ response time from 6 hours to under 2 hours.,Y
+P02_Quote_Assistant,F005,acceptance,MVP1,True,Automatically match at least 80% of RFQ lines to the correct catalog item.,Automatically match at least 80% of RFQ lines to the correct catalog item.,Y
+P02_Quote_Assistant,F006,business_rule,MVP1,True,No quote is sent without human approval.,no quote is sent without human approval.,Y
+P02_Quote_Assistant,F007,ai_quality,All,False,Capture representative corrections to improve matching accuracy over time.,Capture representative corrections to improve matching accuracy over time.,Y
+P02_Quote_Assistant,F008,out_of_scope,MVP1,True,No learning from corrections in MVP1.,No learning from corrections,Y
+P02_Quote_Assistant,F009,scope_mvp1,MVP1,True,"MVP1 includes RFQ intake from the shared sales mailbox and manual paste or upload of email body, PDF, Excel.","In scope (MVP1) – RFQ intake from the shared sales mailbox and manual paste or upload (email body, PDF, Excel)",Y
+P02_Quote_Assistant,F010,integration,MVP1,True,Intake of RFQs from the shared sales mailbox uses Microsoft Graph.,Intake of RFQs from the shared sales mailbox (Microsoft Graph),Y
+P02_Quote_Assistant,F011,scope_mvp1,MVP1,True,Manual paste or upload of RFQs is supported.,"manual paste or upload (email body, PDF, Excel)",Y
+P02_Quote_Assistant,F012,functional,MVP1,True,"Supported attachment types for MVP1: PDF, DOCX and XLSX.","manual paste or upload of PDF, DOCX and XLSX attachments.",Y
+P02_Quote_Assistant,F013,functional,MVP1,True,"Extraction of RFQ lines must include customer part number, description, manufacturer, quantity and unit of measure using Azure OpenAI.","Extraction of RFQ lines: customer part number, description, manufacturer, quantity and unit of measure using Azure OpenAI.",Y
+P02_Quote_Assistant,F014,functional,MVP1,True,Product matching uses the Azure AI Search catalog index (hybrid vector and keyword) and returns a confidence score and up to three alternatives.,Product matching against the Azure AI Search catalog index (hybrid vector and keyword) with a confidence score and up to three alternatives.,Y
+P02_Quote_Assistant,F015,functional,MVP1,True,"Draft quote screen must support edit, remove and add-line actions and Excel export of the approved draft.","Draft quote screen with edit, remove and add-line actions, and Excel export of the approved draft.",Y
+P02_Quote_Assistant,F016,scope_mvp2,MVP2,False,MVP2 includes creation of the draft quote in Salesforce CPQ for approved drafts.,Creation of the draft quote in Salesforce CPQ for approved drafts.,Y
+P02_Quote_Assistant,F017,scope_mvp2,MVP2,False,MVP2 retrieves list and contract price from the pricing engine.,Retrieval of list and contract price from the pricing engine.,Y
+P02_Quote_Assistant,F018,scope_mvp2,MVP2,False,MVP2 uses customer cross-reference tables for customer part numbers.,Use of customer cross-reference tables for customer part numbers.,Y
+P02_Quote_Assistant,F019,scope_mvp2,MVP2,False,MVP2 includes learning from representative corrections (accepted and rejected matches).,Learning from representative corrections (accepted and rejected matches).,Y
+P02_Quote_Assistant,F020,scope_mvp2,MVP2,False,MVP2 provides usage and accuracy dashboards for Sales Managers.,Usage and accuracy dashboards for Sales Managers.,Y
+P02_Quote_Assistant,F021,out_of_scope,NA,False,Automatic sending of quotes to customers is out of scope.,Out of scope: Automatic sending of quotes to customers,Y
+P02_Quote_Assistant,F022,out_of_scope,NA,False,Order creation is out of scope.,order creation,Y
+P02_Quote_Assistant,F023,out_of_scope,NA,False,Freight calculation is out of scope.,freight calculation,Y
+P02_Quote_Assistant,F024,out_of_scope,NA,False,Changes to pricing engine logic are out of scope.,changes to pricing engine logic,Y
+P02_Quote_Assistant,F025,functional,MVP1,True,The system extracts lines using Azure OpenAI.,The system extracts lines using Azure OpenAI.,Y
+P02_Quote_Assistant,F026,functional,MVP1,True,Each extracted line is searched in the catalog index.,Each line is searched in the catalog index.,Y
+P02_Quote_Assistant,F027,functional,MVP1,True,The best match and alternatives are shown with confidence scores.,Best match and alternatives are shown with confidence scores.,Y
+P02_Quote_Assistant,F028,functional,MVP1,True,"The representative edits, approves the draft and exports it.",The representative edits and approves the draft and exports it.,Y
+P02_Quote_Assistant,F030,security_access,All,True,Authentication uses Azure AD SSO.,Azure AD SSO,Y
+P02_Quote_Assistant,F031,security_access,All,True,Role-based access is required.,Role-based access,Y
+P02_Quote_Assistant,F032,security_access,MVP1,True,Representatives see only their own RFQs.,Representatives see only their own RFQs,Y
+P02_Quote_Assistant,F033,role,MVP1,True,"Inside Sales Rep: submit RFQs, review matched lines, choose alternatives, edit quantities and approve the draft quote.","Inside Sales Rep: Submit RFQs, review matched lines, choose alternatives, edit quantities and approve the draft quote",Y
+P02_Quote_Assistant,F034,role,MVP1,True,Sales Manager: view team RFQs and drafts and review match quality reports.,"Sales Manager: View team RFQs and drafts, review match quality reports",Y
+P02_Quote_Assistant,F035,role,MVP1,True,"Catalog Admin: maintain catalog index refresh, synonym lists and confidence thresholds.","Catalog Admin: Maintain catalog index refresh, synonym lists and confidence thresholds",Y
+P02_Quote_Assistant,F036,functional,MVP1,True,Inside Sales Rep can paste an RFQ email or upload an attachment and get a list of extracted lines with quantity and unit of measure.,I can paste an RFQ email or upload an attachment and get a list of extracted lines with quantity and unit of measure.,Y
+P02_Quote_Assistant,F037,functional,MVP1,True,Inside Sales Rep can see the best catalog match for each line with a confidence score and up to three alternatives.,I can see the best catalog match for each line with a confidence score and up to three alternatives.,Y
+P02_Quote_Assistant,F038,functional,MVP1,True,Lines with confidence below 70% are highlighted for manual review.,lines with confidence below 70% are highlighted for manual review.,Y
+P02_Quote_Assistant,F039,functional,MVP1,True,Catalog Admin can add customer-specific synonyms without a code change.,I can add customer-specific synonyms (for example 'THHN 12 BLK' → item 12345) without a code change.,Y
+P02_Quote_Assistant,F040,nfr_availability,All,True,Availability target is 99.5% during business hours in North America.,99.5% during business hours in North America.,Y
+P02_Quote_Assistant,F041,security_access,All,True,Customer contact data in RFQs is confidential and must not be logged in prompts or telemetry.,Customer contact data in RFQs is confidential and must not be logged in prompts or telemetry.,Y
+P02_Quote_Assistant,F042,nfr_performance,MVP1,True,Draft quote for an RFQ with up to 50 lines must be provided within 30 seconds.,Draft quote for an RFQ with up to 50 lines within 30 seconds.,Y
+P02_Quote_Assistant,F043,nfr_performance,MVP1,True,Catalog search response must be under 2 seconds per line.,Catalog search response under 2 seconds per line.,Y
+P02_Quote_Assistant,F044,architecture,All,True,"Trace per RFQ must include model version, prompt version and match confidence.","Trace per RFQ including model version, prompt version and match confidence.",Y
+P02_Quote_Assistant,F045,ai_quality,All,True,Azure OpenAI content filtering must be enabled and no customer data used for model training.,Azure OpenAI content filtering enabled; no customer data used for model training.,Y
+P02_Quote_Assistant,F046,functional,MVP1,True,"MVP1 intake supports PDF, DOCX and XLSX attachments and email body uploads.","Intake of RFQs from the shared sales mailbox (Microsoft Graph) and manual paste or upload of PDF, DOCX and XLSX attachments.",Y
+P02_Quote_Assistant,F047,functional,MVP1,True,Product matching is performed against an Azure AI Search catalog index using hybrid vector and keyword search.,Product matching against the Azure AI Search catalog index (hybrid vector and keyword),Y
+P02_Quote_Assistant,F048,functional,MVP1,True,"Admin UI must provide synonyms management, confidence threshold (default 70%) and nightly catalog index refresh schedule.","Admin UI for synonyms, confidence threshold (default 70%) and nightly catalog index refresh schedule.",Y
+P02_Quote_Assistant,F049,business_rule,All,True,Default confidence threshold is 70%.,(default 70%),Y
+P02_Quote_Assistant,F050,architecture,All,True,Catalog data is loaded nightly from PIM by an Azure Function into Azure AI Search.,Azure Function (Catalog Loader) -> Azure AI Search | nightly index,Y
+P02_Quote_Assistant,F051,architecture,MVP1,True,RFQ processing runs as an AKS service calling Azure OpenAI and AI Search through APIM.,RFQ processing runs as an AKS service calling Azure OpenAI and AI Search through APIM.,Y
+P02_Quote_Assistant,F052,data,All,True,"Data used includes customer RFQs, the product catalog, synonyms and match feedback.","Data used by the Quote Assistant includes customer RFQs, the product catalog, synonyms and match feedback.",Y
+P02_Quote_Assistant,F053,data,All,True,Product catalog source: PIM export; Frequency: Nightly; Owner: Catalog team.,"Product catalog | Items, descriptions, manufacturer, attributes | PIM export | Nightly | Catalog team | Internal",Y
+P02_Quote_Assistant,F054,data,All,True,Customer RFQs source: Sales mailbox and upload; Frequency: Continuous; Owner: Inside Sales; Security: Confidential.,"Customer RFQs | Email body and attachments | Sales mailbox, upload | Continuous | Inside Sales | Confidential",Y
+P02_Quote_Assistant,F055,data,All,True,Synonyms source: Tool configuration; Frequency: As needed; Owner: Catalog Admin.,Synonyms | Customer terms mapped to items | Tool configuration | As needed | Catalog Admin | Internal,Y
+P02_Quote_Assistant,F056,data,All,True,Draft quotes source: Tool output; Frequency: Per RFQ; Owner: Inside Sales; Security: Confidential.,Draft quotes | Matched lines and edits | Tool output | Per RFQ | Inside Sales | Confidential,Y
+P02_Quote_Assistant,F057,data,All,True,Match feedback source: Tool output; Frequency: Per RFQ; Owner: Catalog team.,Match feedback | Accepted/rejected matches | Tool output | Per RFQ | Catalog team | Internal,Y
+P02_Quote_Assistant,F058,data,MVP1,True,Quality checks require validation that each extracted line has a quantity and description.,Quality checks – Validation that each extracted line has a quantity and description; catalog index completeness check after each refresh,Y
+P02_Quote_Assistant,F059,security_access,MVP1,True,RBAC: Inside Sales Reps limited to their own RFQs; Sales Managers see their team.,RBAC – Role-based access with Inside Sales Reps limited to their own RFQs; Sales Managers see their team,Y
+P02_Quote_Assistant,F060,integration,All,True,Identity & Access integration uses Azure AD for SSO and role groups.,Azure AD for SSO and role groups.,Y
+P02_Quote_Assistant,F061,integration,MVP1,True,Enterprise integration: Shared sales mailbox is accessed via Microsoft Graph.,Shared sales mailbox via Microsoft Graph.,Y
+P02_Quote_Assistant,F062,integration,All,True,Product catalog export from PIM occurs nightly.,Product catalog export from PIM (nightly).,Y
+P02_Quote_Assistant,F063,integration,MVP1,True,AI Services: Azure OpenAI (GPT model) is used for line extraction and Azure AI Search for catalog matching.,Azure OpenAI (GPT model) for line extraction; Azure AI Search for catalog matching.,Y
+P02_Quote_Assistant,F064,integration,MVP1,True,Azure Cosmos DB is used for RFQ and draft quote documents and Blob Storage for attachments.,Azure Cosmos DB for RFQ and draft quote documents; Blob Storage for attachments.,Y
+P02_Quote_Assistant,F065,acceptance,All,False,Weekly report to Sales Operations is required.,Weekly report to Sales Operations.,Y
+P02_Quote_Assistant,F066,compliance,All,True,AI Governance Council approval and Responsible AI review are required.,AI Governance Council approval and Responsible AI review,Y
+P02_Quote_Assistant,F067,security_access,All,True,Customer data must be handled as confidential and no PII in logs.,Customer data handled as confidential; no PII in logs,Y
+P02_Quote_Assistant,F068,data,All,False,Synthetic RFQs must be used for development.,Synthetic RFQs for development,Y
+P02_Quote_Assistant,F069,assumption,All,True,Catalog export from PIM contains descriptions for at least 95% of active items.,Catalog export from PIM contains descriptions for at least 95% of active items,Y
+P02_Quote_Assistant,F070,assumption,All,False,RFQs are mostly in English.,RFQs are mostly in English,Y
+P02_Quote_Assistant,F071,business_rule,All,True,Representatives review every draft before use.,Representatives review every draft before use,Y
+P02_Quote_Assistant,F072,dependency,All,True,Dependency: PIM team for nightly catalog export.,PIM team for nightly catalog export.,Y
+P02_Quote_Assistant,F073,dependency,All,True,Dependency: Azure OpenAI quota approval.,Azure OpenAI quota approval.,Y
+P02_Quote_Assistant,F074,dependency,All,False,Dependency: Inside Sales pilot team for UAT.,Inside Sales pilot team for UAT.,Y
+P02_Quote_Assistant,F075,timeline,MVP1,False,MVP1 development timeline is Mar–May 2026.,MVP1: Mar–May 2026,Y
+P02_Quote_Assistant,F076,timeline,All,False,Pilot with 20 representatives scheduled for Jun 2026.,Pilot with 20 representatives: Jun 2026,Y
+P02_Quote_Assistant,F077,timeline,MVP2,False,MVP2 scheduled for Q4 2026.,MVP2: Q4 2026,Y
+P02_Quote_Assistant,F078,acceptance,MVP1,True,Success criterion: ≥95% correct quantity and unit of measure extraction.,≥95% correct quantity and unit of measure extraction,Y
+P02_Quote_Assistant,F079,acceptance,MVP1,True,Success criterion: Draft quote within 30 seconds for 50-line RFQs.,Draft quote within 30 seconds for 50-line RFQs,Y
+P02_Quote_Assistant,F080,acceptance,All,True,Success criterion: No customer PII found in application logs.,No customer PII found in application logs,Y
+P02_Quote_Assistant,F081,risk,MVP1,True,Model hallucinating items mitigated by allowing only catalog items from search results to be proposed.,Model hallucinating items: Only catalog items from search results may be proposed,Y
+P02_Quote_Assistant,F082,assumption,All,False,Azure OpenAI and AI Search run costs tracked via BIR.,Azure OpenAI and AI Search run costs via BIR,Y
+P02_Quote_Assistant,F083,architecture,MVP1,True,Inside Sales Users connect to App Gateway using HTTPS/443 with AD/SSO.,Inside Sales Users -> App Gateway | HTTPS/443 AD/SSO,Y
+P02_Quote_Assistant,F084,architecture,MVP1,True,Admin Users connect to App Gateway using HTTPS/443 with AD/SSO.,Admin Users -> App Gateway | HTTPS/443 AD/SSO,Y
+P02_Quote_Assistant,F085,architecture,MVP1,True,Web UI calls RFQ Processing Service over REST.,Web UI -> RFQ Processing Service | REST,Y
+P02_Quote_Assistant,F086,architecture,MVP1,True,RFQ Processing Service uses Graph API to interact with the Sales Mailbox.,RFQ Processing Service -> Sales Mailbox (Graph API) | Graph API,Y
+P02_Quote_Assistant,F087,architecture,MVP1,True,APIM is used to call Azure OpenAI for line extraction.,APIM -> Azure OpenAI | line extraction,Y
+P02_Quote_Assistant,F088,architecture,MVP1,True,APIM is used to call Azure AI Search for hybrid search.,APIM -> Azure AI Search | hybrid search,Y
+P02_Quote_Assistant,F089,architecture,All,True,Azure Event Grid triggers the Azure Function (Catalog Loader).,Azure Event Grid -> Azure Function (Catalog Loader) | trigger,Y
+P02_Quote_Assistant,F090,architecture,All,True,Azure Cosmos DB stores draft quotes and connects to the Matching Service.,Azure Cosmos DB -> Matching Service | draft quotes,Y
+P02_Quote_Assistant,F091,architecture,MVP1,True,Matching Service calls APIM for search.,Matching Service -> APIM | search,Y
+P02_Quote_Assistant,F092,architecture,All,False,"Supporting services include Datadog, GitHub Actions, Key Vault and Azure Monitor.","Datadog
+GitHub Actions
+Key Vault
+Azure Monitor",Y
+P03_Contract_Intelligence,F001,timeline,NA,False,Document version is 1.2,Version | 1.2,Y
+P03_Contract_Intelligence,F002,timeline,NA,False,Document date is 12 Mar 2025,Date | 12 Mar 2025,Y
+P03_Contract_Intelligence,F003,business_rule,NA,False,Business Owner is Legal Operations,Business Owner | Legal Operations,Y
+P03_Contract_Intelligence,F004,business_rule,NA,False,Document status is Draft,Status | Draft,Y
+P03_Contract_Intelligence,F005,functional,MVP1,True,"System scores seven commercial P3 Levers as Red, Amber or Green (RAG)","score seven commercial levers (P3 Levers) as Red, Amber or Green (RAG) against company standards.",Y
+P03_Contract_Intelligence,F006,scope_mvp1,MVP1,True,MVP1 includes contract upload,"MVP1 covers contract upload, processing, extraction, RAG scoring and the Contract Overview page.",Y
+P03_Contract_Intelligence,F007,scope_mvp2,MVP2,False,MVP2 adds ad-hoc analysis of draft contracts,"MVP2 adds ad-hoc analysis of draft contracts, renewal alerts and integration with the CRM account hierarchy.",Y
+P03_Contract_Intelligence,F008,scope_mvp2,MVP2,False,MVP2 adds renewal alerts,"MVP2 adds ad-hoc analysis of draft contracts, renewal alerts and integration with the CRM account hierarchy.",Y
+P03_Contract_Intelligence,F009,scope_mvp2,MVP2,False,MVP2 adds integration with the CRM account hierarchy,"MVP2 adds ad-hoc analysis of draft contracts, renewal alerts and integration with the CRM account hierarchy.",Y
+P03_Contract_Intelligence,F010,data,All,False,Customer contracts are stored as PDF or Word files on shared drives,"Customer contracts across the CSS, UBS and ESS SBUs are stored as PDF or Word files on shared drives and reviewed manually.",Y
+P03_Contract_Intelligence,F011,acceptance,MVP1,False,Goal to reduce contract review time by 60%,Reduce contract review time by 60%.,Y
+P03_Contract_Intelligence,F012,scope_mvp1,MVP1,True,In scope for MVP1: Contract upload with mandatory attributes,"In scope (MVP1): Contract upload with mandatory attributes, blob storage, processing and OCR, metadata and clause extraction, RAG scoring of seven P3 Levers, Contract Overview page and contract details page",Y
+P03_Contract_Intelligence,F013,scope_mvp1,MVP1,True,In scope for MVP1: blob storage,"In scope (MVP1): Contract upload with mandatory attributes, blob storage, processing and OCR, metadata and clause extraction, RAG scoring of seven P3 Levers, Contract Overview page and contract details page",Y
+P03_Contract_Intelligence,F014,scope_mvp1,MVP1,True,In scope for MVP1: processing and OCR,"In scope (MVP1): Contract upload with mandatory attributes, blob storage, processing and OCR, metadata and clause extraction, RAG scoring of seven P3 Levers, Contract Overview page and contract details page",Y
+P03_Contract_Intelligence,F015,scope_mvp1,MVP1,True,In scope for MVP1: metadata and clause extraction,"In scope (MVP1): Contract upload with mandatory attributes, blob storage, processing and OCR, metadata and clause extraction, RAG scoring of seven P3 Levers, Contract Overview page and contract details page",Y
+P03_Contract_Intelligence,F016,scope_mvp1,MVP1,True,In scope for MVP1: RAG scoring of seven P3 Levers,"In scope (MVP1): Contract upload with mandatory attributes, blob storage, processing and OCR, metadata and clause extraction, RAG scoring of seven P3 Levers, Contract Overview page and contract details page",Y
+P03_Contract_Intelligence,F017,scope_mvp1,MVP1,True,In scope for MVP1: Contract Overview page and contract details page,"In scope (MVP1): Contract upload with mandatory attributes, blob storage, processing and OCR, metadata and clause extraction, RAG scoring of seven P3 Levers, Contract Overview page and contract details page",Y
+P03_Contract_Intelligence,F018,out_of_scope,MVP1,False,Out of scope for MVP1: No draft contract analysis,No draft contract analysis,Y
+P03_Contract_Intelligence,F019,out_of_scope,MVP1,False,Out of scope for MVP1: No renewal alerts,No renewal alerts,Y
+P03_Contract_Intelligence,F020,out_of_scope,MVP1,False,Out of scope for MVP1: No CRM integration,No CRM integration,Y
+P03_Contract_Intelligence,F021,out_of_scope,MVP1,False,Out of scope for MVP1: No bulk upload,No bulk upload,Y
+P03_Contract_Intelligence,F022,role,All,True,Legal persona can upload contracts and view all contracts and analysis,"Legal | Upload contracts, view all contracts and analysis",Y
+P03_Contract_Intelligence,F023,role,All,True,"Admin persona has all Legal access plus user management, SBU/customer mapping and the Standard Clause Library","Admin | All Legal access plus user management, SBU/customer mapping and the Standard Clause Library",Y
+P03_Contract_Intelligence,F024,role,All,True,Customer (account manager) persona has read-only access to Contract Overview and Contracts for assigned customers only and no Upload menu,Customer (account manager) | Read-only access to Contract Overview and Contracts for assigned customers only; no Upload menu,Y
+P03_Contract_Intelligence,F025,functional,MVP1,True,"A signed contract upload must include SBU, customer, contract type, name, effective and expiration date","Upload of one PDF or DOCX contract (max 25 MB, not password protected) with SBU, customer, contract type, name, effective and expiration date.",Y
+P03_Contract_Intelligence,F026,functional,MVP1,True,Allowed upload file types are PDF and DOCX,"Upload of one PDF or DOCX contract (max 25 MB, not password protected)",Y
+P03_Contract_Intelligence,F027,business_rule,MVP1,True,Maximum upload file size is 25 MB,"(max 25 MB, not password protected)",Y
+P03_Contract_Intelligence,F028,functional,MVP1,True,Uploaded contracts must not be password protected,"(max 25 MB, not password protected)",Y
+P03_Contract_Intelligence,F029,data,MVP1,True,Storage of the original file is in Azure Blob Storage,"Storage of the original in Azure Blob Storage and processing with OCR for scanned documents; statuses Uploaded, Processing, Completed, Failed.",Y
+P03_Contract_Intelligence,F030,functional,MVP1,True,Processing includes OCR for scanned documents,"Storage of the original in Azure Blob Storage and processing with OCR for scanned documents; statuses Uploaded, Processing, Completed, Failed.",Y
+P03_Contract_Intelligence,F031,functional,MVP1,True,"System exposes statuses: Uploaded, Processing, Completed, Failed","statuses Uploaded, Processing, Completed, Failed.",Y
+P03_Contract_Intelligence,F032,functional,MVP1,True,"System extracts metadata: parties, dates, renewal type, governing law, notice period","Extraction of metadata (parties, dates, renewal type, governing law, notice period) and clauses with page references.",Y
+P03_Contract_Intelligence,F033,functional,MVP1,True,System extracts clauses with page references,"Extraction of metadata (parties, dates, renewal type, governing law, notice period) and clauses with page references.",Y
+P03_Contract_Intelligence,F034,functional,MVP1,True,RAG scoring covers the seven P3 Levers named Payment Terms; Freight; Cost of Service MOQ/MOS; Restocking Fees; Customer Rebates; Cost Pass Through; Contract Price Obligations,"RAG scoring of seven P3 Levers: Payment Terms (Green ≤45 days, Amber 46–60, Red >60 or missing), Freight, Cost of Service MOQ/MOS, Restocking Fees, Customer Rebates, Cost Pass Through, Contract Price Obligations.",Y
+P03_Contract_Intelligence,F035,business_rule,MVP1,True,Payment Terms Green threshold is ≤45 days,"Payment Terms (Green ≤45 days, Amber 46–60, Red >60 or missing)",Y
+P03_Contract_Intelligence,F036,business_rule,MVP1,True,Payment Terms Amber threshold is 46–60 days,"Payment Terms (Green ≤45 days, Amber 46–60, Red >60 or missing)",Y
+P03_Contract_Intelligence,F037,business_rule,MVP1,True,Payment Terms Red condition is >60 days or missing,"Payment Terms (Green ≤45 days, Amber 46–60, Red >60 or missing)",Y
+P03_Contract_Intelligence,F038,functional,MVP1,True,"Contract Overview search supports customer, account number, contract name and requires minimum 3 characters","Contract Overview with search (customer, account number, contract name, min 3 characters), Active/Expired view, Expiring-in filter (30/60/90/180 days), Summary and P3 Lever Status, expand/collapse per customer.",Y
+P03_Contract_Intelligence,F039,functional,MVP1,True,Contract Overview has Active/Expired view,"Contract Overview with search (customer, account number, contract name, min 3 characters), Active/Expired view, Expiring-in filter (30/60/90/180 days), Summary and P3 Lever Status, expand/collapse per customer.",Y
+P03_Contract_Intelligence,F040,functional,MVP1,True,"Contract Overview has Expiring-in filter options 30, 60, 90 and 180 days",Expiring-in filter (30/60/90/180 days),Y
+P03_Contract_Intelligence,F041,functional,MVP1,True,Contract Overview shows Summary and P3 Lever Status,Summary and P3 Lever Status,Y
+P03_Contract_Intelligence,F042,functional,MVP1,True,Contract Overview supports expand/collapse per customer,expand/collapse per customer.,Y
+P03_Contract_Intelligence,F043,nfr_availability,All,True,Availability requirement is 99.5% during 06:00–22:00 local time,99.5% during 06:00–22:00 local time.,Y
+P03_Contract_Intelligence,F044,security_access,All,True,Authentication uses Azure AD SSO,Azure AD SSO,Y
+P03_Contract_Intelligence,F045,security_access,All,True,Persona-based menus are required and direct-URL access to restricted pages must be denied,persona-based menus; direct-URL access to restricted pages denied.,Y
+P03_Contract_Intelligence,F046,security_access,All,True,Encryption is required at rest and in transit,Encryption at rest and in transit.,Y
+P03_Contract_Intelligence,F047,nfr_performance,MVP1,True,Processing of a 50-page contract must complete within 15 minutes,Processing of a 50-page contract within 15 minutes.,Y
+P03_Contract_Intelligence,F048,nfr_performance,MVP1,True,"Contract Overview must load within 3 seconds for 5,000 contracts","Contract Overview loads within 3 seconds for 5,000 contracts.",Y
+P03_Contract_Intelligence,F049,compliance,All,True,Processing logs must be sent to Datadog with contract reference and failures email the uploader,Processing logs in Datadog with contract reference; failure email to uploader.,Y
+P03_Contract_Intelligence,F050,compliance,All,True,"Audit log of upload, view and archive actions is required","Audit log of upload, view and archive actions.",Y
+P03_Contract_Intelligence,F051,data,MVP1,True,Data sources for MVP include Signed contracts,Signed contracts,Y
+P03_Contract_Intelligence,F052,data,MVP1,True,Data sources for MVP include Standard Clause Library,Standard Clause Library,Y
+P03_Contract_Intelligence,F053,data,MVP1,True,Data sources for MVP include SBU/customer mapping,SBU/customer mapping,Y
+P03_Contract_Intelligence,F054,data,MVP1,True,Quality check: Mandatory metadata must be present,"Quality checks: Mandatory metadata present, clause-to-page references valid, all seven levers scored or marked 'Clause not found'",Y
+P03_Contract_Intelligence,F055,data,MVP1,True,Quality check: clause-to-page references must be valid,clause-to-page references valid,Y
+P03_Contract_Intelligence,F056,data,MVP1,True,Quality check: all seven levers must be scored or marked 'Clause not found',all seven levers scored or marked 'Clause not found',Y
+P03_Contract_Intelligence,F057,security_access,All,True,Customer persona is limited to assigned customers,Customer persona limited to assigned customers,Y
+P03_Contract_Intelligence,F058,security_access,All,True,All access must be audited,RBAC: Customer persona restricted to assigned customers; all access audited,Y
+P03_Contract_Intelligence,F059,compliance,All,True,AI Governance Council approval is required,AI Governance Council approval,Y
+P03_Contract_Intelligence,F060,security_access,All,True,Contracts are restricted data and masked contracts must be used for testing,Contracts are restricted data; masked contracts for testing,Y
+P03_Contract_Intelligence,F061,assumption,MVP1,True,SBU and customer mappings exist before upload,SBU and customer mappings exist before upload,Y
+P03_Contract_Intelligence,F062,assumption,MVP1,False,Most contracts are text-based PDFs,Most contracts are text-based PDFs,Y
+P03_Contract_Intelligence,F063,dependency,MVP1,True,Dependency on IT platform team for blob storage and processing,IT platform team for blob storage and processing,Y
+P03_Contract_Intelligence,F064,dependency,MVP1,True,Dependency on Legal SMEs for golden dataset,Legal SMEs for golden dataset,Y
+P03_Contract_Intelligence,F065,timeline,MVP1,False,MVP1 build is scheduled Apr–Jun 2025,MVP1 build: Apr–Jun 2025,Y
+P03_Contract_Intelligence,F066,timeline,MVP1,False,UAT is scheduled Jul 2025,UAT: Jul 2025,Y
+P03_Contract_Intelligence,F067,timeline,MVP2,False,MVP2 scheduled for Q4 2025,MVP2: Q4 2025,Y
+P03_Contract_Intelligence,F068,acceptance,MVP1,True,Acceptance: ≥90% accuracy of RAG colour per lever against the Legal golden dataset,≥90% accuracy of RAG colour per lever against the Legal golden dataset,Y
+P03_Contract_Intelligence,F069,acceptance,MVP1,True,Acceptance: ≥95% metadata extraction accuracy,≥95% metadata extraction accuracy,Y
+P03_Contract_Intelligence,F070,acceptance,MVP1,True,Acceptance: processing within 15 minutes for 50 pages,Processing within 15 minutes for 50 pages,Y
+P03_Contract_Intelligence,F071,acceptance,MVP1,True,Acceptance: Customer persona cannot access unassigned customers,Customer persona cannot access unassigned customers,Y
+P03_Contract_Intelligence,F072,risk,MVP1,True,Risk: Scanned or poor-quality contracts require OCR and failure handling with resubmission,Scanned or poor-quality contracts: OCR and failure handling with resubmission,Y
+P03_Contract_Intelligence,F073,risk,MVP1,True,Ambiguous clauses must show reason and page reference for Legal review,Ambiguous clauses: Reason and page reference shown for Legal review,Y
+P03_Contract_Intelligence,F074,functional,MVP1,True,Admin can change a lever threshold and existing contracts are re-scored with history retained,"As Admin, I can change a lever threshold and existing contracts are re-scored with history retained.",Y
+P03_Contract_Intelligence,F075,integration,All,True,"Azure AD groups are mapped to Legal, Admin and Customer personas","Azure AD groups mapped to Legal, Admin and Customer personas.",Y
+P03_Contract_Intelligence,F076,integration,MVP1,True,Azure Document Intelligence is used for OCR and layout,Azure Document Intelligence for OCR and layout; Azure OpenAI for clause extraction and scoring rationale.,Y
+P03_Contract_Intelligence,F077,integration,MVP1,True,Azure OpenAI is used for clause extraction and scoring rationale,Azure Document Intelligence for OCR and layout; Azure OpenAI for clause extraction and scoring rationale.,Y
+P03_Contract_Intelligence,F078,data,MVP1,True,"Azure Blob Storage is used for files and Azure PostgreSQL for metadata, clauses and scores","Azure Blob Storage for files; Azure PostgreSQL for metadata, clauses and scores.",Y
+P03_Contract_Intelligence,F079,integration,MVP1,True,Azure Service Bus is used between upload and processing,Azure Service Bus between upload and processing; Azure Function for failure notifications via SendGrid.,Y
+P03_Contract_Intelligence,F080,integration,MVP1,True,Azure Function is used for failure notifications via SendGrid,Azure Function for failure notifications via SendGrid.,Y
+P03_Contract_Intelligence,F081,architecture,All,True,Architecture identity provider is Azure AD (Entra ID),Azure AD (Entra ID),Y
+P03_Contract_Intelligence,F082,architecture,All,True,App Gateway is listed as an identity/entry point component,App Gateway,Y
+P03_Contract_Intelligence,F083,architecture,All,True,Application services include Web UI,Web UI,Y
+P03_Contract_Intelligence,F084,architecture,All,True,Application services include File Service,File Service,Y
+P03_Contract_Intelligence,F085,architecture,All,True,Application services include Processing Service,Processing Service,Y
+P03_Contract_Intelligence,F086,architecture,All,True,Application services include Notification Service and Azure Function,"Notification Service
+Azure Function",Y
+P03_Contract_Intelligence,F087,architecture,All,True,"AI Services include APIM, Azure Document Intelligence and Azure OpenAI","APIM
+Azure Document Intelligence
+Azure OpenAI",Y
+P03_Contract_Intelligence,F088,architecture,All,True,Data stores include Azure Blob Storage and Azure PostgreSQL,"Azure Blob Storage
+Azure PostgreSQL",Y
+P03_Contract_Intelligence,F089,architecture,All,True,Integration/messaging includes Azure Service Bus,Azure Service Bus,Y
+P03_Contract_Intelligence,F090,architecture,All,True,External/enterprise system is SendGrid,SendGrid,Y
+P03_Contract_Intelligence,F091,architecture,All,True,"Supporting services include Datadog, GitHub Actions, Key Vault and Azure DevOps","Datadog
+GitHub Actions
+Key Vault
+Azure DevOps",Y
+P03_Contract_Intelligence,F092,architecture,All,True,Connection: Legal Users -> Azure AD (Entra ID) uses HTTPS/443 AD/SSO,Legal Users -> Azure AD (Entra ID) | HTTPS/443 AD/SSO,Y
+P03_Contract_Intelligence,F093,architecture,All,True,Connection: Processing Service -> APIM uses HTTPS/443 Managed Identity,Processing Service -> APIM | HTTPS/443 Managed Identity,Y
+P03_Contract_Intelligence,F094,architecture,All,True,Notification Service -> SendGrid connection uses SMTP/587,Notification Service -> SendGrid | SMTP/587,Y
+P03_Contract_Intelligence,F095,architecture,All,True,File Service publishes 'contract uploaded' to Azure Service Bus,File Service -> Azure Service Bus | contract uploaded,Y
+P03_Contract_Intelligence,F096,architecture,All,True,Processing Service sends metadata and score events to Azure Function,"Processing Service -> Azure Function | metadata, score/azure event",Y
+P03_Contract_Intelligence,F097,architecture,All,True,APIM calls Azure Document Intelligence and Azure OpenAI,"APIM -> Azure Document Intelligence | OCR/layout
+APIM -> Azure OpenAI | clauses + RAG",Y
+P03_Contract_Intelligence,F098,architecture,All,False,Environment: components are deployed in a Non-production Subscription,Components are deployed in a Non-production Subscription.,Y
+P04_Product_Data_Enrichment,F001,scope_mvp1,All,True,Extract technical attributes from supplier specification sheets and catalog PDFs and propose them for new and existing items in PIM,extract technical attributes from supplier specification sheets and catalog PDFs,Y
+P04_Product_Data_Enrichment,F002,scope_mvp1,MVP1,True,"MVP1 extracts attributes for three pilot categories: wire and cable, lighting, circuit breakers","MVP1 extracts attributes for three pilot categories (wire and cable, lighting, circuit breakers)",Y
+P04_Product_Data_Enrichment,F003,scope_mvp2,MVP2,False,MVP2 publishes approved attributes to PIM and the e-commerce site,MVP2 publishes approved attributes to PIM and the e-commerce site,Y
+P04_Product_Data_Enrichment,F004,data,All,False,Around 35% of active items on the e-commerce site have incomplete attributes,Around 35% of active items on the e-commerce site have incomplete attributes,Y
+P04_Product_Data_Enrichment,F005,data,All,False,Content specialists copy attributes manually from supplier PDFs which takes 10–15 minutes per item,which takes 10–15 minutes per item,Y
+P04_Product_Data_Enrichment,F006,functional,MVP1,True,Automatically fill required attributes for pilot categories,Fill required attributes for pilot categories automatically,Y
+P04_Product_Data_Enrichment,F007,business_rule,All,True,Reduce enrichment effort per item by 70%,Reduce enrichment effort per item by 70%,Y
+P04_Product_Data_Enrichment,F008,business_rule,MVP1,True,Improve attribute completeness on the website from 65% to 90% for pilot categories,Improve attribute completeness on the website from 65% to 90% for pilot categories,Y
+P04_Product_Data_Enrichment,F009,functional,MVP1,True,Keep specialists in control with review and approval,Keep specialists in control with review and approval,Y
+P04_Product_Data_Enrichment,F010,scope_mvp1,MVP1,True,Upload of supplier spec sheets (PDF) by item is in scope for MVP1,Upload of supplier spec sheets (PDF) by item,Y
+P04_Product_Data_Enrichment,F011,functional,MVP1,True,Attribute extraction against the category attribute schema is in scope for MVP1,attribute extraction against the category attribute schema,Y
+P04_Product_Data_Enrichment,F012,functional,MVP1,True,Unit normalisation is in scope for MVP1,unit normalisation,Y
+P04_Product_Data_Enrichment,F013,functional,MVP1,True,Confidence per attribute is provided in MVP1,confidence per attribute,Y
+P04_Product_Data_Enrichment,F014,functional,MVP1,True,Review screen with accept/edit/reject per attribute is in scope for MVP1,review screen with accept/edit/reject,Y
+P04_Product_Data_Enrichment,F015,integration,MVP1,True,Export of approved attributes as CSV in PIM import format is in scope for MVP1,export of approved attributes as CSV in PIM import format,Y
+P04_Product_Data_Enrichment,F016,scope_mvp2,MVP2,False,Direct publish to PIM via API is in scope for MVP2,Direct publish to PIM via API,Y
+P04_Product_Data_Enrichment,F017,scope_mvp2,MVP2,False,Automatic retrieval of spec sheets from supplier portals is in scope for MVP2,automatic retrieval of spec sheets from supplier portals,Y
+P04_Product_Data_Enrichment,F018,scope_mvp2,MVP2,True,Expansion to 15 categories is in scope for MVP2,Expansion to 15 categories,Y
+P04_Product_Data_Enrichment,F019,scope_mvp2,MVP2,False,Image-based attribute extraction is in scope for MVP2,image-based attribute extraction,Y
+P04_Product_Data_Enrichment,F020,out_of_scope,All,False,Product pricing is out of scope,Product pricing,Y
+P04_Product_Data_Enrichment,F021,out_of_scope,All,False,Marketing descriptions are out of scope,marketing descriptions,Y
+P04_Product_Data_Enrichment,F022,out_of_scope,All,False,Translation is out of scope,translation,Y
+P04_Product_Data_Enrichment,F023,out_of_scope,All,False,Item creation in ERP is out of scope,item creation in ERP,Y
+P04_Product_Data_Enrichment,F024,role,MVP1,True,"Content Specialist can upload spec sheets, review extracted attributes, accept, edit or reject values and export approved attributes","Upload spec sheets, review extracted attributes, accept, edit or reject values and export approved attributes",Y
+P04_Product_Data_Enrichment,F025,role,MVP1,True,Content Lead can approve exports for PIM import and monitor quality,Approve exports for PIM import and monitor quality,Y
+P04_Product_Data_Enrichment,F026,role,MVP1,True,"Taxonomy Admin can maintain category attribute schemas, allowed values and unit rules","Maintain category attribute schemas, allowed values and unit rules",Y
+P04_Product_Data_Enrichment,F027,functional,MVP1,True,"Content Specialist sees each required attribute with value, unit, confidence and source page","see each required attribute with value, unit, confidence and source page",Y
+P04_Product_Data_Enrichment,F028,business_rule,MVP1,True,Attributes with confidence below 80% are highlighted and must be reviewed before export,attributes with confidence below 80% are highlighted and must be reviewed before export,Y
+P04_Product_Data_Enrichment,F029,business_rule,MVP1,True,"A Content Lead can approve an export batch of up to 1,000 items","approve an export batch of up to 1,000 items",Y
+P04_Product_Data_Enrichment,F030,functional,All,True,Taxonomy Admin can add an allowed value to a list attribute without a code change,add an allowed value to a list attribute (e.g. jacket colour) without a code change,Y
+P04_Product_Data_Enrichment,F031,nfr_performance,MVP1,True,MVP1 allows upload of one or more spec sheet PDFs linked to an item number,Upload of one or more spec sheet PDFs (max 20 MB each) linked to an item number,Y
+P04_Product_Data_Enrichment,F032,nfr_performance,MVP1,True,Maximum uploaded PDF size is 20 MB each,max 20 MB each,Y
+P04_Product_Data_Enrichment,F033,integration,MVP1,True,Extraction uses Azure Document Intelligence (layout) and Azure OpenAI (attribute mapping),Azure Document Intelligence (layout) and Azure OpenAI (attribute mapping),Y
+P04_Product_Data_Enrichment,F034,functional,MVP1,True,"Unit normalisation must handle units such as mm → in, AWG, A, V","Unit normalisation (e.g. mm → in, AWG, A, V)",Y
+P04_Product_Data_Enrichment,F035,functional,MVP1,True,Values are validated against allowed values and ranges,validation against allowed values and ranges,Y
+P04_Product_Data_Enrichment,F036,functional,MVP1,True,"Review screen supports accept, edit, reject per attribute and export of approved attributes to CSV in PIM import format","Review screen with accept, edit, reject per attribute; export of approved attributes to CSV in PIM import format",Y
+P04_Product_Data_Enrichment,F037,nfr_performance,MVP2,False,MVP2 includes direct publish to PIM API,Direct publish to PIM API,Y
+P04_Product_Data_Enrichment,F038,functional,All,True,"Admin UI includes category schemas, allowed values, ranges, unit conversion rules and confidence threshold (default 80%)","Admin UI for category schemas, allowed values, ranges, unit conversion rules and confidence threshold (default 80%)",Y
+P04_Product_Data_Enrichment,F039,nfr_availability,All,False,Availability requirement is 99% during business hours,Availability: 99% during business hours,Y
+P04_Product_Data_Enrichment,F040,security_access,All,True,Security requires Azure AD SSO and role-based access,Azure AD SSO and role-based access,Y
+P04_Product_Data_Enrichment,F041,nfr_performance,MVP1,True,Extraction for a 10-page spec sheet must complete within 45 seconds,Extraction for a 10-page spec sheet within 45 seconds,Y
+P04_Product_Data_Enrichment,F042,nfr_performance,MVP1,True,"Export of 1,000 items must complete within 2 minutes","Export of 1,000 items within 2 minutes",Y
+P04_Product_Data_Enrichment,F043,nfr_performance,All,True,Observability requires a trace per item including model version and schema version,Trace per item including model version and schema version,Y
+P04_Product_Data_Enrichment,F044,integration,MVP1,True,Identity & Access integration is Azure AD,Azure AD.,Y
+P04_Product_Data_Enrichment,F045,integration,MVP1,True,PIM import (CSV) is used in MVP1; PIM API is used in MVP2,PIM import (CSV) in MVP1; PIM API in MVP2.,Y
+P04_Product_Data_Enrichment,F046,integration,All,True,AI Services include Azure Document Intelligence and Azure OpenAI,"Azure Document Intelligence, Azure OpenAI.",Y
+P04_Product_Data_Enrichment,F047,data,MVP1,True,Azure Blob Storage is used for PDFs and Azure SQL Database for attributes and review status,"Azure Blob Storage for PDFs, Azure SQL Database for attributes and review status.",Y
+P04_Product_Data_Enrichment,F048,data,All,True,Spec sheets are uploaded and are the source for spec sheet data,Spec sheets | Supplier technical PDFs | Upload,Y
+P04_Product_Data_Enrichment,F049,data,All,True,Category schemas originate from taxonomy configuration and are updated as needed,"Category schemas | Required attributes, allowed values | Taxonomy configuration",Y
+P04_Product_Data_Enrichment,F050,data,All,True,"Extracted attributes (values, units, confidence) are tool output produced per item","Extracted attributes | Values, units, confidence | Per item",Y
+P04_Product_Data_Enrichment,F052,ai_quality,MVP1,True,"Quality checks include allowed-value and range validation, unit consistency, mandatory attribute completeness per category","Quality checks – Allowed-value and range validation, unit consistency, mandatory attribute completeness per category",Y
+P04_Product_Data_Enrichment,F053,business_rule,MVP1,True,Only Content Leads can approve exports,RBAC – Only Content Leads can approve exports,Y
+P04_Product_Data_Enrichment,F054,role,MVP1,True,Taxonomy Admin manages schemas,Taxonomy Admin manages schemas,Y
+P04_Product_Data_Enrichment,F055,data,MVP1,False,"Reporting includes attributes filled per category, acceptance rate per attribute, effort per item","Attributes filled per category, acceptance rate per attribute, effort per item",Y
+P04_Product_Data_Enrichment,F056,compliance,All,False,"AI Governance Council approval is listed under Security, Privacy & Compliance",AI Governance Council approval,Y
+P04_Product_Data_Enrichment,F057,compliance,All,True,Supplier documents are used under supplier agreements; legal review is pending,Supplier documents used under supplier agreements; legal review pending,Y
+P04_Product_Data_Enrichment,F058,assumption,MVP1,True,Spec sheets are text-based PDFs for at least 80% of items,Spec sheets are text-based PDFs for at least 80% of items,Y
+P04_Product_Data_Enrichment,F059,assumption,MVP1,True,Category schemas for the three pilot categories are finalised before build,Category schemas for the three pilot categories are finalised before build,Y
+P04_Product_Data_Enrichment,F060,dependency,MVP1,True,Taxonomy team is a dependency for schemas,Taxonomy team for schemas,Y
+P04_Product_Data_Enrichment,F061,dependency,MVP1,True,PIM team is a dependency for import format,PIM team for import format,Y
+P04_Product_Data_Enrichment,F062,dependency,All,False,Legal review of supplier document usage is a dependency,Legal review of supplier document usage,Y
+P04_Product_Data_Enrichment,F063,timeline,MVP1,False,MVP1 planned for Mar–May 2026,MVP1: Mar–May 2026,Y
+P04_Product_Data_Enrichment,F064,timeline,MVP2,False,MVP2 planned for H2 2026,MVP2: H2 2026,Y
+P04_Product_Data_Enrichment,F065,acceptance,MVP1,True,Acceptance: ≥92% correct attribute values on the pilot golden set,≥92% correct attribute values on the pilot golden set,Y
+P04_Product_Data_Enrichment,F066,acceptance,MVP1,True,Acceptance: 100% of exported values must pass allowed-value and range validation,100% of exported values pass allowed-value and range validation,Y
+P04_Product_Data_Enrichment,F067,acceptance,MVP1,True,Acceptance: Export file imports into PIM without errors,Export file imports into PIM without errors,Y
+P04_Product_Data_Enrichment,F068,risk,All,False,Risk: Inconsistent supplier units,Inconsistent supplier units,Y
+P04_Product_Data_Enrichment,F069,risk,All,False,Risk mitigation: Normalisation rules and validation,Normalisation rules and validation,Y
+P04_Product_Data_Enrichment,F070,architecture,All,True,Solution architecture identity includes Azure AD (Entra ID) and App Gateway,"Azure AD (Entra ID)
+App Gateway",Y
+P04_Product_Data_Enrichment,F071,architecture,All,True,"Application services include Web UI, Extraction Service, Export Service, APIM and Azure Function","Web UI
+Extraction Service
+Export Service
+APIM
+Azure Function",Y
+P04_Product_Data_Enrichment,F072,integration,MVP1,True,APIM connects to Azure Document Intelligence for layout processing,APIM -> Azure Document Intelligence | layout,Y
+P04_Product_Data_Enrichment,F073,integration,MVP1,True,APIM connects to Azure OpenAI for attribute mapping,APIM -> Azure OpenAI | attribute mapping,Y
+P04_Product_Data_Enrichment,F074,architecture,MVP1,True,Extraction Service stores PDFs to Azure Blob Storage,Extraction Service -> Azure Blob Storage | PDFs,Y
+P04_Product_Data_Enrichment,F075,architecture,MVP1,True,Extraction Service writes attributes to Azure SQL Database,Extraction Service -> Azure SQL Database | attributes,Y
+P04_Product_Data_Enrichment,F076,integration,MVP1,True,Web UI calls Extraction Service via REST,Web UI -> Extraction Service | REST,Y
+P04_Product_Data_Enrichment,F077,integration,MVP1,True,Extraction Service calls APIM using HTTPS/443 with Managed Identity,Extraction Service -> APIM | HTTPS/443 Managed Identity,Y
+P04_Product_Data_Enrichment,F078,integration,MVP1,True,Export Service invokes Azure Function to build CSV,Export Service -> Azure Function | build CSV,Y
+P04_Product_Data_Enrichment,F079,integration,MVP1,True,Azure Function transfers CSV to PIM via SFTP drop,Azure Function -> PIM (CSV import) | SFTP drop,Y
+P04_Product_Data_Enrichment,F080,architecture,All,False,"Supporting services include Datadog, GitHub Actions and Key Vault","Datadog
+GitHub Actions
+Key Vault",Y
+P04_Product_Data_Enrichment,F081,architecture,All,True,Connections from Content Users and Admin Users to App Gateway use HTTPS/443 and AD/SSO,Content Users -> App Gateway | HTTPS/443 AD/SSO,Y
+P04_Product_Data_Enrichment,F082,architecture,All,False,Diagram indicates deployment is in a Non-production subscription for listed components,"Diagram title and borders indicate ""Non-production""",Y
+P05_Freight_Claims,F001,business_rule,All,False,Wesco files about 900 freight claims per month.,Wesco files about 900 freight claims per month.,Y
+P05_Freight_Claims,F002,business_rule,All,False,30% of claims are rejected by carriers due to missing evidence or late filing.,30% are rejected by carriers due to missing evidence or late filing,Y
+P05_Freight_Claims,F003,business_rule,All,True,Carrier deadline is 9 months.,carrier deadline is 9 months,Y
+P05_Freight_Claims,F004,business_rule,All,True,Many carriers require notice within 5 days for concealed damage.,many carriers require notice within 5 days for concealed damage,Y
+P05_Freight_Claims,F005,acceptance,All,True,Reduce claim rejection rate from 30% to under 10%.,Reduce claim rejection rate from 30% to under 10%,Y
+P05_Freight_Claims,F006,acceptance,All,True,Ensure claims are filed within carrier deadlines.,Ensure claims are filed within carrier deadlines,Y
+P05_Freight_Claims,F007,acceptance,All,True,Reduce effort per claim from 45 to 15 minutes.,Reduce effort per claim from 45 to 15 minutes,Y
+P05_Freight_Claims,F008,scope_mvp1,MVP1,True,Claim intake form linked to shipment (PRO number / BOL) is in scope for MVP1.,Claim intake form linked to shipment (PRO number / BOL),Y
+P05_Freight_Claims,F009,scope_mvp1,MVP1,True,Photo and document upload is in scope for MVP1.,photo and document upload,Y
+P05_Freight_Claims,F010,scope_mvp1,MVP1,True,AI-generated damage description from photos is in scope for MVP1.,AI-generated damage description from photos,Y
+P05_Freight_Claims,F011,scope_mvp1,MVP1,True,Claim value calculation from sales order lines is in scope for MVP1.,claim value calculation from sales order lines,Y
+P05_Freight_Claims,F012,scope_mvp1,MVP1,True,Deadline calculation is in scope for MVP1.,deadline calculation,Y
+P05_Freight_Claims,F013,scope_mvp1,MVP1,True,Claim packet PDF generation is in scope for MVP1.,claim packet PDF,Y
+P05_Freight_Claims,F014,scope_mvp1,MVP1,True,Email to the carrier claims address is in scope for MVP1.,email to the carrier claims address,Y
+P05_Freight_Claims,F015,scope_mvp1,MVP1,True,Claim register is in scope for MVP1.,claim register,Y
+P05_Freight_Claims,F016,scope_mvp2,MVP2,False,Carrier API submission for top 5 carriers is in scope for MVP2.,Carrier API submission for top 5 carriers,Y
+P05_Freight_Claims,F017,scope_mvp2,MVP2,False,Status tracking is in scope for MVP2.,status tracking,Y
+P05_Freight_Claims,F018,scope_mvp2,MVP2,False,Reminders for overdue responses are in scope for MVP2.,reminders for overdue responses,Y
+P05_Freight_Claims,F019,scope_mvp2,MVP2,False,Recovery reporting is in scope for MVP2.,recovery reporting,Y
+P05_Freight_Claims,F020,out_of_scope,All,False,Customer-facing claim portal is out of scope.,Customer-facing claim portal,Y
+P05_Freight_Claims,F021,out_of_scope,All,False,Litigation handling is out of scope.,Litigation handling,Y
+P05_Freight_Claims,F022,out_of_scope,All,False,Insurance claims are out of scope.,insurance claims,Y
+P05_Freight_Claims,F023,role,MVP1,True,"Branch User can create claims, upload evidence, review AI description and submit claim packet.","Create claims, upload evidence, review AI description and submit claim packet",Y
+P05_Freight_Claims,F024,role,MVP1,True,"Claims Specialist must review and approve claims above USD 5,000, follow up with carriers, close claims.","Review and approve claims above USD 5,000, follow up with carriers, close claims",Y
+P05_Freight_Claims,F025,role,MVP1,True,"Logistics Admin maintains carrier list, claim deadlines and email templates.","Maintain carrier list, claim deadlines and email templates",Y
+P05_Freight_Claims,F026,functional,MVP1,True,"User can enter a PRO number and see shipment, carrier and order lines pre-filled.","enter a PRO number and see shipment, carrier and order lines pre-filled",Y
+P05_Freight_Claims,F027,functional,MVP1,True,Branch User can upload up to 10 photos and get a suggested damage description that they can edit.,upload up to 10 photos and get a suggested damage description that I can edit,Y
+P05_Freight_Claims,F028,business_rule,MVP1,True,"Claims Specialist must approve claims above USD 5,000 before they are sent.","must approve claims above USD 5,000 before they are sent",Y
+P05_Freight_Claims,F029,functional,MVP1,True,Branch User sees a warning when a concealed damage claim is created more than 5 days after delivery.,see a warning when a concealed damage claim is created more than 5 days after delivery,Y
+P05_Freight_Claims,F030,integration,MVP1,True,"Shipment lookup by PRO number or BOL is from the TMS API and returns carrier, delivery date and order number.","Shipment lookup by PRO number or BOL from the Transportation Management System (TMS) API, including carrier, delivery date and order number",Y
+P05_Freight_Claims,F031,functional,MVP1,True,Upload supports up to 10 photos.,Upload of up to 10 photos,Y
+P05_Freight_Claims,F032,functional,MVP1,True,Accepted photo file types: JPG and PNG.,JPG/PNG,Y
+P05_Freight_Claims,F033,functional,MVP1,True,Max file size per photo is 10 MB.,max 10 MB each,Y
+P05_Freight_Claims,F034,functional,MVP1,True,"Documents supported as PDF: BOL, delivery receipt, invoice.","documents (BOL, delivery receipt, invoice as PDF)",Y
+P05_Freight_Claims,F035,integration,MVP1,True,Damage description is suggested by Azure OpenAI vision from photos.,Damage description suggested by Azure OpenAI vision from photos,Y
+P05_Freight_Claims,F036,functional,MVP1,True,Suggested damage description is editable by the user.,editable by the user,Y
+P05_Freight_Claims,F037,functional,MVP1,True,"Claim value calculation equals damaged quantity × unit cost from ERP sales order, plus freight charge where applicable.","Claim value calculation = damaged quantity × unit cost from the ERP sales order, plus freight charge where applicable",Y
+P05_Freight_Claims,F038,functional,MVP1,True,Deadline calculation is per carrier rules with a warning for late concealed damage claims.,Deadline calculation per carrier rules and warning for late concealed damage claims,Y
+P05_Freight_Claims,F039,functional,MVP1,True,Claim packet PDF is generated and emailed to the carrier claims address.,Claim packet PDF generation and email to the carrier claims address,Y
+P05_Freight_Claims,F040,data,MVP1,True,"Claim register status values include Draft, Submitted, Pending approval.","claim register with status Draft, Submitted, Pending approval",Y
+P05_Freight_Claims,F041,architecture,MVP1,True,"Admin UI exists for carriers, claim email addresses, deadlines and templates.","Admin UI for carriers, claim email addresses, deadlines and templates",Y
+P05_Freight_Claims,F042,nfr_availability,MVP1,True,Availability requirement is 99.5% during 05:00–23:00 local time.,Availability: 99.5% during 05:00–23:00 local time,Y
+P05_Freight_Claims,F043,security_access,MVP1,True,Security uses Azure AD SSO.,Security – Azure AD SSO,Y
+P05_Freight_Claims,F044,security_access,MVP1,True,Branch users limited to their branch claims (branch-scoped access).,Branch-scoped access,Y
+P05_Freight_Claims,F045,nfr_performance,MVP1,True,Shipment lookup must return within 3 seconds.,Shipment lookup within 3 seconds.,Y
+P05_Freight_Claims,F046,nfr_performance,MVP1,True,Damage description must be returned within 20 seconds for 10 photos.,Damage description within 20 seconds for 10 photos.,Y
+P05_Freight_Claims,F047,nfr_performance,MVP1,True,Claim packet generation must complete within 10 seconds.,Claim packet within 10 seconds.,Y
+P05_Freight_Claims,F048,nfr_performance,MVP1,True,Application must be usable on tablets in the warehouse (responsive layout).,Usable on tablets in the warehouse (responsive layout),Y
+P05_Freight_Claims,F049,architecture,MVP1,True,Trace per claim is required for observability.,Observability – Trace per claim,Y
+P05_Freight_Claims,F052,data,MVP1,True,Evidence (photos and documents) source is Upload and frequency is Per claim.,Evidence | Photos and documents | Upload | Per claim,Y
+P05_Freight_Claims,F053,data,MVP1,True,Claims register is stored in the Tool and frequency is Per claim; owner Logistics; security Confidential.,Claims register | Claim details and status | Tool | Per claim,Y
+P05_Freight_Claims,F054,data,MVP1,True,"Carrier rules (deadlines, addresses) are configurable and owner is Logistics Admin.","Carrier rules | Deadlines, addresses | Configuration | As needed | Logistics Admin",Y
+P05_Freight_Claims,F055,business_rule,MVP1,True,Mandatory evidence per claim type: photos for damage and delivery receipt for shortage.,"Mandatory evidence per claim type (photos for damage, delivery receipt for shortage)",Y
+P05_Freight_Claims,F056,business_rule,MVP1,True,Claim value must reconcile to the order.,claim value reconciliation to order,Y
+P05_Freight_Claims,F057,security_access,MVP1,True,"RBAC: Branch scope enforced; approvals by Claims Specialist above USD 5,000.","RBAC: Branch scope enforced; approvals by Claims Specialist above USD 5,000",Y
+P05_Freight_Claims,F058,integration,MVP1,True,Identity & Access integration uses Azure AD.,Azure AD.,Y
+P05_Freight_Claims,F059,integration,MVP1,True,TMS API and ERP sales order API are accessed through APIM.,"TMS API (shipment), ERP sales order API (unit cost) through APIM",Y
+P05_Freight_Claims,F060,integration,MVP1,True,SendGrid is used for carrier emails.,SendGrid for carrier emails,Y
+P05_Freight_Claims,F061,integration,MVP1,True,Azure OpenAI vision is used for damage description.,Azure OpenAI vision for damage description,Y
+P05_Freight_Claims,F062,architecture,MVP1,True,Photos and packets are stored in Azure Blob Storage.,Azure Blob Storage for photos and packets,Y
+P05_Freight_Claims,F063,architecture,MVP1,True,Claims are stored in Azure PostgreSQL.,Azure PostgreSQL for claims,Y
+P05_Freight_Claims,F064,architecture,MVP1,True,Azure Service Bus used for packet generation and email sending orchestration.,Azure Service Bus for packet generation and email sending,Y
+P05_Freight_Claims,F065,compliance,All,True,AI Governance Council approval is required.,AI Governance Council approval,Y
+P05_Freight_Claims,F066,compliance,All,True,Unit cost data is confidential.,Unit cost data confidential,Y
+P05_Freight_Claims,F067,assumption,All,False,TMS has PRO numbers for 95% of LTL shipments.,TMS has PRO numbers for 95% of LTL shipments,Y
+P05_Freight_Claims,F068,assumption,All,False,Carrier claim addresses are current.,Carrier claim addresses are current,Y
+P05_Freight_Claims,F069,dependency,MVP1,True,Dependency: TMS and ERP API access is required.,TMS and ERP API access.,Y
+P05_Freight_Claims,F070,timeline,MVP1,True,MVP1 target timeline: Apr–Jun 2026.,MVP1: Apr–Jun 2026.,Y
+P05_Freight_Claims,F071,timeline,MVP2,False,MVP2 target timeline: Q4 2026.,MVP2: Q4 2026.,Y
+P05_Freight_Claims,F072,acceptance,MVP1,True,Success criteria: ≥95% of claims contain all mandatory evidence.,≥95% of claims contain all mandatory evidence,Y
+P05_Freight_Claims,F073,acceptance,MVP1,True,Success criteria: Claim value calculation 100% correct on test set.,Claim value calculation 100% correct on test set,Y
+P05_Freight_Claims,F074,acceptance,MVP1,True,Success criteria: Damage description rated acceptable by users in ≥85% of cases.,Damage description rated acceptable by users in ≥85% of cases,Y
+P05_Freight_Claims,F075,acceptance,MVP1,True,Success criteria: Late concealed damage warnings 100% correct.,Late concealed damage warnings 100% correct,Y
+P05_Freight_Claims,F076,risk,MVP1,False,Risk: Poor photo quality may affect AI description; mitigation: guidance and manual description.,Poor photo quality | Guidance and manual description,Y
+P05_Freight_Claims,F077,dependency,MVP1,True,Dependency: Logistics team for UAT.,Logistics team for UAT,Y
+P05_Freight_Claims,F078,integration,MVP1,True,Architecture uses App Gateway and Claims Service; Web UI is responsive.,App Gateway -> Web UI (responsive) | HTTPS/443,Y
+P05_Freight_Claims,F079,architecture,MVP1,True,Claims Service connects to Azure PostgreSQL and Azure Blob Storage.,Claims Service -> Azure PostgreSQL | claims,Y
+P05_Freight_Claims,F080,architecture,MVP1,True,Claims Service sends claim submitted events to Azure Service Bus.,Claims Service -> Azure Service Bus | claim submitted,Y
+P05_Freight_Claims,F081,architecture,MVP1,True,APIM is used to call Azure OpenAI (vision) for damage description.,APIM -> Azure OpenAI (vision) | damage description,Y
+P05_Freight_Claims,F082,architecture,MVP1,True,Azure Function sends email via SendGrid using SMTP/587.,Azure Function -> SendGrid | SMTP/587,Y
+P05_Freight_Claims,F083,architecture,MVP1,False,"Supporting services include Datadog, GitHub Actions, Key Vault and Azure Monitor.","Datadog
+GitHub Actions
+Key Vault
+Azure Monitor",Y
+P06_Rebate_Validation,F001,scope_mvp1,MVP1,True,MVP1 reads rebate agreements,"MVP1 reads rebate agreements, extracts tier rules, calculates earned rebates",Y
+P06_Rebate_Validation,F002,scope_mvp1,MVP1,True,MVP1 extracts tier rules from agreements,"MVP1 reads rebate agreements, extracts tier rules, calculates earned rebates",Y
+P06_Rebate_Validation,F003,scope_mvp1,MVP1,True,MVP1 calculates earned rebates from sales and purchase data in the enterprise data lake,calculates earned rebates from sales and purchase data in the enterprise data lake,Y
+P06_Rebate_Validation,F004,scope_mvp1,MVP1,True,MVP1 produces a claim worksheet for review,and produces a claim worksheet for review,Y
+P06_Rebate_Validation,F005,out_of_scope,NA,False,Customer rebates (sell-side) are out of scope,Customer rebates (sell-side),Y
+P06_Rebate_Validation,F006,out_of_scope,NA,False,Price protection claims are out of scope,price protection claims,Y
+P06_Rebate_Validation,F007,out_of_scope,NA,False,Supplier payment collection is out of scope,supplier payment collection,Y
+P06_Rebate_Validation,F008,business_rule,All,False,Wesco manages over 400 supplier rebate agreements,Wesco manages over 400 supplier rebate agreements,Y
+P06_Rebate_Validation,F009,data,All,True,Agreement terms are in PDF contracts and amendments,Agreement terms are in PDF contracts and amendments,Y
+P06_Rebate_Validation,F010,business_rule,All,False,An estimated 2–3% of earned rebates are never claimed,an estimated 2–3% of earned rebates are never claimed,Y
+P06_Rebate_Validation,F011,business_rule,MVP1,True,Calculate earned rebates automatically for all active agreements,Calculate earned rebates automatically for all active agreements,Y
+P06_Rebate_Validation,F012,business_rule,MVP1,False,Recover unclaimed rebates target is +1.5% of rebate income,Recover unclaimed rebates (target +1.5% of rebate income),Y
+P06_Rebate_Validation,F013,nfr_performance,MVP1,True,Cut claim preparation time from 3 days to 4 hours per supplier,Cut claim preparation time from 3 days to 4 hours per supplier,Y
+P06_Rebate_Validation,F014,business_rule,MVP1,True,Provide auditable calculations,Provide auditable calculations,Y
+P06_Rebate_Validation,F015,scope_mvp1,MVP1,True,Upload of rebate agreements (PDF) is in scope for MVP1,Upload of rebate agreements (PDF),Y
+P06_Rebate_Validation,F016,ai_quality,MVP1,True,"AI extraction of tiers, rates, eligible product lines and periods is in scope for MVP1","AI extraction of tiers, rates, eligible product lines and periods",Y
+P06_Rebate_Validation,F017,functional,MVP1,True,Analyst review of extracted terms is in scope for MVP1,analyst review of extracted terms,Y
+P06_Rebate_Validation,F018,integration,MVP1,True,Calculation from Delta Lake purchase data is in scope for MVP1,calculation from Delta Lake purchase data,Y
+P06_Rebate_Validation,F019,functional,MVP1,True,Claim worksheet with tier reached and earned amount is in scope for MVP1,claim worksheet with tier reached and earned amount,Y
+P06_Rebate_Validation,F020,scope_mvp2,MVP2,False,Supplier portal submission is in scope for MVP2,Supplier portal submission,Y
+P06_Rebate_Validation,F021,scope_mvp2,MVP2,False,Dispute tracking is in scope for MVP2,Dispute tracking,Y
+P06_Rebate_Validation,F022,scope_mvp2,MVP2,False,Accrual posting to finance is in scope for MVP2,accrual posting to finance,Y
+P06_Rebate_Validation,F023,scope_mvp2,MVP2,False,Amendment comparison is in scope for MVP2,amendment comparison,Y
+P06_Rebate_Validation,F024,role,MVP1,True,Rebate Analyst uploads agreements,"Rebate Analyst | Upload agreements, review extracted terms, run calculations and prepare claim worksheets",Y
+P06_Rebate_Validation,F025,role,MVP1,True,Rebate Analyst reviews extracted terms,"Rebate Analyst | Upload agreements, review extracted terms, run calculations and prepare claim worksheets",Y
+P06_Rebate_Validation,F026,role,MVP1,True,Rebate Analyst runs calculations and prepares claim worksheets,"Rebate Analyst | Upload agreements, review extracted terms, run calculations and prepare claim worksheets",Y
+P06_Rebate_Validation,F027,role,All,True,"Finance Manager approves claim worksheets above USD 50,000","Finance Manager | Approve claim worksheets above USD 50,000 and review accrual variances",Y
+P06_Rebate_Validation,F028,role,All,True,Finance Manager reviews accrual variances,"Finance Manager | Approve claim worksheets above USD 50,000 and review accrual variances",Y
+P06_Rebate_Validation,F029,role,All,False,"Program Admin maintains supplier mappings, product line mappings and calculation settings","Program Admin | Maintain supplier mappings, product line mappings and calculation settings",Y
+P06_Rebate_Validation,F030,functional,MVP1,True,"Upload of agreement PDFs and amendments must extract supplier, period, tiers (threshold, rate), retroactive vs incremental, eligible product lines and exclusions","extraction of supplier, period, tiers (threshold, rate), retroactive vs incremental, eligible product lines and exclusions",Y
+P06_Rebate_Validation,F031,integration,MVP1,True,Extraction must use Azure Document Intelligence and Azure OpenAI,using Azure Document Intelligence and Azure OpenAI,Y
+P06_Rebate_Validation,F032,functional,MVP1,True,Only confirmed terms are used in calculations (analyst confirmation step),Analyst confirmation step; only confirmed terms are used,Y
+P06_Rebate_Validation,F033,integration,MVP1,True,Calculations use purchase data from Delta Lake (EUDM) via Databricks SQL,Calculation using purchase data from Delta Lake (EUDM) via Databricks SQL,Y
+P06_Rebate_Validation,F034,functional,MVP1,True,"Calculation outputs must include eligible spend, tier reached, earned rebate","eligible spend, tier reached, earned rebate",Y
+P06_Rebate_Validation,F035,business_rule,MVP1,True,Retroactive calculation applies rate to full spend,retroactive applies rate to full spend,Y
+P06_Rebate_Validation,F036,business_rule,MVP1,True,Incremental calculation applies rate per tier band,incremental applies rate per tier band,Y
+P06_Rebate_Validation,F037,functional,MVP1,True,Claim worksheet must include supporting purchase lines,"Claim worksheet with supporting purchase lines, export to Excel, and variance to accrual",Y
+P06_Rebate_Validation,F038,functional,MVP1,True,Claim worksheet must support export to Excel,export to Excel,Y
+P06_Rebate_Validation,F039,functional,MVP1,True,Claim worksheet must show variance to accrual,variance to accrual,Y
+P06_Rebate_Validation,F040,nfr_availability,All,True,Availability requirement is 99% business hours,Availability: 99% business hours.,Y
+P06_Rebate_Validation,F041,security_access,All,True,Security uses Azure AD,Security – Azure AD; agreements and spend data restricted.,Y
+P06_Rebate_Validation,F042,nfr_performance,MVP1,True,Calculation for one supplier-year must complete within 2 minutes,Calculation for one supplier-year within 2 minutes.,Y
+P06_Rebate_Validation,F043,nfr_performance,MVP1,True,Month-end batch of 400 agreements must complete within 8 hours,Month-end batch of 400 agreements within 8 hours.,Y
+P06_Rebate_Validation,F044,acceptance,MVP1,True,Every calculation must be reproducible with agreement version and data snapshot date,Every calculation reproducible with agreement version and data snapshot date.,Y
+P06_Rebate_Validation,F045,data,MVP1,True,Rebate agreements data source is Upload and frequency is Ad-hoc,"Rebate agreements | Terms, tiers, eligibility | Upload | Ad-hoc | Supplier Programs | Restricted",Y
+P06_Rebate_Validation,F046,data,MVP1,True,Rebate agreements data owner is Supplier Programs,"Rebate agreements | Terms, tiers, eligibility | Upload | Ad-hoc | Supplier Programs | Restricted",Y
+P06_Rebate_Validation,F047,data,MVP1,True,Rebate agreements security classification is Restricted,Supplier Programs | Restricted,Y
+P06_Rebate_Validation,F048,data,MVP1,True,Purchase data source is Delta Lake (EUDM) and frequency is Daily,"Purchase data | PO lines, spend by product line | Delta Lake (EUDM) | Daily | Finance Data | Confidential",Y
+P06_Rebate_Validation,F049,data,MVP1,True,Purchase data owner is Finance Data and security classification is Confidential,Daily | Finance Data | Confidential,Y
+P06_Rebate_Validation,F050,data,MVP1,True,Product line mapping source is Configuration and frequency is Monthly,Product line mapping | Supplier lines to items | Configuration | Monthly | Program Admin | Internal,Y
+P06_Rebate_Validation,F051,data,MVP1,True,Product line mapping owner is Program Admin and security classification is Internal,Monthly | Program Admin | Internal,Y
+P06_Rebate_Validation,F052,data,MVP1,True,Calculations data source is Tool output and frequency is Per run,"Calculations | Spend, tier, rebate | Tool output | Per run | Supplier Programs | Confidential",Y
+P06_Rebate_Validation,F053,data,MVP1,True,Calculations owner is Supplier Programs and security classification is Confidential,Per run | Supplier Programs | Confidential,Y
+P06_Rebate_Validation,F054,functional,MVP1,True,Quality checks include agreement term completeness,"Quality checks: Agreement term completeness, tier thresholds ascending, purchase data reconciliation to GL totals",Y
+P06_Rebate_Validation,F055,functional,MVP1,True,Quality checks include tier thresholds ascending,tier thresholds ascending,Y
+P06_Rebate_Validation,F056,functional,MVP1,True,Quality checks include purchase data reconciliation to GL totals,purchase data reconciliation to GL totals,Y
+P06_Rebate_Validation,F057,security_access,All,True,"RBAC requires Finance Manager approval for claims above USD 50,000","RBAC – Approval above USD 50,000 by Finance Manager; analysts cannot approve own claims",Y
+P06_Rebate_Validation,F058,security_access,All,True,Analysts cannot approve their own claims,analysts cannot approve own claims,Y
+P06_Rebate_Validation,F059,integration,MVP1,True,Identity & Access interface required is Azure AD,Azure AD.,Y
+P06_Rebate_Validation,F060,integration,MVP1,True,Enterprise Data dependency is Delta Lake (EUDM/IAP) purchase data through Databricks SQL warehouse,Delta Lake (EUDM/IAP) purchase data through Databricks SQL warehouse.,Y
+P06_Rebate_Validation,F061,integration,MVP1,True,AI Services required are Azure Document Intelligence and Azure OpenAI,"Azure Document Intelligence, Azure OpenAI.",Y
+P06_Rebate_Validation,F062,integration,MVP1,True,Data & Storage must use Azure PostgreSQL for terms and calculations,Azure PostgreSQL for terms and calculations; Blob Storage for agreements.,Y
+P06_Rebate_Validation,F063,integration,MVP1,True,Blob Storage must be used for agreements,Blob Storage for agreements.,Y
+P06_Rebate_Validation,F064,compliance,All,False,AI Governance Council approval is required,AI Governance Council approval; SOX relevance assessed via C2P,Y
+P06_Rebate_Validation,F065,compliance,All,False,SOX relevance will be assessed via C2P,SOX relevance assessed via C2P,Y
+P06_Rebate_Validation,F066,assumption,MVP1,True,Delta Lake purchase data is complete for the last 24 months,Delta Lake purchase data is complete for the last 24 months,Y
+P06_Rebate_Validation,F067,assumption,MVP1,True,Agreements are mostly digital PDFs,Agreements are mostly digital PDFs,Y
+P06_Rebate_Validation,F068,dependency,MVP1,True,Data platform team is required for Databricks access,Data platform team for Databricks access,Y
+P06_Rebate_Validation,F069,dependency,MVP1,True,Supplier Programs SMEs are required for golden dataset,Supplier Programs SMEs for golden dataset,Y
+P06_Rebate_Validation,F070,timeline,MVP1,False,MVP1 timeline is Mar–Jun 2026,MVP1: Mar–Jun 2026,Y
+P06_Rebate_Validation,F071,timeline,MVP2,False,MVP2 timeline is Q4 2026,MVP2: Q4 2026,Y
+P06_Rebate_Validation,F072,acceptance,MVP1,True,Acceptance: ≥95% accuracy of extracted tier terms on golden agreements,≥95% accuracy of extracted tier terms on golden agreements,Y
+P06_Rebate_Validation,F073,acceptance,MVP1,True,Acceptance: 100% calculation accuracy against analyst-verified examples,100% calculation accuracy against analyst-verified examples,Y
+P06_Rebate_Validation,F074,acceptance,MVP1,True,Acceptance: Reproducible calculations with snapshot date,Reproducible calculations with snapshot date,Y
+P06_Rebate_Validation,F075,risk,MVP1,True,Complex agreement language risk is mitigated by mandatory analyst confirmation,Complex agreement language | Mandatory analyst confirmation,Y
+P06_Rebate_Validation,F076,risk,MVP1,True,Data lake gaps risk is mitigated by reconciliation checks,Data lake gaps | Reconciliation checks,Y
+P06_Rebate_Validation,F077,risk,MVP1,True,Retroactive vs incremental misread risk is mitigated by explicit field and tests,Retroactive vs incremental misread | Explicit field and tests,Y
+P06_Rebate_Validation,F078,scope_mvp1,MVP1,True,Appendix: Agreement Extraction must extract tier terms with page references,Agreement Extraction: Extract tier terms with page references.,Y
+P06_Rebate_Validation,F079,functional,MVP1,True,Analyst uploads agreement and terms are extracted before confirmation,"Analyst uploads agreement.
+- Terms extracted.
+- Analyst confirms.",Y
+P06_Rebate_Validation,F080,integration,MVP1,True,Agreement Service must store confirmed terms in Azure PostgreSQL,Agreement Service -> Azure PostgreSQL | confirmed terms,Y
+P06_Rebate_Validation,F081,integration,MVP1,True,Agreement Service must store agreements in Azure Blob Storage,Agreement Service -> Azure Blob Storage | agreements,Y
+P06_Rebate_Validation,F082,integration,MVP1,True,Calculation Service must store results in Azure PostgreSQL,Calculation Service -> Azure PostgreSQL | results,Y
+P06_Rebate_Validation,F083,integration,MVP1,True,Calculation Service must call Delta Lake EUDM/IAP (Databricks SQL) using HTTPS/443 OAuth 2.0,Calculation Service -> Delta Lake EUDM/IAP (Databricks SQL) | HTTPS/443 OAuth 2.0,Y
+P06_Rebate_Validation,F084,integration,MVP1,True,APIM must call Azure Document Intelligence for layout,APIM -> Azure Document Intelligence | layout,Y
+P06_Rebate_Validation,F085,integration,MVP1,True,APIM must call Azure OpenAI for term extraction,APIM -> Azure OpenAI | term extraction,Y
+P06_Rebate_Validation,F086,architecture,All,False,Users include Rebate Analysts and Finance Managers,"Rebate Analysts
+Finance Managers",Y
+P06_Rebate_Validation,F087,integration,All,True,Identity & entry points include Azure AD (Entra ID) and App Gateway,"Azure AD (Entra ID)
+App Gateway",Y
+P06_Rebate_Validation,F088,architecture,All,True,"Application services include Web UI, Agreement Service, Calculation Service, Azure Function (Batch Scheduler), APIM","Web UI
+Agreement Service
+Calculation Service
+Azure Function (Batch Scheduler)
+APIM",Y
+P06_Rebate_Validation,F089,integration,All,True,AI Services listed are Azure Document Intelligence and Azure OpenAI,"Azure Document Intelligence
+Azure OpenAI",Y
+P06_Rebate_Validation,F090,integration,All,True,"Data stores listed are Azure Blob Storage, Azure PostgreSQL, Delta Lake EUDM/IAP (Databricks SQL)","Azure Blob Storage
+Azure PostgreSQL
+Delta Lake EUDM/IAP (Databricks SQL)",Y
+P06_Rebate_Validation,F091,integration,MVP1,True,App Gateway is entry point for Rebate Analysts and Finance Managers over HTTPS/443 with AD/SSO,Rebate Analysts -> App Gateway | HTTPS/443 AD/SSO,Y
+P06_Rebate_Validation,F092,integration,MVP1,True,Web UI communicates with Agreement Service using REST,Web UI -> Agreement Service | REST,Y
+P06_Rebate_Validation,F093,integration,MVP1,True,Web UI communicates with Calculation Service to run calculations,Web UI -> Calculation Service | run calculation,Y
+P06_Rebate_Validation,F094,integration,MVP1,True,Azure Function (Batch Scheduler) calls Agreement Service for month-end batch,Azure Function (Batch Scheduler) -> Agreement Service | month-end batch,Y
+P06_Rebate_Validation,F095,integration,MVP1,True,Agreement Service connects to APIM using HTTPS/443 Managed Identity,Agreement Service -> APIM | HTTPS/443 Managed Identity,Y
+P06_Rebate_Validation,F096,integration,MVP1,True,Calculation Service communicates with Azure PostgreSQL for results,Calculation Service -> Azure PostgreSQL | results,Y
+P06_Rebate_Validation,F097,architecture,All,False,"Supporting services include Datadog, GitHub Actions, Key Vault, Azure Monitor","Datadog
+GitHub Actions
+Key Vault
+Azure Monitor",Y
+P06_Rebate_Validation,F098,architecture,All,False,Solution environment is labeled as Non-production,Solution labeled as Non-production.,Y
+P07_Email_Order_Entry,F001,business_rule,All,True,Reduce order entry time by 60%,Reduce order entry time by 60%,Y
+P07_Email_Order_Entry,F002,business_rule,All,True,Reduce order entry errors by 50%,Reduce order entry errors by 50%,Y
+P07_Email_Order_Entry,F003,nfr_performance,All,True,Create SAP draft orders within 5 minutes of email receipt,Create SAP draft orders within 5 minutes of email receipt,Y
+P07_Email_Order_Entry,F004,scope_mvp1,MVP1,True,Keep CSR review for every order in MVP1,Keep CSR review for every order in MVP1,Y
+P07_Email_Order_Entry,F005,data,All,True,"Customer Service receives about 6,000 PO emails per week","Customer Service receives about 6,000 PO emails per week across 40 branches; average manual entry takes 12 minutes.",Y
+P07_Email_Order_Entry,F006,data,All,True,PO emails across 40 branches,"Customer Service receives about 6,000 PO emails per week across 40 branches; average manual entry takes 12 minutes.",Y
+P07_Email_Order_Entry,F007,data,All,False,Average manual entry takes 12 minutes,"Customer Service receives about 6,000 PO emails per week across 40 branches; average manual entry takes 12 minutes.",Y
+P07_Email_Order_Entry,F008,scope_mvp1,MVP1,True,PO intake from branch order mailboxes via Microsoft Graph,MVP1: Intake from branch order mailboxes via Microsoft Graph; duplicate PO detection by customer PO number.,Y
+P07_Email_Order_Entry,F009,functional,MVP1,True,Duplicate PO detection by customer PO number,MVP1: Intake from branch order mailboxes via Microsoft Graph; duplicate PO detection by customer PO number.,Y
+P07_Email_Order_Entry,F010,functional,MVP1,True,"Extraction of customer PO number, sold-to, ship-to, requested delivery date and lines","Extraction of customer PO number, sold-to, ship-to, requested delivery date and lines (customer part, description, quantity, UoM, price) using Azure Document Intelligence and Azure OpenAI.",Y
+P07_Email_Order_Entry,F011,integration,MVP1,True,Extraction uses Azure Document Intelligence,using Azure Document Intelligence and Azure OpenAI.,Y
+P07_Email_Order_Entry,F012,integration,MVP1,True,Extraction uses Azure OpenAI,using Azure Document Intelligence and Azure OpenAI.,Y
+P07_Email_Order_Entry,F013,functional,MVP1,True,"Item matching via customer cross-reference table, then catalog search","item matching via customer cross-reference table, then catalog search.",Y
+P07_Email_Order_Entry,F014,functional,MVP1,True,Customer identification by sender domain and PO content,"Customer identification by sender domain and PO content; item matching via customer cross-reference table, then catalog search.",Y
+P07_Email_Order_Entry,F015,integration,MVP1,True,"SAP validation via APIM (customer active, material valid, price variance >5% flagged)","SAP validation via APIM (customer active, material valid, price variance >5% flagged) and creation of a draft sales order (not released).",Y
+P07_Email_Order_Entry,F016,business_rule,MVP1,True,Price variance >5% flagged,price variance >5% flagged,Y
+P07_Email_Order_Entry,F017,functional,MVP1,True,Creation of a draft sales order (not released),creation of a draft sales order (not released).,Y
+P07_Email_Order_Entry,F018,functional,MVP1,True,CSR review queue with corrections and release action,MVP1 – CSR review queue with corrections and release action.,Y
+P07_Email_Order_Entry,F019,scope_mvp2,MVP2,False,Straight-through release for trusted customers,"MVP2: Straight-through release for trusted customers, order acknowledgement emails, EDI fallback detection, analytics",Y
+P07_Email_Order_Entry,F020,scope_mvp2,MVP2,False,Acknowledgement emails (MVP2),"MVP2: Straight-through release for trusted customers, order acknowledgement emails, EDI fallback detection, analytics",Y
+P07_Email_Order_Entry,F021,scope_mvp2,MVP2,False,EDI fallback detection (MVP2),"MVP2: Straight-through release for trusted customers, order acknowledgement emails, EDI fallback detection, analytics",Y
+P07_Email_Order_Entry,F022,out_of_scope,All,False,EDI orders are out of scope,"Out of scope
+EDI orders, credit checks changes, quotations, returns",Y
+P07_Email_Order_Entry,F023,out_of_scope,All,False,Credit checks changes are out of scope,"Out of scope
+EDI orders, credit checks changes, quotations, returns",Y
+P07_Email_Order_Entry,F024,out_of_scope,All,False,Quotations are out of scope,"Out of scope
+EDI orders, credit checks changes, quotations, returns",Y
+P07_Email_Order_Entry,F025,out_of_scope,All,False,Returns are out of scope,"Out of scope
+EDI orders, credit checks changes, quotations, returns",Y
+P07_Email_Order_Entry,F026,role,All,True,"CSR reviews draft orders, correct lines, release orders in SAP","CSR | Review draft orders, correct lines, release orders in SAP",Y
+P07_Email_Order_Entry,F027,role,All,False,"CS Supervisor monitors queue and SLAs, reassign orders","CS Supervisor | Monitor queue and SLAs, reassign orders",Y
+P07_Email_Order_Entry,F028,role,All,True,"CS Admin maintains mailbox routing, customer cross-reference uploads and confidence thresholds","CS Admin | Maintain mailbox routing, customer cross-reference uploads and confidence thresholds",Y
+P07_Email_Order_Entry,F029,functional,All,True,CSR sees each PO email converted to a draft order with header and lines and a confidence per field,"As a CSR, I see each PO email converted to a draft order with header and lines and a confidence per field.",Y
+P07_Email_Order_Entry,F030,functional,All,True,CSR sees lines where the customer part number has no cross-reference highlighted,"As a CSR, I see lines where the customer part number has no cross-reference highlighted.",Y
+P07_Email_Order_Entry,F031,functional,All,True,CS Supervisor sees orders older than 30 minutes in the queue flagged,"As a CS Supervisor, I see orders older than 30 minutes in the queue flagged.",Y
+P07_Email_Order_Entry,F032,functional,All,True,CS Admin can upload a customer cross-reference file,"As a CS Admin, I can upload a customer cross-reference file.",Y
+P07_Email_Order_Entry,F033,nfr_availability,All,True,Availability 99.5% 24x5,99.5% 24x5.,Y
+P07_Email_Order_Entry,F034,security_access,All,True,Security uses Azure AD,Azure AD; branch-based queue access.,Y
+P07_Email_Order_Entry,F035,security_access,All,True,Branch-based queue access (RBAC),RBAC: CSRs see queues for their branches only,Y
+P07_Email_Order_Entry,F036,nfr_performance,All,True,Draft order created within 5 minutes of email receipt for 95% of POs,Draft order created within 5 minutes of email receipt for 95% of POs.,Y
+P07_Email_Order_Entry,F037,nfr_performance,All,True,Peak 300 emails per hour,Peak 300 emails per hour.,Y
+P07_Email_Order_Entry,F038,nfr_performance,All,True,End-to-end trace per email to SAP draft order number,End-to-end trace per email to SAP draft order number.,Y
+P07_Email_Order_Entry,F039,integration,MVP1,True,Branch mailboxes via Graph API are a data source,Branch mailboxes (Graph API); SAP S/4HANA sales order and pricing APIs via APIM.,Y
+P07_Email_Order_Entry,F040,integration,MVP1,True,SAP S/4HANA sales order and pricing APIs accessed via APIM,SAP S/4HANA sales order and pricing APIs via APIM.,Y
+P07_Email_Order_Entry,F041,integration,MVP1,True,"AI Services: Azure Document Intelligence, Azure OpenAI, Azure AI Search","Azure Document Intelligence, Azure OpenAI, Azure AI Search (catalog).",Y
+P07_Email_Order_Entry,F042,data,MVP1,True,Cosmos DB for order drafts,Cosmos DB for order drafts; Blob Storage for emails.,Y
+P07_Email_Order_Entry,F043,data,MVP1,True,Blob Storage for emails,Cosmos DB for order drafts; Blob Storage for emails.,Y
+P07_Email_Order_Entry,F044,architecture,All,False,App Gateway present as entry point,App Gateway,Y
+P07_Email_Order_Entry,F045,architecture,All,True,APIM is an application service,APIM,Y
+P07_Email_Order_Entry,F046,architecture,MVP1,True,Order Extraction Service exists,Order Extraction Service,Y
+P07_Email_Order_Entry,F047,architecture,MVP1,True,Order Creation Service exists,Order Creation Service,Y
+P07_Email_Order_Entry,F048,architecture,MVP1,True,Web UI (Review Queue) exists,Web UI (Review Queue),Y
+P07_Email_Order_Entry,F049,architecture,MVP1,True,Azure Event Grid triggers on new mail from Branch Mailboxes (Graph API),Branch Mailboxes (Graph API) -> Azure Event Grid | new mail,Y
+P07_Email_Order_Entry,F050,architecture,MVP1,True,Azure Event Grid publishes events to Azure Service Bus,Azure Event Grid -> Azure Service Bus | event,Y
+P07_Email_Order_Entry,F051,architecture,MVP1,True,Azure Service Bus queues processing steps to Order Extraction Service,Azure Service Bus -> Order Extraction Service | queue,Y
+P07_Email_Order_Entry,F052,architecture,MVP1,True,Order Extraction Service writes email copy to Azure Blob Storage,Order Extraction Service -> Azure Blob Storage | email copy,Y
+P07_Email_Order_Entry,F053,architecture,MVP1,True,Order Extraction Service sends extracted PO to Order Creation Service,Order Extraction Service -> Order Creation Service | extracted PO,Y
+P07_Email_Order_Entry,F054,architecture,MVP1,True,Order Creation Service writes drafts to Azure Cosmos DB,Order Creation Service -> Azure Cosmos DB | drafts,Y
+P07_Email_Order_Entry,F055,architecture,MVP1,True,Order Creation Service validates and creates draft order in SAP via APIM,Order Creation Service -> SAP S/4HANA | validate + draft order via APIM,Y
+P07_Email_Order_Entry,F056,assumption,All,False,Customers send one PO per email in most cases,Customers send one PO per email in most cases,Y
+P07_Email_Order_Entry,F057,assumption,All,True,Cross-reference files exist for top 200 customers,Cross-reference files exist for top 200 customers,Y
+P07_Email_Order_Entry,F058,dependency,MVP1,True,Dependency: SAP integration team,SAP integration team,Y
+P07_Email_Order_Entry,F059,dependency,MVP1,True,Dependency: Mailbox access approval,Mailbox access approval,Y
+P07_Email_Order_Entry,F060,dependency,MVP1,True,Dependency: CS branches for UAT,CS branches for UAT,Y
+P07_Email_Order_Entry,F061,timeline,MVP1,True,MVP1: Apr–Jul 2026,MVP1: Apr–Jul 2026,Y
+P07_Email_Order_Entry,F062,acceptance,MVP1,True,≥95% header field accuracy on pilot customers,≥95% header field accuracy and ≥90% line accuracy on pilot customers,Y
+P07_Email_Order_Entry,F063,acceptance,MVP1,True,≥90% line accuracy on pilot customers,≥95% header field accuracy and ≥90% line accuracy on pilot customers,Y
+P07_Email_Order_Entry,F064,acceptance,MVP1,True,No orders released without CSR action in MVP1,No orders released without CSR action in MVP1,Y
+P07_Email_Order_Entry,F065,acceptance,MVP1,True,Duplicate POs detected 100% in test set,Duplicate POs detected 100% in test set,Y
+P07_Email_Order_Entry,F066,risk,All,False,Risk: Unusual PO layouts,Unusual PO layouts,Y
+P07_Email_Order_Entry,F067,risk,All,False,Risk: Missing cross-references,Missing cross-references,Y
+P07_Email_Order_Entry,F068,risk,All,True,Risk: SAP API limits,SAP API limits,Y
+P07_Email_Order_Entry,F069,security_access,All,True,AI Governance Council approval required,AI Governance Council approval; customer data confidential,Y

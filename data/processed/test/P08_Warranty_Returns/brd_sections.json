@@ -1,0 +1,167 @@
+[
+  {
+    "heading": "(front matter)",
+    "level": 0,
+    "text": "- Business Requirements Document (BRD)\n- Warranty Returns (RMA) Assistant\n1.0 · 23 Mar 2026 · Returns & Warranty Operations"
+  },
+  {
+    "heading": "Overview",
+    "level": 1,
+    "text": "The RMA Assistant will help Returns Coordinators decide whether customer return requests are eligible under supplier warranty and return policies, and generate Return Material Authorisations (RMA).\nMVP1 reads return requests, retrieves the original invoice from SAP, checks eligibility against return policies held in a policy knowledge base (RAG), recommends approve/reject with reasons and creates the RMA after coordinator approval. MVP2 adds supplier warranty claim submission and a customer self-service portal."
+  },
+  {
+    "heading": "Problem Statement",
+    "level": 1,
+    "text": "- Around 4,000 return requests per month are handled manually; coordinators look up supplier policies across 300+ PDF documents.\n- Inconsistent decisions lead to customer disputes and unrecovered supplier warranty credits."
+  },
+  {
+    "heading": "Business Goals",
+    "level": 1,
+    "text": "- Consistent eligibility decisions based on current policies\n- Reduce handling time per request from 20 to 8 minutes\n- Increase supplier warranty recovery by 15%\n- Provide policy citations for every decision"
+  },
+  {
+    "heading": "In-Scope / Out-of-Scope",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "(MVP1)",
+    "level": 2,
+    "text": "Return request intake (web form and email), invoice lookup in SAP, policy retrieval from the policy knowledge base, eligibility recommendation with cited policy clauses, restocking fee calculation, coordinator approval, RMA creation in SAP, customer notification email"
+  },
+  {
+    "heading": "(MVP2)",
+    "level": 2,
+    "text": "Supplier warranty claim submission, customer self-service portal, return shipping label generation, analytics"
+  },
+  {
+    "heading": "Out of scope",
+    "level": 2,
+    "text": "Refund processing, inventory disposition, credit memo posting"
+  },
+  {
+    "heading": "Personas & RBAC",
+    "level": 1,
+    "text": "| Persona | Responsibilities |\n|---|---|\n| Returns Coordinator | Review requests and AI recommendations, approve or reject, create RMA |\n| Returns Manager | Approve exceptions (outside policy) and returns above USD 10,000 |\n| Policy Admin | Upload and retire supplier policy documents, maintain restocking fee rules |"
+  },
+  {
+    "heading": "User Stories",
+    "level": 1,
+    "text": "- As a Returns Coordinator, I see the recommendation (eligible/not eligible) with the policy clause and document cited.\n- As a Returns Coordinator, I see the restocking fee calculated (standard 15%, waived for defective items under warranty).\n- As a Returns Manager, I approve exceptions with a mandatory reason.\n- As a Policy Admin, I can upload a new policy version and retire the old one so it is no longer used."
+  },
+  {
+    "heading": "Non-Functional Requirements (NFR)",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Availability",
+    "level": 2,
+    "text": "- 99.5% business hours."
+  },
+  {
+    "heading": "Security",
+    "level": 2,
+    "text": "- Azure AD; customer data confidential."
+  },
+  {
+    "heading": "Performance",
+    "level": 2,
+    "text": "Recommendation within 15 seconds. RMA creation within 10 seconds."
+  },
+  {
+    "heading": "Responsible AI",
+    "level": 2,
+    "text": "- Every recommendation must cite at least one policy clause; no decision is executed without human approval."
+  },
+  {
+    "heading": "Functional Requirements",
+    "level": 1,
+    "text": "- MVP1 – Request intake via web form and returns mailbox (Graph API) with invoice number, items, quantity, reason code and photos.\n- MVP1: Invoice and purchase date lookup in SAP via APIM.\n- MVP1: Policy retrieval from Azure AI Search (policy chunks with supplier, product category, effective dates) and recommendation by Azure OpenAI with citations; only active policy versions used.\n- MVP1: Eligibility rules: return window (default 30 days from invoice for non-defective, warranty period per supplier for defective), condition, non-returnable categories (custom cut cable, special orders).\n- MVP1: Restocking fee: 15% for non-defective returns, waived for defective under warranty; manager approval for exceptions and returns above USD 10,000.\n- MVP1 – RMA creation in SAP and customer email notification via SendGrid.\n- MVP2 – Supplier warranty claims.\n- MVP2: Customer portal.\n- MVP2 – Shipping labels.\n- MVP2 – Analytics.\n- Admin: Policy document upload, versioning and retirement; fee rules configuration."
+  },
+  {
+    "heading": "System Integrations",
+    "level": 1,
+    "text": "| Area | Requirement |\n|---|---|\n| Identity & Access | Azure AD. |\n| Enterprise Systems | SAP S/4HANA (invoices, RMA) via APIM; returns mailbox via Graph API; SendGrid. |\n| AI Services | Azure OpenAI, Azure AI Search (policy index), Azure Document Intelligence for policy PDFs. |\n| Data & Storage | Azure PostgreSQL for requests and decisions; Blob Storage for policies and photos. |"
+  },
+  {
+    "heading": "Architecture",
+    "level": 1,
+    "text": "Refer to P08_Warranty_Returns_Architecture.png."
+  },
+  {
+    "heading": "Data & Governance",
+    "level": 1,
+    "text": "Data includes return requests, invoices, supplier policies and decisions.\n| Data | Description | Source | Frequency | Owner | Security |\n|---|---|---|---|---|---|\n| Return requests | Items, reason, photos | Web form, mailbox | Continuous | Returns Ops | Confidential |\n| Invoices | Items, dates, prices | SAP | On demand | Finance | Confidential |\n| Supplier policies | Return and warranty terms | Policy Admin upload | As needed | Returns Ops | Internal |\n| Decisions and RMAs | Recommendation, approval, RMA number | Tool / SAP | Per request | Returns Ops | Confidential |\n- Quality checks – Policy metadata completeness (supplier, category, effective dates); citation present for every recommendation\n- RBAC: Exceptions and high-value returns require Returns Manager"
+  },
+  {
+    "heading": "Reporting & Monitoring",
+    "level": 1,
+    "text": "- Requests handled, recommendation acceptance rate, handling time"
+  },
+  {
+    "heading": "Security, Privacy & Compliance",
+    "level": 1,
+    "text": "- AI Governance Council approval; Responsible AI review"
+  },
+  {
+    "heading": "Assumptions & Constraints",
+    "level": 1,
+    "text": "- Policy documents for top 50 suppliers available as PDFs\n- Invoice numbers provided in 90% of requests"
+  },
+  {
+    "heading": "External Dependencies",
+    "level": 1,
+    "text": "- SAP RMA API\n- Returns team for golden decisions\n- Legal confirmation of policy interpretation"
+  },
+  {
+    "heading": "High-Level Plan",
+    "level": 1,
+    "text": "- MVP1: Apr–Jul 2026\n- MVP2: 2027"
+  },
+  {
+    "heading": "Acceptance & Success Metrics",
+    "level": 1,
+    "text": "- ≥90% agreement between recommendation and coordinator golden decisions\n- 100% of recommendations include a valid citation from an active policy\n- Restocking fee 100% correct on test set\n- No RMA created without coordinator approval"
+  },
+  {
+    "heading": "Key Risks",
+    "level": 1,
+    "text": "| Risk | Mitigation |\n|---|---|\n| Outdated policies | Versioning and retirement |\n| Hallucinated policy terms | Citation validation |\n| Missing invoice numbers | Search by customer and item |\n(TBD – pending SME review)"
+  },
+  {
+    "heading": "Cost & ROI Summary",
+    "level": 1,
+    "text": "- Coordinator time saved\n- Additional warranty recovery"
+  },
+  {
+    "heading": "Appendix",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "RMA Assistant MVP1 Scope Overview",
+    "level": 2,
+    "text": "- Request Intake: Form and mailbox.\n- Eligibility Recommendation – Policy retrieval with citations.\n- RMA Creation: Approval and SAP RMA."
+  },
+  {
+    "heading": "How it works",
+    "level": 3,
+    "text": "- Request received.\n- Invoice retrieved.\n- Relevant policy clauses retrieved.\n- Recommendation with citation.\n- Coordinator approves; RMA created; customer notified."
+  },
+  {
+    "heading": "Data sources for MVP",
+    "level": 3,
+    "text": "- Requests\n- SAP invoices\n- Policy documents"
+  },
+  {
+    "heading": "Security",
+    "level": 3,
+    "text": "- Azure AD\n- Role-based approvals"
+  },
+  {
+    "heading": "Exclusions",
+    "level": 2,
+    "text": "- No supplier claims\n- No customer portal\n- No shipping labels\n- No analytics"
+  }
+]

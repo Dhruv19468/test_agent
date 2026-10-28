@@ -1,0 +1,152 @@
+[
+  {
+    "heading": "(front matter)",
+    "level": 0,
+    "text": "- Test Plan\n- Vendor Compliance Screening\n0.9 · Vendor Compliance Screening · QA Lead, Quality Engineering\nThis plan defines the quality approach for validating Vendor Compliance Screening MVP1: package upload, classification, extraction, cross-checks, sanctions screening, risk rating, decisions and evidence packs. Continuous monitoring, Ariba integration, self-service and reminders are MVP2."
+  },
+  {
+    "heading": "Test Objectives",
+    "level": 1,
+    "text": "- Verify document classification and field extraction accuracy.\n- Validate cross-checks for name, tax ID, address, bank holder and insurance.\n- Validate sanctions screening for supplier and owners and match handling.\n- Verify risk rating rules are 100% correct.\n- Validate approvals, evidence packs, 7-year retention, masking and security."
+  },
+  {
+    "heading": "In Scope / Out of Scope",
+    "level": 1,
+    "text": "In scope (functional): upload; classification; extraction; cross-checks; insurance expiry and coverage; screening API; risk rating; decisions; Compliance Manager approvals and clearance; evidence pack; Azure AD; RBAC.\nIn scope (non-functional): performance (10 documents in 2 minutes, screening in 10 s), security and privacy, retention, accessibility, observability, reliability."
+  },
+  {
+    "heading": "Out of scope",
+    "level": 3,
+    "text": "Performance management, contract negotiation and ERP payment setup. Continuous monitoring, Ariba, self-service and reminders (MVP2)."
+  },
+  {
+    "heading": "Test Assumptions",
+    "level": 1,
+    "text": "- Documents may be scanned or photographed.\n- Screening sandbox returns configurable match results.\n- Compliance provides golden data."
+  },
+  {
+    "heading": "Testing Strategy",
+    "level": 1,
+    "text": "| Test level | Description |\n|---|---|\n| Unit testing | developer-owned tests for cross-check rules, risk rating engine, masking and APIs. Target minimum coverage: 85%. |\n| Component testing | document service, screening service and evidence service. |\n| API and contract testing | positive and negative behaviour, schemas, authentication, error codes, idempotency and versioning. |\n| Integration testing | UI–services, document service–Blob/APIM–Document Intelligence, Service Bus–screening service, screening–APIM–screening API, services–PostgreSQL and Azure AD. |\n| System testing | end-to-end scenarios across upload, classification, extraction, cross-checks, screening, rating, decision and evidence. |\n| User acceptance testing | Supplier Risk Analysts and Compliance Managers validate checks, screening and approvals. |\nTechniques: Use requirements-based testing, equivalence partitioning, boundary-value analysis, pairwise coverage, negative testing, exploratory testing, risk-based prioritisation, regression testing and data-driven automation."
+  },
+  {
+    "heading": "Roles & Permissions",
+    "level": 1,
+    "text": "- Supplier Risk Analyst: Permitted actions: Upload, review, decide Low/Medium risk; Restricted actions: Approving High risk, clearing matches, settings\n- Compliance Manager: Permitted actions: Approve High risk, clear Potential Matches; Restricted actions: Settings\n- Risk Admin: Permitted actions: Document types, rules, screening settings; Restricted actions: Decisions\nVerify approval and clearance restrictions, masking per role and evidence access control."
+  },
+  {
+    "heading": "Features to be Tested",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Upload and classification",
+    "level": 2,
+    "text": "- PDF/JPG/PNG ≤15 MB; 16 MB rejected; each document type classified; unknown document routed to manual review."
+  },
+  {
+    "heading": "Extraction and cross-checks",
+    "level": 2,
+    "text": "- Legal name, tax ID, address, bank holder compared to form; tax ID format by country; insurance USD 2M exactly passes, USD 1.99M fails; expired insurance flagged."
+  },
+  {
+    "heading": "Sanctions screening",
+    "level": 2,
+    "text": "- Supplier and each owner screened; No Match, Potential Match, Confirmed Match; API timeout blocks decision until screened."
+  },
+  {
+    "heading": "Risk rating",
+    "level": 2,
+    "text": "- Confirmed Match → High; expired insurance → High; tax ID mismatch → High; Potential Match → Medium; all clear → Low."
+  },
+  {
+    "heading": "Decisions and evidence",
+    "level": 2,
+    "text": "- High risk requires Compliance Manager; every Potential Match cleared with reason; evidence pack contains documents, checks, screening results and decision."
+  },
+  {
+    "heading": "Document AI and Data Quality Validation",
+    "level": 1,
+    "text": "Use golden onboarding packages. Targets ≥95% classification and ≥93% field extraction accuracy.\nConfusion matrix by document type. Field accuracy for tax IDs and bank holder names. Version tracking per supplier."
+  },
+  {
+    "heading": "Non-Functional Requirements Testing",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Performance",
+    "level": 2,
+    "text": "- 10-document package within 2 minutes; screening within 10 seconds; 10 and 25 concurrent analysts."
+  },
+  {
+    "heading": "Resilience",
+    "level": 2,
+    "text": "- Service restart during processing, network interruption, dependency failure, retry/idempotency and recovery from partial failure.\n- Backup/restore, data reconciliation after recovery, alerting and runbooks."
+  },
+  {
+    "heading": "Accessibility & Browser Compatibility",
+    "level": 2,
+    "text": "- Screen reader labels, keyboard-only navigation, focus order, colour contrast, error identification and zoom/reflow.\n- Current enterprise-supported versions of Edge, Chrome and Firefox."
+  },
+  {
+    "heading": "Security",
+    "level": 2,
+    "text": "- Azure AD login, MFA, session timeout, token expiration, logout and JWT validation.\n- RBAC at UI and API layers; rate limiting; input validation; safe error messages; CSRF and XSS protection.\n- Verify bank and tax data masked except last 4 digits.\n- Verify screening API key stored in Key Vault and never logged.\n- Verify 7-year retention policy and deletion protection on evidence storage.\n- Dependency scanning, SAST/DAST and penetration testing before release."
+  },
+  {
+    "heading": "Observability and Audit Testing",
+    "level": 1,
+    "text": "Verify structured logs, metrics, traces, correlation IDs, dashboards and alerts. Audit records must capture user, supplier, documents, extracted values (masked), screening request and result, risk rating, decision, approver and clearance reasons. Confirm timestamps, access controls, retention and exportability."
+  },
+  {
+    "heading": "Test Environment & Data",
+    "level": 1,
+    "text": "| Data category | Examples |\n|---|---|\n| Valid | Golden packages with expected checks and ratings |\n| Invalid | Unreadable, oversized and unknown documents |\n| Boundary | Insurance USD 2M/1.99M, expiry today/yesterday, 15/16 MB |\n| Security | Restricted roles, key exposure tests |\n| Production-like | Masked packages at monthly volume |\nIsolated development, QA/integration, performance and UAT environments; versioned test data and expected results; record build, configuration, dataset and model version for every execution."
+  },
+  {
+    "heading": "Entry / Exit Criteria",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Entry criteria",
+    "level": 2,
+    "text": "- BRD approved and requirements baselined; acceptance criteria and thresholds agreed.\n- Environment, integrations, monitoring and access provisioned; test data available.\n- Screening sandbox configured with test match scenarios; golden packages approved.\n- Build deployed with unit-test evidence and known limitations documented."
+  },
+  {
+    "heading": "Exit criteria",
+    "level": 2,
+    "text": "- At least 95% of planned test cases passed, with all critical-path cases passed.\n- No open Critical defects and no open High-severity security defects.\n- Classification and extraction targets met.\n- Risk rating 100% correct.\n- 100% of suppliers screened before decision.\n- Retention and masking verified.\n- All UAT scenarios approved and business sign-off completed."
+  },
+  {
+    "heading": "Defect Severity & Process",
+    "level": 1,
+    "text": "- Critical: Definition: Sanctioned supplier rated Low or decision without screening; Example: Confirmed Match not shown\n- High: Definition: Flow blocked; Example: Screening API integration fails\n- Medium – Definition: Workaround; Example: Manual classification needed\n- Low: Definition: Cosmetic; Example: Evidence PDF layout\nEach defect includes steps, expected/actual results, evidence, severity, environment, build, owner and retest result."
+  },
+  {
+    "heading": "Test Risks",
+    "level": 1,
+    "text": "- False negatives in screening – Scenario tests with sandbox\n- Document quality: Manual review route\n- Data exposure: Masking and key tests\n- API outage: Block-until-screened tests"
+  },
+  {
+    "heading": "Test Deliverables",
+    "level": 1,
+    "text": "Master Test Plan and Test Strategy. Requirements Traceability Matrix (RTM). Test scenarios, cases, scripts and automation report. Versioned test data and golden dataset. Defect report, daily status report and test execution report. Performance, security, accessibility and reliability test reports. UAT evidence and sign-off. Test closure report with residual risks and lessons learned."
+  },
+  {
+    "heading": "Traceability",
+    "level": 1,
+    "text": "Map every BRD requirement to test cases and evidence. Report weekly planned/executed/passed/failed/blocked cases, coverage by requirement and risk, defect severity and ageing, classification and extraction accuracy, screening coverage, rating accuracy, review time, accessibility and security findings and UAT completion."
+  },
+  {
+    "heading": "Sample E2E Flow",
+    "level": 1,
+    "text": "- Analyst signs in with MFA.\n- Uploads onboarding package.\n- Documents classified and extracted.\n- Cross-checks shown.\n- Screening performed.\n- Risk rating calculated.\n- Compliance Manager approves High risk.\n- Evidence pack generated and retained."
+  },
+  {
+    "heading": "Sign-off",
+    "level": 1,
+    "text": "| Role | Name | Signature / Date |\n|---|---|---|\n| QA Lead |  |  |\n| Product Owner |  |  |\n| Business Owner |  |  |\nRelease decision: MVP1 should not be released until the exit criteria are met or deviations are accepted by Supplier Risk and Product."
+  }
+]

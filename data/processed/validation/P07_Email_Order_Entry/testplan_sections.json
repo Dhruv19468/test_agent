@@ -1,0 +1,162 @@
+[
+  {
+    "heading": "Master Test Plan – Email Order Entry",
+    "level": 1,
+    "text": "| Field | Value |\n|---|---|\n| Version | 0.9 |\n| Application | Email Order Entry |\n| Prepared by | QA Lead, Quality Engineering |\n| Reviewed by | Test Manager |\n| Test phase | MVP1 |\n| Audience | Business Stakeholders, Product Owners, Architects, Development Team and QA Team |\nPurpose: This plan defines the quality approach for validating Email Order Entry MVP1: mailbox intake, extraction, customer and item matching, SAP validation, draft order creation and CSR review. Straight-through release, acknowledgements, EDI detection and analytics are MVP2."
+  },
+  {
+    "heading": "References",
+    "level": 2,
+    "text": "- Email Order Entry BRD\n- Email Order Entry architecture diagram"
+  },
+  {
+    "heading": "Quality Objectives",
+    "level": 1,
+    "text": "Verify extraction of PO header and lines from email bodies, PDFs and Excel attachments. Validate customer identification and item matching via cross-reference and catalog search. Validate SAP validation rules and draft order creation without release. Verify duplicate PO detection. Validate 5-minute SLA, branch-based access and observability."
+  },
+  {
+    "heading": "Test Scope",
+    "level": 1,
+    "text": "In scope (functional): Graph mailbox intake; Event Grid/Service Bus processing; extraction; customer identification; item matching; SAP validation; draft order creation; review queue; cross-reference upload; Azure AD; RBAC.\nIn scope (non-functional): performance (95% within 5 minutes, 300 emails per hour), security, accessibility, observability, reliability."
+  },
+  {
+    "heading": "Out of scope",
+    "level": 3,
+    "text": "EDI orders, credit check changes, quotations and returns. Straight-through release, acknowledgements, EDI detection and analytics (MVP2)."
+  },
+  {
+    "heading": "Test Assumptions",
+    "level": 1,
+    "text": "- PO formats vary widely by customer.\n- SAP sandbox with test customers and materials available.\n- Cross-reference files for pilot customers provided."
+  },
+  {
+    "heading": "Approach",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Levels of testing",
+    "level": 2,
+    "text": "- Unit testing: developer-owned tests for field mappers, duplicate detector, matching logic, SAP payload builder and APIs. Target minimum coverage: 85%.\n- Component testing: extraction service, order creation service and review queue.\n- API and contract testing: positive and negative behaviour, schemas, authentication, error codes, idempotency and versioning.\n- Integration testing: Graph mailbox–Event Grid–Service Bus, extraction–APIM–Document Intelligence/Azure OpenAI/AI Search, order creation–SAP, services–Cosmos DB/Blob and Azure AD.\n- System testing: end-to-end scenarios across email receipt, extraction, matching, SAP validation, draft creation and CSR release.\n- User acceptance testing: CSRs and CS Supervisors validate drafts, corrections and queue management."
+  },
+  {
+    "heading": "Test techniques",
+    "level": 2,
+    "text": "Use requirements-based testing, equivalence partitioning, boundary-value analysis, pairwise coverage, negative testing, exploratory testing, risk-based prioritisation, regression testing and data-driven automation."
+  },
+  {
+    "heading": "Roles & Permissions",
+    "level": 1,
+    "text": "- CSR: Permitted actions: Review, correct and release drafts for own branches; Restricted actions: Other branches, admin\n- CS Supervisor – Permitted actions: Monitor and reassign queue; Restricted actions: Admin configuration\n- CS Admin: Permitted actions: Mailbox routing, cross-reference upload, thresholds; Restricted actions: Releasing orders\nVerify branch isolation, release only by CSRs, and admin restrictions."
+  },
+  {
+    "heading": "Test Coverage – Functional",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Intake and duplicates",
+    "level": 2,
+    "text": "- Single PO, multiple attachments, non-PO email, duplicate customer PO number, mailbox outage."
+  },
+  {
+    "heading": "Extraction",
+    "level": 2,
+    "text": "- Header (PO number, sold-to, ship-to, date) and lines (part, description, quantity, UoM, price) from body, PDF and Excel; multi-page POs."
+  },
+  {
+    "heading": "Customer and item matching",
+    "level": 2,
+    "text": "- Sender domain match, unknown sender, cross-reference hit, miss with catalog fallback, ambiguous item highlighted."
+  },
+  {
+    "heading": "SAP validation and draft",
+    "level": 2,
+    "text": "- Inactive customer, invalid material, price variance 5% (no flag) vs 5.01% (flag), draft created not released, SAP timeout retry."
+  },
+  {
+    "heading": "Review queue",
+    "level": 2,
+    "text": "- Branch queues, 30-minute ageing flag, correction and release, reassignment by supervisor."
+  },
+  {
+    "heading": "Security & Compliance Testing",
+    "level": 1,
+    "text": "- Azure AD login, MFA, session timeout, token expiration, logout and JWT validation.\n- RBAC at UI and API layers; rate limiting; input validation; safe error messages; CSRF and XSS protection.\n- Spoofed sender domains must not be auto-identified as trusted customers.\n- Prompt-injection text in emails must not alter processing.\n- Dependency scanning, SAST/DAST and penetration testing before release."
+  },
+  {
+    "heading": "AI and Data Quality Validation",
+    "level": 1,
+    "text": "Use a labelled PO set from pilot customers. Targets ≥95% header and ≥90% line accuracy.\nField-level accuracy by format (body, PDF, Excel). Matching accuracy with and without cross-reference. Version tracking per email."
+  },
+  {
+    "heading": "Non-Functional Requirements Testing",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Performance and scalability",
+    "level": 2,
+    "text": "- 95% of drafts within 5 minutes; 300 emails per hour peak; queue backlog recovery."
+  },
+  {
+    "heading": "Reliability and recovery",
+    "level": 2,
+    "text": "- Service restart during processing, network interruption, dependency failure, retry/idempotency and recovery from partial failure.\n- Backup/restore, data reconciliation after recovery, alerting and runbooks."
+  },
+  {
+    "heading": "Accessibility & Browser Compatibility",
+    "level": 2,
+    "text": "Screen reader labels, keyboard-only navigation, focus order, colour contrast, error identification and zoom/reflow. Current enterprise-supported versions of Edge, Chrome and Firefox."
+  },
+  {
+    "heading": "Logging, Monitoring & Audit",
+    "level": 1,
+    "text": "Verify structured logs, metrics, traces, correlation IDs, dashboards and alerts. Audit records must capture email identifier, customer, PO number, extraction version, matches, SAP draft number, CSR corrections and release. Confirm timestamps, access controls, retention and exportability."
+  },
+  {
+    "heading": "Test Data and Environment Strategy",
+    "level": 1,
+    "text": "- Valid: Pilot customer POs with expected drafts\n- Invalid: Non-PO emails, corrupt attachments\n- Boundary: 5%/5.01% price variance, 29/30-minute ageing\n- Security – Spoofed domains, injection text\n- Production-like: Weekly email volume\nIsolated development, QA/integration, performance and UAT environments; versioned test data and expected results; record build, configuration, dataset and model version for every execution."
+  },
+  {
+    "heading": "Entry and Exit Criteria",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Entry criteria",
+    "level": 2,
+    "text": "- BRD approved and requirements baselined; acceptance criteria and thresholds agreed.\n- Environment, integrations, monitoring and access provisioned; test data available.\n- SAP sandbox data and pilot cross-references loaded.\n- Build deployed with unit-test evidence and known limitations documented."
+  },
+  {
+    "heading": "Exit criteria",
+    "level": 2,
+    "text": "- At least 95% of planned test cases passed, with all critical-path cases passed.\n- No open Critical defects and no open High-severity security defects.\n- Accuracy targets met.\n- 100% duplicate detection.\n- No release without CSR action.\n- SLA met.\n- All UAT scenarios approved and business sign-off completed."
+  },
+  {
+    "heading": "Defect Management",
+    "level": 1,
+    "text": "| Severity | Definition | Example |\n|---|---|---|\n| Critical | Wrong customer or material on order | Order drafted for wrong ship-to |\n| High | Drafts not created | SAP integration failure |\n| Medium | Workaround | Excel PO needs manual lines |\n| Low | Cosmetic | Queue sort order |\nEach defect includes steps, expected/actual results, evidence, severity, environment, build, owner and retest result."
+  },
+  {
+    "heading": "Risks and Mitigations",
+    "level": 1,
+    "text": "| Risk | Mitigation |\n|---|---|\n| Format variety | Golden set and review |\n| Spoofing | Security tests |\n| SAP limits | Load tests and retry |\n| Missing cross-references | Fallback tests |"
+  },
+  {
+    "heading": "Test Deliverables",
+    "level": 1,
+    "text": "Master Test Plan and Test Strategy. Requirements Traceability Matrix (RTM). Test scenarios, cases, scripts and automation report. Versioned test data and golden dataset. Defect report, daily status report and test execution report. Performance, security, accessibility and reliability test reports. UAT evidence and sign-off. Test closure report with residual risks and lessons learned."
+  },
+  {
+    "heading": "Traceability and Metrics",
+    "level": 1,
+    "text": "Map every BRD requirement to test cases and evidence. Report weekly planned/executed/passed/failed/blocked cases, coverage by requirement and risk, defect severity and ageing, field accuracy, draft SLA compliance, correction rate, SAP error rate, accessibility and security findings and UAT completion."
+  },
+  {
+    "heading": "Sample E2E Flow",
+    "level": 1,
+    "text": "- PO email arrives in branch mailbox.\n- Event triggers processing.\n- Header and lines extracted.\n- Customer and items matched.\n- SAP validation and draft creation.\n- CSR reviews and releases.\n- Verify trace and audit.\nRelease decision: MVP1 should not be released until the exit criteria are met or deviations are accepted by Customer Service Operations and Product."
+  }
+]

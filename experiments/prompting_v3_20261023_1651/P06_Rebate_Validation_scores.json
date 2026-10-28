@@ -1,0 +1,110 @@
+{
+  "project": "P06_Rebate_Validation",
+  "structure": 1.0,
+  "missing_sections": [],
+  "coverage": 0.9125,
+  "coverage_all": 0.8928571428571429,
+  "guard_downgrades": 0,
+  "missed_facts": [
+    {
+      "id": "F013",
+      "category": "nfr_performance",
+      "fact": "Cut claim preparation time from 3 days to 4 hours per supplier"
+    },
+    {
+      "id": "F052",
+      "category": "data",
+      "fact": "Calculations data source is Tool output and frequency is Per run"
+    }
+  ],
+  "coverage_by_category": {
+    "acceptance": 1.0,
+    "ai_quality": 1.0,
+    "architecture": 1.0,
+    "assumption": 1.0,
+    "business_rule": 0.64,
+    "compliance": 1.0,
+    "data": 0.55,
+    "dependency": 1.0,
+    "functional": 1.0,
+    "integration": 0.96,
+    "nfr_availability": 1.0,
+    "nfr_performance": 0.67,
+    "out_of_scope": 1.0,
+    "risk": 1.0,
+    "role": 0.92,
+    "scope_mvp1": 1.0,
+    "scope_mvp2": 1.0,
+    "security_access": 1.0,
+    "timeline": 0.5
+  },
+  "faithfulness": 0.9830508474576272,
+  "claims": 63,
+  "requirement_claims": 59,
+  "test_design_claims": 4,
+  "invented": 1,
+  "unverified_supported": 1,
+  "invented_claims": [
+    {
+      "claim": "If tier thresholds are non-ascending, extraction must flag for analyst review and block calculation",
+      "kind": "requirement",
+      "verdict": "supported"
+    }
+  ],
+  "similarity": 0.9363636363636364,
+  "embedding_sim": 0.7210614980883343,
+  "section_scores": {
+    "references": 1.0,
+    "objectives": 1.0,
+    "scope_in": 1.0,
+    "scope_out": 1.0,
+    "assumptions_dependencies": 1.0,
+    "test_strategy": 0.8,
+    "functional_coverage": 0.8,
+    "rbac_testing": 1.0,
+    "security_compliance": 0.6,
+    "ai_data_quality": 1.0,
+    "nfr_performance": 1.0,
+    "nfr_reliability": 1.0,
+    "nfr_accessibility_compat": 1.0,
+    "observability_audit": 1.0,
+    "test_data_environment": 0.8,
+    "entry_exit_criteria": 0.8,
+    "defect_management": 1.0,
+    "risks": 1.0,
+    "deliverables_reporting": 0.8,
+    "traceability_metrics": 1.0,
+    "schedule": 1.0,
+    "e2e_scenario": 1.0
+  },
+  "missing_points": {
+    "test_strategy": [
+      "Explicit unit-test coverage target (85% for tier calculator) not specified",
+      "Some specific contract/API test expectations (e.g., explicit idempotency/versioning targets) left as TBD"
+    ],
+    "functional_coverage": [
+      "Handling of returns and credit notes (explicit tests)",
+      "The exact BRD worked numeric examples (e.g. spend USD 2.1M \u2192 retroactive USD 63,000 and incremental USD 23,000) are not reproduced as explicit verification cases"
+    ],
+    "security_compliance": [
+      "Explicit MFA/token-expiration/JWT validation and logout behaviour tests",
+      "CSRF/XSS protection and safe error message verification not explicitly listed",
+      "Rate limiting and abuse/throttling tests not specified",
+      "Explicit check that spend/private data is not written to logs"
+    ],
+    "test_data_environment": [
+      "Explicit boundary test case for approval threshold USD 50,000 / USD 50,000.01",
+      "More explicit mention of 'restricted accounts' test users (security accounts) could be surfaced"
+    ],
+    "entry_exit_criteria": [
+      "Explicit exit metric: 'At least 95% of planned test cases passed' (test-case pass-rate threshold) is not stated",
+      "Explicit statement of no open Critical/High security defects timing/handling details left as TBD"
+    ],
+    "deliverables_reporting": [
+      "Explicit Requirements Traceability Matrix (RTM) listed as a deliverable (while traceability is covered elsewhere, RTM is not called out in deliverables list)",
+      "Daily status/reporting cadence (reference expects daily status)",
+      "Test closure report with residual risks and lessons learned not explicitly listed"
+    ]
+  },
+  "overall": 0.9255758859784284
+}

@@ -1,0 +1,172 @@
+[
+  {
+    "heading": "(front matter)",
+    "level": 0,
+    "text": "- Business Requirements Document\n- Customer Quote Assistant\n1.0 · 03 Feb 2026 · Inside Sales Operations"
+  },
+  {
+    "heading": "Executive Summary",
+    "level": 1,
+    "text": "The Quote Assistant will help Inside Sales Representatives respond faster to customer Requests for Quotation (RFQ) received by email. It reads the RFQ, identifies the requested products and quantities, matches them to the Wesco catalog and drafts a quote for the representative to review.\nMVP1 delivers RFQ reading, product matching and a draft quote in the web tool. MVP2 adds creation of the quote in Salesforce CPQ, pricing from the pricing engine, customer-specific price agreements and a feedback loop that improves product matching."
+  },
+  {
+    "heading": "Problem Statement",
+    "level": 1,
+    "text": "Inside Sales receives about 2,500 RFQs per week. Representatives spend 25–40 minutes per RFQ searching the catalog and keying lines into Salesforce.\nSlow quote turnaround loses deals to competitors; customers expect a response within 4 business hours.\nMany RFQs use customer part numbers or free-text descriptions that do not match Wesco item numbers."
+  },
+  {
+    "heading": "Goals & Objectives",
+    "level": 1,
+    "text": "Reduce average RFQ response time from 6 hours to under 2 hours. Automatically match at least 80% of RFQ lines to the correct catalog item. Keep the sales representative in control: no quote is sent without human approval. Capture representative corrections to improve matching accuracy over time.\n(TBD – pending SME review)"
+  },
+  {
+    "heading": "Project Scope",
+    "level": 1,
+    "text": "Initial scope aligns to phased MVPs:\n- In scope (MVP1) – RFQ intake from the shared sales mailbox and manual paste or upload (email body, PDF, Excel), line extraction, product matching against the catalog search index with confidence score, draft quote screen with alternatives, export of the draft as Excel\n- In scope (MVP2): Quote creation in Salesforce CPQ, list and contract pricing from the pricing engine, customer cross-reference tables, feedback learning from corrections, usage analytics\n- Out of scope: Automatic sending of quotes to customers, order creation, freight calculation, changes to pricing engine logic"
+  },
+  {
+    "heading": "Annexure – MVP1 Scope",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Quote Assistant MVP1 Scope Overview",
+    "level": 2,
+    "text": "RFQ Intake: Mailbox and manual paste/upload of RFQs. Line Extraction: Extract product lines with quantity and unit. Product Matching: Match lines to catalog items with confidence and alternatives. Draft Quote: Review, edit and export the draft quote."
+  },
+  {
+    "heading": "Process flow",
+    "level": 3,
+    "text": "- The representative pastes or forwards an RFQ.\n- The system extracts lines using Azure OpenAI.\n- Each line is searched in the catalog index.\n- Best match and alternatives are shown with confidence scores.\n- The representative edits and approves the draft and exports it."
+  },
+  {
+    "heading": "Data sources",
+    "level": 3,
+    "text": "- Customer RFQs\n- Nightly catalog export\n- Synonym configuration"
+  },
+  {
+    "heading": "Security",
+    "level": 3,
+    "text": "- Azure AD SSO\n- Role-based access\n- Representatives see only their own RFQs"
+  },
+  {
+    "heading": "Not in MVP1",
+    "level": 3,
+    "text": "- No Salesforce CPQ quote creation\n- No pricing retrieval\n- No customer cross-reference tables\n- No learning from corrections"
+  },
+  {
+    "heading": "User Roles",
+    "level": 1,
+    "text": "- Inside Sales Rep: Submit RFQs, review matched lines, choose alternatives, edit quantities and approve the draft quote\n- Sales Manager: View team RFQs and drafts, review match quality reports\n- Catalog Admin: Maintain catalog index refresh, synonym lists and confidence thresholds"
+  },
+  {
+    "heading": "Sample Use Cases & User Stories",
+    "level": 1,
+    "text": "- As an Inside Sales Rep, I can paste an RFQ email or upload an attachment and get a list of extracted lines with quantity and unit of measure.\n- As an Inside Sales Rep, I can see the best catalog match for each line with a confidence score and up to three alternatives.\n- As an Inside Sales Rep, lines with confidence below 70% are highlighted for manual review.\n- As a Catalog Admin, I can add customer-specific synonyms (for example 'THHN 12 BLK' → item 12345) without a code change."
+  },
+  {
+    "heading": "Non-Functional Requirements (NFR)",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Availability",
+    "level": 2,
+    "text": "- 99.5% during business hours in North America."
+  },
+  {
+    "heading": "Security",
+    "level": 2,
+    "text": "- Azure AD SSO.\n- Role-based access for Inside Sales Rep, Sales Manager and Catalog Admin.\n- Customer contact data in RFQs is confidential and must not be logged in prompts or telemetry."
+  },
+  {
+    "heading": "Performance",
+    "level": 2,
+    "text": "Draft quote for an RFQ with up to 50 lines within 30 seconds. Catalog search response under 2 seconds per line."
+  },
+  {
+    "heading": "Observability",
+    "level": 2,
+    "text": "- Trace per RFQ including model version, prompt version and match confidence."
+  },
+  {
+    "heading": "Responsible AI",
+    "level": 2,
+    "text": "- Azure OpenAI content filtering enabled; no customer data used for model training.\n- Adherence to AI Governance Council guidance."
+  },
+  {
+    "heading": "Functional Requirements (by MVP)",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "MVP1",
+    "level": 2,
+    "text": "- Intake of RFQs from the shared sales mailbox (Microsoft Graph) and manual paste or upload of PDF, DOCX and XLSX attachments.\n- Extraction of RFQ lines: customer part number, description, manufacturer, quantity and unit of measure using Azure OpenAI.\n- Product matching against the Azure AI Search catalog index (hybrid vector and keyword) with a confidence score and up to three alternatives.\n- Draft quote screen with edit, remove and add-line actions, and Excel export of the approved draft."
+  },
+  {
+    "heading": "MVP2",
+    "level": 2,
+    "text": "- Creation of the draft quote in Salesforce CPQ for approved drafts.\n- Retrieval of list and contract price from the pricing engine.\n- Use of customer cross-reference tables for customer part numbers.\n- Learning from representative corrections (accepted and rejected matches).\n- Usage and accuracy dashboards for Sales Managers."
+  },
+  {
+    "heading": "Admin",
+    "level": 2,
+    "text": "- Admin UI for synonyms, confidence threshold (default 70%) and nightly catalog index refresh schedule."
+  },
+  {
+    "heading": "Architecture Overview",
+    "level": 1,
+    "text": "Refer to the architecture diagram (P02_Quote_Assistant_Architecture.png). Catalog data is loaded nightly from PIM by an Azure Function into Azure AI Search. RFQ processing runs as an AKS service calling Azure OpenAI and AI Search through APIM."
+  },
+  {
+    "heading": "Data Requirements",
+    "level": 1,
+    "text": "Data used by the Quote Assistant includes customer RFQs, the product catalog, synonyms and match feedback.\n| Data | Description | Source | Frequency | Owner | Security |\n|---|---|---|---|---|---|\n| Customer RFQs | Email body and attachments | Sales mailbox, upload | Continuous | Inside Sales | Confidential |\n| Product catalog | Items, descriptions, manufacturer, attributes | PIM export | Nightly | Catalog team | Internal |\n| Synonyms | Customer terms mapped to items | Tool configuration | As needed | Catalog Admin | Internal |\n| Draft quotes | Matched lines and edits | Tool output | Per RFQ | Inside Sales | Confidential |\n| Match feedback | Accepted/rejected matches | Tool output | Per RFQ | Catalog team | Internal |\n- Quality checks – Validation that each extracted line has a quantity and description; catalog index completeness check after each refresh\n- RBAC – Role-based access with Inside Sales Reps limited to their own RFQs; Sales Managers see their team"
+  },
+  {
+    "heading": "Integrations",
+    "level": 1,
+    "text": "| Area | Requirement |\n|---|---|\n| Identity & Access | Azure AD for SSO and role groups. |\n| Enterprise Systems | Shared sales mailbox via Microsoft Graph. Product catalog export from PIM (nightly). Salesforce CPQ and pricing engine (MVP2). |\n| AI Services | Azure OpenAI (GPT model) for line extraction; Azure AI Search for catalog matching. |\n| Data & Storage | Azure Cosmos DB for RFQ and draft quote documents; Blob Storage for attachments. |"
+  },
+  {
+    "heading": "Analytics, Logging & Observability",
+    "level": 1,
+    "text": "Lines matched automatically, average confidence, correction rate. RFQ turnaround time before and after. Weekly report to Sales Operations.\nNote: to be validated with the backend architects."
+  },
+  {
+    "heading": "Security",
+    "level": 1,
+    "text": "- AI Governance Council approval and Responsible AI review\n- Customer data handled as confidential; no PII in logs\n- Synthetic RFQs for development"
+  },
+  {
+    "heading": "Constraints and Assumptions",
+    "level": 1,
+    "text": "- Catalog export from PIM contains descriptions for at least 95% of active items\n- RFQs are mostly in English\n- Representatives review every draft before use"
+  },
+  {
+    "heading": "Dependencies",
+    "level": 3,
+    "text": "PIM team for nightly catalog export. Azure OpenAI quota approval. Inside Sales pilot team for UAT."
+  },
+  {
+    "heading": "Timeline",
+    "level": 1,
+    "text": "- MVP1: Mar–May 2026\n- Pilot with 20 representatives: Jun 2026\n- MVP2: Q4 2026"
+  },
+  {
+    "heading": "Success Criteria",
+    "level": 1,
+    "text": "- ≥80% of RFQ lines matched to the correct item as top-1 on the pilot test set\n- ≥95% correct quantity and unit of measure extraction\n- Draft quote within 30 seconds for 50-line RFQs\n- No customer PII found in application logs"
+  },
+  {
+    "heading": "Risks & Mitigations",
+    "level": 1,
+    "text": "- Ambiguous RFQ descriptions: Confidence threshold, alternatives and human review\n- Model hallucinating items: Only catalog items from search results may be proposed\n- Catalog data quality: Index completeness checks and synonym management"
+  },
+  {
+    "heading": "ROI",
+    "level": 1,
+    "text": "- Time saved per RFQ multiplied by weekly volume\n- Expected win-rate improvement from faster response (to be validated in pilot)\n- Azure OpenAI and AI Search run costs via BIR"
+  }
+]

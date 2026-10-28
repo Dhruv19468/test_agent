@@ -1,0 +1,201 @@
+{
+  "project": "P07_Email_Order_Entry",
+  "structure": 0.7,
+  "missing_sections": [
+    "scope_out",
+    "rbac_testing",
+    "security_compliance",
+    "nfr_reliability",
+    "nfr_accessibility_compat",
+    "observability_audit"
+  ],
+  "coverage": 0.875,
+  "coverage_all": 0.855072463768116,
+  "guard_downgrades": 2,
+  "missed_facts": [
+    {
+      "id": "F005",
+      "category": "data",
+      "fact": "Customer Service receives about 6,000 PO emails per week"
+    },
+    {
+      "id": "F006",
+      "category": "data",
+      "fact": "PO emails across 40 branches"
+    },
+    {
+      "id": "F031",
+      "category": "functional",
+      "fact": "CS Supervisor sees orders older than 30 minutes in the queue flagged"
+    },
+    {
+      "id": "F062",
+      "category": "acceptance",
+      "fact": "\u226595% header field accuracy on pilot customers"
+    },
+    {
+      "id": "F063",
+      "category": "acceptance",
+      "fact": "\u226590% line accuracy on pilot customers"
+    }
+  ],
+  "coverage_by_category": {
+    "acceptance": 0.5,
+    "architecture": 0.92,
+    "assumption": 0.5,
+    "business_rule": 1.0,
+    "data": 0.4,
+    "dependency": 1.0,
+    "functional": 0.9,
+    "integration": 1.0,
+    "nfr_availability": 1.0,
+    "nfr_performance": 1.0,
+    "out_of_scope": 1.0,
+    "risk": 1.0,
+    "role": 0.67,
+    "scope_mvp1": 1.0,
+    "scope_mvp2": 0.83,
+    "security_access": 0.83,
+    "timeline": 1.0
+  },
+  "faithfulness": 0.8387096774193549,
+  "claims": 71,
+  "requirement_claims": 62,
+  "test_design_claims": 9,
+  "invented": 10,
+  "unverified_supported": 1,
+  "invented_claims": [
+    {
+      "claim": "Use labeled dataset of PO emails minimum N=2000 samples for accuracy measurement",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Initial AI evaluation size target at least 1000 labeled emails",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Recommended labeled dataset size between 2000 and 5000 emails",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Test management tool: Azure DevOps Test Plans or TestRail",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "API test automation tools: Postman/Newman and REST-assured",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "UI automation tools: Playwright or Selenium",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Load testing tools: k6 or JMeter",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "AI evaluation implemented with custom Python scripts",
+      "kind": "requirement",
+      "verdict": "not_found"
+    },
+    {
+      "claim": "Performance target: 95th percentile time-to-draft <= 5 minutes",
+      "kind": "requirement",
+      "verdict": "supported"
+    },
+    {
+      "claim": "Use mock SAP in Integration/Test environment and SAP sandbox in Pre-Prod",
+      "kind": "requirement",
+      "verdict": "not_found"
+    }
+  ],
+  "similarity": 0.8476190476190476,
+  "embedding_sim": 0.4274380504191114,
+  "section_scores": {
+    "references": 0.8,
+    "objectives": 1.0,
+    "scope_in": 0.8,
+    "scope_out": 1.0,
+    "assumptions_dependencies": 1.0,
+    "test_strategy": 0.8,
+    "functional_coverage": 0.8,
+    "rbac_testing": 0.8,
+    "security_compliance": 0.6,
+    "ai_data_quality": 1.0,
+    "nfr_performance": 1.0,
+    "nfr_reliability": 0.8,
+    "nfr_accessibility_compat": 0.2,
+    "observability_audit": 1.0,
+    "test_data_environment": 0.8,
+    "entry_exit_criteria": 0.8,
+    "defect_management": 0.8,
+    "risks": 1.0,
+    "deliverables_reporting": 1.0,
+    "traceability_metrics": 0.8,
+    "e2e_scenario": 1.0
+  },
+  "missing_points": {
+    "references": [
+      "Explicitly reference architecture diagram and versioned BRD/document links (only BRD alignment mentioned).",
+      "List of supporting documents (e.g., integration diagrams, API contracts) not enumerated."
+    ],
+    "scope_in": [
+      "Explicit accessibility entry in non\u2011functional scope (screen\u2011reader, keyboard navigation, browser compatibility) not called out.",
+      "Some minor scope details like explicit mention of multi\u2011branch mailboxes per branch mapping not spelled out (mostly implied)."
+    ],
+    "test_strategy": [
+      "Unit test coverage target (85%) is not specified for developer/unit tests.",
+      "Detailed test techniques list (equivalence partitioning, boundary\u2011value analysis, pairwise) not enumerated.",
+      "Some API/contract specifics (idempotency/versioning/error code matrix) not detailed though contract testing is mentioned."
+    ],
+    "functional_coverage": [
+      "30\u2011minute ageing flag and related threshold tests for review queue (ageing behavior) not explicitly covered.",
+      "Supervisor reassignment behavior and permissions in review queue not explicitly enumerated in functional coverage section.",
+      "Mailbox outage / mailbox failover intake scenarios not explicitly listed (delivery/retry covered but mailbox outage case not explicit)."
+    ],
+    "rbac_testing": [
+      "Explicit test verifying CS Supervisor permitted actions (monitor + reassign) and restrictions.",
+      "Explicit verification that CS Admin cannot perform releases (admin restriction) and other admin\u2011specific constraints."
+    ],
+    "security_compliance": [
+      "MFA, session timeout, token expiration and explicit JWT validation tests are not listed.",
+      "CSRF/XSS and UI input sanitization tests not explicitly specified.",
+      "Explicit spoofed\u2011sender domain tests (ensure spoofing does not auto\u2011trust) and prompt\u2011injection tests for email content are not enumerated (AI safety/hallucination covered but prompt\u2011injection test cases not explicit).",
+      "SAST/DAST/dependency scanning mention is light (pen tests included but CI security scans not explicit)."
+    ],
+    "nfr_reliability": [
+      "Explicit backup/restore and data reconciliation tests after recovery not described.",
+      "Runbooks, alerting playbooks and on\u2011call procedures validation are not explicitly listed."
+    ],
+    "nfr_accessibility_compat": [
+      "Screen\u2011reader / ARIA label tests, keyboard\u2011only navigation, focus order and colour contrast checks.",
+      "Zoom/reflow and responsive behaviour tests and explicit supported browser/version compatibility (Edge/Chrome/Firefox) are not present."
+    ],
+    "test_data_environment": [
+      "Explicit boundary datasets called out in reference (e.g., 5% vs 5.01% price variance, 29/30\u2011minute ageing) are not enumerated as distinct test data cases.",
+      "Explicit mandate to record build/config/dataset/model version for every execution is mentioned broadly for AI but not enforced across all test runs."
+    ],
+    "entry_exit_criteria": [
+      "Exact numeric exit thresholds from reference (e.g., 95% of planned test cases passed, 100% duplicate detection) are not all strictly enforced in exit criteria.",
+      "Explicit statement that no High\u2011severity security defects can be open at exit is not enumerated (security criteria are referenced but not with same strictness).",
+      "Explicit 'no release without CSR action' as an exit condition not enumerated though draft non\u2011release is tested."
+    ],
+    "defect_management": [
+      "Required defect report fields (steps, expected/actual, environment, build, owner, retest result) are not listed in the same explicit template form.",
+      "Reference examples mapping specific severity definitions to examples (table) are not fully reproduced."
+    ],
+    "traceability_metrics": [
+      "Explicit accessibility findings metric is not listed.",
+      "Weekly planned/executed/blocked reporting cadence is not explicitly called out (metrics are listed but cadence/reporting frequency not all specified).",
+      "SAP error rate and correction rate metrics are implied but not called out exactly as in reference."
+    ]
+  },
+  "overall": 0.6902880184331798
+}

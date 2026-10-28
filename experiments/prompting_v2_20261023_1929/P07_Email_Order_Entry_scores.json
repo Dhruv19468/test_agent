@@ -1,0 +1,143 @@
+{
+  "project": "P07_Email_Order_Entry",
+  "structure": 1.0,
+  "missing_sections": [],
+  "coverage": 0.9196428571428571,
+  "coverage_all": 0.9202898550724637,
+  "guard_downgrades": 1,
+  "missed_facts": [
+    {
+      "id": "F001",
+      "category": "business_rule",
+      "fact": "Reduce order entry time by 60%"
+    },
+    {
+      "id": "F002",
+      "category": "business_rule",
+      "fact": "Reduce order entry errors by 50%"
+    },
+    {
+      "id": "F005",
+      "category": "data",
+      "fact": "Customer Service receives about 6,000 PO emails per week"
+    },
+    {
+      "id": "F015",
+      "category": "integration",
+      "fact": "SAP validation via APIM (customer active, material valid, price variance >5% flagged)"
+    }
+  ],
+  "coverage_by_category": {
+    "acceptance": 1.0,
+    "architecture": 1.0,
+    "assumption": 1.0,
+    "business_rule": 0.33,
+    "data": 0.5,
+    "dependency": 1.0,
+    "functional": 1.0,
+    "integration": 0.83,
+    "nfr_availability": 1.0,
+    "nfr_performance": 1.0,
+    "out_of_scope": 1.0,
+    "risk": 1.0,
+    "role": 1.0,
+    "scope_mvp1": 1.0,
+    "scope_mvp2": 1.0,
+    "security_access": 1.0,
+    "timeline": 1.0
+  },
+  "faithfulness": 0.9841269841269841,
+  "claims": 75,
+  "requirement_claims": 63,
+  "test_design_claims": 12,
+  "invented": 1,
+  "unverified_supported": 0,
+  "invented_claims": [
+    {
+      "claim": "SAP sandbox endpoints and APIM test endpoints must be provided by SAP integration team.",
+      "kind": "requirement",
+      "verdict": "not_found"
+    }
+  ],
+  "similarity": 0.8476190476190476,
+  "embedding_sim": 0.6769495111124783,
+  "section_scores": {
+    "references": 1.0,
+    "objectives": 1.0,
+    "scope_in": 1.0,
+    "scope_out": 1.0,
+    "assumptions_dependencies": 1.0,
+    "test_strategy": 0.8,
+    "functional_coverage": 0.8,
+    "rbac_testing": 1.0,
+    "security_compliance": 0.6,
+    "ai_data_quality": 0.8,
+    "nfr_performance": 1.0,
+    "nfr_reliability": 0.8,
+    "nfr_accessibility_compat": 0.4,
+    "observability_audit": 0.8,
+    "test_data_environment": 0.8,
+    "entry_exit_criteria": 0.8,
+    "defect_management": 0.6,
+    "risks": 1.0,
+    "deliverables_reporting": 0.8,
+    "traceability_metrics": 0.8,
+    "e2e_scenario": 1.0
+  },
+  "missing_points": {
+    "test_strategy": [
+      "Unit-test coverage target (85%) not specified",
+      "Explicit API/contract checklist (schemas, error codes, idempotency, versioning) not called out",
+      "Component testing scope/details (component-level tests) not explicit"
+    ],
+    "functional_coverage": [
+      "Explicit extraction from email body called out (body vs attachments)",
+      "Boundary test for price variance exactly at 5.00% vs 5.01% not spelled out",
+      "Multi-page PO extraction case not explicitly listed"
+    ],
+    "security_compliance": [
+      "MFA, session timeout and JWT validation tests not explicitly listed",
+      "CSRF/XSS and input validation tests not called out",
+      "Rate limiting tests and abuse/throttling checks not explicit",
+      "Prompt-injection tests for email text not specifically described",
+      "Dependency scanning / SAST/DAST / penetration testing not specified"
+    ],
+    "ai_data_quality": [
+      "Field-level accuracy broken down by format (body, PDF, Excel) not explicitly specified",
+      "Version tracking per email / extraction model version recorded per execution not specified"
+    ],
+    "nfr_reliability": [
+      "Backup/restore and data reconciliation tests after recovery not defined",
+      "Runbooks / playbook execution verification not detailed (DR/runbook validation)"
+    ],
+    "nfr_accessibility_compat": [
+      "Detailed accessibility criteria (screen reader labels, focus order, contrast, zoom/reflow)",
+      "Explicit supported browser versions and compatibility matrix",
+      "Acceptance criteria for accessibility conformance (WCAG level)"
+    ],
+    "observability_audit": [
+      "Explicit extraction/model version in audit log not listed",
+      "Exportability/retention/export testing specifics are TBD rather than defined"
+    ],
+    "test_data_environment": [
+      "Versioned test data and golden dataset recording per run (dataset/model/build/version) not specified",
+      "Explicit production-like weekly volume schedule / cadence for performance tests (detailed dataset sizing)"
+    ],
+    "entry_exit_criteria": [
+      "Planned test case pass percentage (e.g. \u226595% of planned test cases passed) from reference not explicitly included in entry/exit list"
+    ],
+    "defect_management": [
+      "Explicit defect severity definitions and examples table content (Critical/High/Medium/Low) not included",
+      "Required defect report fields (steps, evidence, environment, build) not enumerated"
+    ],
+    "deliverables_reporting": [
+      "Explicit separate reports for accessibility and security test results called out in reference are not explicitly listed",
+      "Automation reporting detail (coverage, regression list) not detailed"
+    ],
+    "traceability_metrics": [
+      "Weekly planned/executed/passed/failed/blocked reporting cadence and format not explicitly defined",
+      "Explicit metrics for accessibility and security findings tracking not listed"
+    ]
+  },
+  "overall": 0.9035515873015871
+}

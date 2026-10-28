@@ -1,0 +1,122 @@
+[
+  {
+    "heading": "Master Test Plan – Quote Assistant",
+    "level": 1,
+    "text": "Version: 1.0\nApplication: Quote Assistant\nPrepared by: QA Lead, Quality Engineering\nReviewed by: Test Manager\nTest phase: MVP1\nAudience: Business Stakeholders, Product Owners, Architects, Development Team and QA Team\nPurpose. This plan defines the quality approach for validating Quote Assistant MVP1, from RFQ intake through line extraction, catalog matching, draft quote review and export. Salesforce CPQ creation, pricing and learning from corrections are MVP2 and are not release blockers for MVP1."
+  },
+  {
+    "heading": "References",
+    "level": 2,
+    "text": "Quote Assistant BRD. Quote Assistant architecture diagram."
+  },
+  {
+    "heading": "Test Objectives",
+    "level": 1,
+    "text": "Verify extraction of customer part number, description, manufacturer, quantity and unit of measure from RFQ emails, PDF, DOCX and XLSX. Confirm product matching returns the correct catalog item as top-1 for at least 80% of lines and up to three alternatives. Validate the 70% confidence threshold, highlighting and manual review behaviour. Verify the model only proposes items that exist in the catalog index (no hallucinated items). Validate role-based access, data confidentiality, performance and Responsible AI controls."
+  },
+  {
+    "heading": "Scope of Testing",
+    "level": 1,
+    "text": "In scope (functional): mailbox intake; manual paste and upload; attachment parsing; line extraction with Azure OpenAI; catalog search and matching; confidence threshold; draft quote edit/add/remove; Excel export; synonym administration; nightly catalog index refresh; Azure AD SSO; RBAC; error handling.\nIn scope (non-functional): performance (50-line RFQ in 30 s, search under 2 s per line), security and privacy, Responsible AI, accessibility, observability, reliability and browser compatibility."
+  },
+  {
+    "heading": "Out of scope",
+    "level": 3,
+    "text": "- Automatic sending of quotes and order creation.\n- Freight calculation and pricing engine changes.\n- Salesforce CPQ integration, pricing retrieval and learning from corrections (MVP2)."
+  },
+  {
+    "heading": "Assumptions and Dependencies",
+    "level": 1,
+    "text": "- RFQs vary from structured tables to free text and may contain customer-specific terms.\n- Matching accuracy depends on catalog description quality and synonyms.\n- Graph API mailbox, PIM export, Azure OpenAI and AI Search must be available or mocked.\n- Inside Sales will provide a labelled RFQ test set with the correct item for each line.\n- Azure OpenAI quota is sufficient for performance testing."
+  },
+  {
+    "heading": "Test Strategy",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Test levels",
+    "level": 2,
+    "text": "- Unit testing: developer-owned tests for attachment parsers, prompt builders, response validators, matching ranker and APIs. Target minimum coverage: 85%.\n- Component testing: RFQ processing service, matching service, catalog loader function and synonym administration.\n- API and contract testing: positive and negative behaviour, schemas, authentication, error codes, idempotency and versioning.\n- Integration testing: UI–backend, Graph API mailbox–processing service, backend–APIM–Azure OpenAI, backend–APIM–AI Search, Event Grid–catalog loader function, function–AI Search, backend–Cosmos DB and backend–Azure AD.\n- System testing: end-to-end scenarios across RFQ intake, extraction, matching, review, edit and export.\n- User acceptance testing: Inside Sales Representatives and Sales Managers validate matching quality, usability and turnaround time on real-like RFQs."
+  },
+  {
+    "heading": "Techniques",
+    "level": 2,
+    "text": "Use requirements-based testing, equivalence partitioning, boundary-value analysis, pairwise coverage, negative testing, exploratory testing, risk-based prioritisation, regression testing and data-driven automation."
+  },
+  {
+    "heading": "Functional Test Coverage",
+    "level": 1,
+    "text": "- RFQ intake: Email body only, PDF, DOCX, XLSX, multiple attachments, image-only PDF, password-protected file, empty RFQ, very long email thread. Verify forwarded emails are attributed to the correct representative and unsupported formats show a clear error.\n- Line extraction – Extract customer part number, description, manufacturer, quantity and unit of measure for tables and free-text lines. Cover quantities in words ('two hundred'), mixed units (FT vs EA), missing quantity, duplicate lines and non-product text (signatures, disclaimers).\n- Catalog matching – Verify top-1 match and up to three alternatives with confidence scores for exact item numbers, manufacturer part numbers, synonyms and free text. Lines below 70% confidence are highlighted; lines with no result show 'No match found' instead of an invented item. Verify that every proposed item exists in the current catalog index and discontinued items are not proposed.\n- Draft quote: Edit quantity, choose an alternative, remove and add lines, approve the draft and export to Excel with correct columns. Verify representatives see only their own RFQs and Sales Managers see their team's RFQs.\n- Administration and catalog refresh – Add, edit and delete synonyms and verify the effect on matching without redeployment. Change confidence threshold and verify highlighting; verify nightly index refresh, partial file and failed refresh handling."
+  },
+  {
+    "heading": "Roles & Permissions",
+    "level": 1,
+    "text": "| Role | Permitted actions | Restricted actions |\n|---|---|---|\n| Inside Sales Rep | Submit RFQs, review and edit matches, approve and export own drafts | Other reps' RFQs, synonyms and thresholds |\n| Sales Manager | View team RFQs, drafts and match quality reports | Editing reps' drafts, administration |\n| Catalog Admin | Synonyms, confidence threshold, index refresh schedule | Viewing customer RFQ content |\nVerify data isolation between representatives, manager team scope, direct-URL/API access to other users' RFQs, session expiry and role changes."
+  },
+  {
+    "heading": "AI, Matching Quality and Responsible AI Validation",
+    "level": 1,
+    "text": "Use a labelled RFQ golden set covering structured, free-text and customer-specific RFQs. Targets: ≥80% top-1 item accuracy and ≥95% correct quantity and unit of measure.\n- Measure top-1 and top-3 accuracy, precision of the confidence threshold and rate of 'No match found'.\n- Run consistency tests: the same RFQ processed three times must give the same matches.\n- Track prompt version, model version and index version per RFQ; re-run the golden set after every change."
+  },
+  {
+    "heading": "Performance, Reliability & Accessibility",
+    "level": 1,
+    "text": ""
+  },
+  {
+    "heading": "Performance and scalability",
+    "level": 2,
+    "text": "- Draft quote for a 50-line RFQ within 30 seconds; catalog search under 2 seconds per line.\n- Test 20, 50 and 100 concurrent representatives and Azure OpenAI rate limits (HTTP 429 handling).\n- Nightly index refresh of the full catalog completes before 06:00."
+  },
+  {
+    "heading": "Resilience",
+    "level": 2,
+    "text": "- Service restart during processing, network interruption, dependency failure, retry/idempotency and recovery from partial failure.\n- Backup/restore, data reconciliation after recovery, alerting and runbooks."
+  },
+  {
+    "heading": "Accessibility & Browser Compatibility",
+    "level": 2,
+    "text": "Screen reader labels, keyboard-only navigation, focus order, colour contrast, error identification and zoom/reflow. Current enterprise-supported versions of Edge, Chrome and Firefox."
+  },
+  {
+    "heading": "Security",
+    "level": 2,
+    "text": "Azure AD login, MFA, session timeout, token expiration, logout and JWT validation. RBAC at UI and API layers; rate limiting; input validation; safe error messages; CSRF and XSS protection. Prompt-injection tests embedded in RFQ text (e.g. 'ignore previous instructions') must not change system behaviour. Verify no customer names, emails or phone numbers appear in logs, prompts stored in telemetry or exports outside the user's scope. Verify Azure OpenAI content filtering is enabled and that customer data is not retained for model training. Dependency scanning, SAST/DAST and penetration testing before release."
+  },
+  {
+    "heading": "Observability and Audit Testing",
+    "level": 1,
+    "text": "Verify structured logs, metrics, traces, correlation IDs, dashboards and alerts. Audit records must capture user, role, RFQ identifier, prompt and model version, index version, match confidence, edits made, approval and export actions. Confirm timestamps, access controls, retention and exportability."
+  },
+  {
+    "heading": "Environments and Test Data",
+    "level": 1,
+    "text": "- Valid: Labelled RFQs (table, free text, mixed) with correct item per line\n- Invalid – Empty RFQs, unsupported files, image-only PDFs, non-product emails\n- Boundary – 50-line and 51-line RFQs, confidence exactly 70%, very long descriptions\n- Security – Prompt-injection text, PII-heavy emails, restricted-role accounts\n- Production-like: Synthetic RFQs at weekly volume with the full catalog index\nIsolated development, QA/integration, performance and UAT environments; versioned test data and expected results; record build, configuration, dataset and model version for every execution."
+  },
+  {
+    "heading": "Entry / Exit Criteria",
+    "level": 1,
+    "text": "| Entry criteria | Exit criteria |\n|---|---|\n| BRD approved and requirements baselined; acceptance criteria and thresholds agreed. | At least 95% of planned test cases passed, with all critical-path cases passed. |\n| Environment, integrations, monitoring and access provisioned; test data available. | No open Critical defects and no open High-severity security defects. |\n| Catalog index loaded and validated; labelled RFQ golden set approved by Inside Sales. | ≥80% top-1 matching and ≥95% quantity/UoM accuracy on the golden set. |\n| Build deployed with unit-test evidence and known limitations documented. | No hallucinated (non-catalog) items in any test run. |\n|  | No PII found in logs during log scanning. |\n|  | All UAT scenarios approved and business sign-off completed. |"
+  },
+  {
+    "heading": "Defect Severity & Process",
+    "level": 1,
+    "text": "- Critical: Definition: Wrong item proposed with high confidence, data leak or security breach; Example: Item not in catalog proposed as top match\n- High – Definition: Core flow blocked; Example: Attachments cannot be processed\n- Medium: Definition: Workaround exists; Example: Alternative list missing for some lines\n- Low: Definition: Cosmetic; Example: Confidence badge colour wrong\nEach defect includes steps, expected/actual results, evidence, severity, environment, build, owner and retest result."
+  },
+  {
+    "heading": "Risk Register",
+    "level": 1,
+    "text": "| Risk | Mitigation |\n|---|---|\n| Ambiguous descriptions | Confidence threshold, alternatives, synonym management |\n| Hallucinated items | Validation that every item exists in the index; negative tests |\n| Prompt injection | Input sanitisation tests and system-prompt hardening |\n| Model or quota limits | Rate-limit tests, retries and queueing |\n| Catalog refresh failure | Index health checks and alerting |"
+  },
+  {
+    "heading": "Traceability and Metrics",
+    "level": 1,
+    "text": "Map every BRD requirement to test cases and evidence. Report weekly planned/executed/passed/failed/blocked cases, coverage by requirement and risk, defect severity and ageing, top-1/top-3 matching accuracy, extraction accuracy, turnaround time, Azure OpenAI error and throttling rate, accessibility and security findings and UAT completion."
+  },
+  {
+    "heading": "Sample E2E Flow",
+    "level": 1,
+    "text": "- Sign in with Azure AD as an Inside Sales Rep.\n- Forward an RFQ email with an XLSX attachment to the sales mailbox.\n- Verify extracted lines with quantity and unit of measure.\n- Verify top match, alternatives and confidence per line; low-confidence lines highlighted.\n- Edit a quantity, choose an alternative and add a missing line.\n- Approve and export the draft quote to Excel.\n- Verify audit trail, telemetry and absence of PII in logs.\nRelease recommendation: MVP1 should not be released until the exit criteria are met or each deviation has documented impact, mitigation, owner and formal Sales Operations/Product acceptance."
+  }
+]

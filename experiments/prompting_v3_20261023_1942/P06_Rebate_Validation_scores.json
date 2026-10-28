@@ -1,0 +1,113 @@
+{
+  "project": "P06_Rebate_Validation",
+  "structure": 1.0,
+  "missing_sections": [],
+  "coverage": 0.875,
+  "coverage_all": 0.8571428571428571,
+  "guard_downgrades": 1,
+  "missed_facts": [
+    {
+      "id": "F003",
+      "category": "scope_mvp1",
+      "fact": "MVP1 calculates earned rebates from sales and purchase data in the enterprise data lake"
+    },
+    {
+      "id": "F013",
+      "category": "nfr_performance",
+      "fact": "Cut claim preparation time from 3 days to 4 hours per supplier"
+    },
+    {
+      "id": "F052",
+      "category": "data",
+      "fact": "Calculations data source is Tool output and frequency is Per run"
+    },
+    {
+      "id": "F053",
+      "category": "data",
+      "fact": "Calculations owner is Supplier Programs and security classification is Confidential"
+    },
+    {
+      "id": "F095",
+      "category": "integration",
+      "fact": "Agreement Service connects to APIM using HTTPS/443 Managed Identity"
+    }
+  ],
+  "coverage_by_category": {
+    "acceptance": 1.0,
+    "ai_quality": 1.0,
+    "architecture": 0.88,
+    "assumption": 1.0,
+    "business_rule": 0.57,
+    "compliance": 1.0,
+    "data": 0.6,
+    "dependency": 1.0,
+    "functional": 1.0,
+    "integration": 0.87,
+    "nfr_availability": 1.0,
+    "nfr_performance": 0.67,
+    "out_of_scope": 1.0,
+    "risk": 1.0,
+    "role": 1.0,
+    "scope_mvp1": 0.83,
+    "scope_mvp2": 1.0,
+    "security_access": 0.83,
+    "timeline": 0.5
+  },
+  "faithfulness": 0.9857142857142858,
+  "claims": 89,
+  "requirement_claims": 70,
+  "test_design_claims": 19,
+  "invented": 1,
+  "unverified_supported": 1,
+  "invented_claims": [
+    {
+      "claim": "Audit trail must record who confirmed terms and timestamp",
+      "kind": "requirement",
+      "verdict": "supported"
+    }
+  ],
+  "similarity": 0.9545454545454546,
+  "embedding_sim": 0.7014603138848439,
+  "section_scores": {
+    "references": 1.0,
+    "objectives": 1.0,
+    "scope_in": 1.0,
+    "scope_out": 1.0,
+    "assumptions_dependencies": 1.0,
+    "test_strategy": 1.0,
+    "functional_coverage": 0.8,
+    "rbac_testing": 1.0,
+    "security_compliance": 0.8,
+    "ai_data_quality": 1.0,
+    "nfr_performance": 1.0,
+    "nfr_reliability": 1.0,
+    "nfr_accessibility_compat": 0.4,
+    "observability_audit": 1.0,
+    "test_data_environment": 1.0,
+    "entry_exit_criteria": 1.0,
+    "defect_management": 1.0,
+    "risks": 1.0,
+    "deliverables_reporting": 1.0,
+    "traceability_metrics": 1.0,
+    "schedule": 1.0,
+    "e2e_scenario": 1.0
+  },
+  "missing_points": {
+    "functional_coverage": [
+      "Explicit BRD worked numeric examples (e.g., retroactive 2.1M -> 63,000 and incremental -> 23,000) not reproduced as signed-off verification cases",
+      "Explicit mention of returns and credit-note handling test cases",
+      "Explicit test to assert 'below first tier => zero rebate' using the BRD examples (although boundary tests present, the exact BRD examples are missing)"
+    ],
+    "security_compliance": [
+      "Explicit MFA and JWT validation test cases not spelled out",
+      "CSRF/XSS test cases and safe error-message verification not explicitly listed",
+      "SAST/DAST and formal penetration testing steps/acceptance not detailed",
+      "Explicit rate-limiting and logging-of-spend-data-not-exposed tests (though safe logging/adversarial inputs are mentioned)"
+    ],
+    "nfr_accessibility_compat": [
+      "Concrete accessibility test cases (screen reader labels, keyboard-only navigation, focus order, colour contrast, error identification, zoom/reflow) absent",
+      "Explicit browser compatibility matrix / enterprise-supported versions testing (Edge/Chrome/Firefox) not implemented \u2014 only a TODO entry"
+    ]
+  },
+  "overall": 0.9168262987012988
+}
