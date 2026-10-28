@@ -1,2 +1,13 @@
 # test_agent
 test_agent
+
+
+Openai Api key: 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
+
+Langsmith api key: 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
+
+
+
+
+
+Groq api: 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
